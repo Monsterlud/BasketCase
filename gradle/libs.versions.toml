@@ -1,46 +1,88 @@
 [versions]
-activity-compose = "1.8.2"
+
+activity-compose = "1.9.0"
 androidx-junit = "1.1.5"
-core-ktx = "1.12.0"
+core-ktx = "1.13.1"
 espresso-core = "3.5.1"
 junit = "4.13.2"
-lifecycle-runtime-ktx = "2.7.0"
-composeBom = "2024.04.00"
-android-gradle-plugin = "8.2.0"
-android-kotlin = "1.9.20"
+lifecycle-runtime-ktx = "2.8.0"
+composeBom = "2024.06.00"
 appcompat = "1.6.1"
-material = "1.11.0"
+material = "1.12.0"
+room = "2.6.1"
+googleFonts = "1.6.8"
+navigationRuntimeKtx = "2.7.7"
+navigationCompose = "2.8.0-beta04"
+android-kotlin = "1.9.24"
+android-gradle-plugin = "8.4.0"
+ksp = "1.9.24-1.0.20"
 ktlint = "12.1.0"
+koin = "3.5.6"
+mockk = "1.13.11"
+kotlinxCoroutines = "1.8.1"
+junitVersion = "1.2.1"
+compose-compiler = "1.5.12"
+safeArgs = "2.7.7"
+googleGson = "2.10.1"
+timber = "5.0.1"
 
 [libraries]
 
 # Android
-androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
 
-# Jetpack Compose
+# UI
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-graphics = { module = "androidx.compose.ui:ui-graphics" }
 compose-tooling = { module = "androidx.compose.ui:ui-tooling-preview" }
-material3 = { module = "androidx.compose.material3:material3" }
 compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+material3 = { module = "androidx.compose.material3:material3" }
+
+# Google
+androidx-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "googleFonts" }
+google-gson = { group = "com.google.code.gson", name = "gson", version.ref = "googleGson" }
+
+# Navigation
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+
+# Koin
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+
+# Room
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-extentions = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+# Debug
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 
 # Unit Test
-androidx-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-junit" }
 junit = { module = "junit:junit", version.ref = "junit" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+kotlinx-coroutine-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 
 # Instrumented Test
 androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 
-
+#############
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "android-gradle-plugin"}
-android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "android-kotlin"}
-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint"}
+
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+android-kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "android-kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "android-kotlin" }
+safeArgs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "safeArgs" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

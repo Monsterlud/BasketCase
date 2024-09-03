@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.kotlin) apply false
     alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.parcelize) apply false
+    alias(libs.plugins.safeArgs) apply false
 }
 
 buildscript {

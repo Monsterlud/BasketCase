@@ -17,6 +17,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "BasketCase"
 include(":app")
-include(":presentation")
-include(":core")
-include(":data")

@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.android.kotlin)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.parcelize)
+    alias(libs.plugins.safeArgs)
 }
 
 android {
@@ -38,12 +41,16 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.5"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
+        arg("exclude", "com.monsalud.basketcase.domain.model")
     }
 }
 
@@ -54,12 +61,33 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
 
-    // Jetpack Compose & Material
+    // UI: Jetpack Compose & Material
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.graphics)
     implementation(libs.compose.tooling)
     implementation(libs.material3)
+    implementation(libs.androidx.google.fonts)
+
+    // Google
+    implementation(libs.google.gson)
+
+    // Navigation
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.navigation.compose)
+
+    // Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.extentions)
+    ksp(libs.room.compiler)
+
+    // Debug
+    implementation(libs.timber)
 
     // Unit Test
     testImplementation(libs.junit)
