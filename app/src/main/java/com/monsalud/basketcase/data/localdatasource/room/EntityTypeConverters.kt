@@ -34,6 +34,7 @@ class EntityTypeConverters {
     fun fromMarketType(value: MarketType): String {
         return value.getMarketTypeName()
     }
+
     @TypeConverter
     fun toMarketType(value: String): MarketType {
         return when (value) {
