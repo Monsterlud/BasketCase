@@ -23,17 +23,20 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         setContent {
             BasketCaseTheme {
                 val navController = rememberNavController()
                 val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
-                
-                NavDrawer(drawerState = drawerState, navController = navController, onScreenChange = { screen ->
-                    viewModel.setCurrentScreen(screen)
-                }) {
+
+                NavDrawer(
+                    drawerState = drawerState,
+                    navController = navController,
+                    onScreenChange = { screen ->
+                        viewModel.setCurrentScreen(screen)
+                    }
+                ) {
                     Scaffold(
                         topBar = {
                             BasketCaseTopBar(

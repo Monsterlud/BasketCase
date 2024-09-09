@@ -25,12 +25,9 @@ fun BasketCaseTopBar(
                 Icon(
                     Icons.Default.Menu, contentDescription = "Hamburger Menu"
                 )
-        }},
-        actions = {
-            IconButton(onClick = onBackClick) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
             }
         },
+
         modifier = modifier
     )
 }
