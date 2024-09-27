@@ -8,10 +8,24 @@ import com.monsalud.basketcase.domain.model.FoodItem
 import com.monsalud.basketcase.domain.model.ItemToPurchase
 import com.monsalud.basketcase.domain.model.Market
 
-@Database(version = 1, entities = [FoodItemEntity::class, ItemToPurchaseEntity::class, MarketEntity::class], exportSchema = false)
+@Database(
+    entities = [
+        FoodItemEntity::class,
+        ItemToPurchaseEntity::class,
+        MarketEntity::class,
+        GroceryListEntity::class,
+        GroceryListItemAssociation::class
+    ],
+    version = 1,
+    exportSchema = false)
 abstract class BasketCaseDatabase : RoomDatabase() {
 
-    abstract fun basketCaseDAO(): BasketCaseDAO
+    abstract fun foodItemDao(): FoodItemDao
+    abstract fun itemToPurchaseDao(): ItemToPurchaseDao
+    abstract fun marketDao(): MarketDao
+    abstract fun groceryListDao(): GroceryListDao
+    abstract fun groceryListItemAssociationDao(): GroceryListItemAssociationDao
+
 
     companion object {
         @Volatile

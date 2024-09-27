@@ -1,10 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="primaryLight">#3b693a</color>
+    <color name="secondaryLight">#52634f</color>
+    <color name="tertiaryLight">#38656a</color>
+    <color name="errorLight">#ba1a1a</color>
+
+    <color name="primaryContainerLight">#bcf0b5</color>
+    <color name="secondaryContainerLight">#d5e8cf</color>
+    <color name="tertiaryContainerLight">#bcebf1</color>
+    <color name="errorContainerLight">#ffdad6</color>
+
+    <color name="onPrimaryContainerLight">#002204</color>
+    <color name="onSecondaryContainerLight">#101f10</color>
+    <color name="onTertiaryContainerLight">#001f23</color>
+    <color name="onErrorContainerLight">#410002</color>
+
+    <color name="surfaceDimLight">#d8dbd2</color>
+    <color name="surfaceLight">#f7fbf1</color>
+    <color name="surfaceBrightLight">#f7fbf1</color>
+    <color name="inverseSurfaceLight">#2d322c</color>
+    <color name="inverseOnSurfaceLight">#eef2e9</color>
+    <color name="inversePrimaryLight">#a0d39a</color>
+
+    <color name="primaryDark">#a0d39a</color>
+    <color name="secondaryDark">#b9ccb4</color>
+    <color name="tertiaryDark">#a0cfd4</color>
+    <color name="errorDark">#ffb4ab</color>
+    <color name="onPrimaryDark">#093910</color>
+    <color name="onSecondaryDark">#253423</color>
+    <color name="onTertiaryDark">#00363b</color>
+    <color name="onErrorDark">#690005</color>"
+    
+    <color name="primaryContainerDark">#235024</color>
+    <color name="secondaryContainerDark">#3b4b38</color>
+    <color name="tertiaryContainerDark">#1f4d52</color>
+    <color name="errorContainerDark">#93000a</color>
+
+    <color name="onPrimaryContainerDark">#bcf0b5</color>
+    <color name="onSecondaryContainerDark">#d5e8cf</color>
+    <color name="onTertiaryContainerDark">#bcebf1</color>
+    <color name="onErrorContainerDark">#ffdad6</color>
+    
+    <color name="surfaceDimDark">#10140f</color>"
+    <color name="surfaceDark">#10140f</color>
+    <color name="surfaceBrightDark">#363a34</color>
+    <color name="inverseSurfaceDark">#e0e4db</color>
+    <color name="inverseOnSurfaceDark">#2d322c</color>
+    <color name="inversePrimaryDark">#3b693a</color>
+
 </resources>

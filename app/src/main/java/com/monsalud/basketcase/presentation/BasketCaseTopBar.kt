@@ -10,6 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import com.monsalud.basketcase.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -18,8 +21,9 @@ fun BasketCaseTopBar(
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val fontFamily = FontFamily(Font(R.font.playwriteitmoderna_regular))
     TopAppBar(
-        title = { Text("BasketCase") },
+        title = { Text(text = "BasketCase", fontFamily = fontFamily) },
         navigationIcon = {
             IconButton(onClick = onMenuClick) {
                 Icon(

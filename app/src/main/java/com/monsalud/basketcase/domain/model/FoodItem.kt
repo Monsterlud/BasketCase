@@ -3,7 +3,7 @@ package com.monsalud.basketcase.domain.model
 data class FoodItem(
     val id: Long,
     val name: String,
-    val category: FoodCategory,
+    val category: FoodCategory = FoodCategory.MISCELLANEOUS,
 )
 
 enum class FoodCategory {

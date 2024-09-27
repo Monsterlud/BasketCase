@@ -3,9 +3,9 @@ package com.monsalud.basketcase.domain.model
 data class ItemToPurchase(
     val id: Long,
     val item: FoodItem,
-    val market: Market,
-    val amount: Double,
-    val amountType: AmountType
+    val market: Market? = null,
+    val amount: Double? = null,
+    val amountType: AmountType? = null
 )
 
 enum class AmountType {

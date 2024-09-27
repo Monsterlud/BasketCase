@@ -3,9 +3,9 @@ package com.monsalud.basketcase.domain.model
 class Market(
     val id: Long,
     val marketName: String,
-    val marketType: MarketType,
-    val marketLocation: Pair<Double, Double>,
-    val marketAddress: String
+    val marketType: MarketType? = MarketType.OTHER,
+    val marketLocation: Pair<Double, Double>? = null,
+    val marketAddress: String? = null
 )
 
 enum class MarketType {
