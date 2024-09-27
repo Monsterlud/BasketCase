@@ -42,29 +42,44 @@ data class MarketEntity(
     var marketType: MarketType,
 
     @ColumnInfo(name = "market_location")
-    var marketLocation: Pair<Double, Double>,
+    var marketLocation: Pair<Double, Double>? = null,
 
     @ColumnInfo(name = "market_address")
-    var marketAddress: String
+    var marketAddress: String? = null
 )
 
-@Entity
+@Entity(
+    foreignKeys = [
+        ForeignKey(
+            entity = FoodItemEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["food_item_id"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
+            entity = MarketEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["market_id"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
+)
 @TypeConverters(EntityTypeConverters::class)
 data class ItemToPurchaseEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long,
 
-    @ColumnInfo(name = "food_item")
-    var foodItem: FoodItem,
-
-    @ColumnInfo(name = "market")
-    var market: Market,
+    @ColumnInfo(name = "food_item_id")
+    var foodItemId: Long,
 
     @ColumnInfo(name = "amount_to_purchase")
     var amountToPurchase: Double,
 
     @ColumnInfo(name = "amount_type")
-    var amountType: AmountType
+    var amountType: AmountType,
+
+    @ColumnInfo(name = "market_id")
+    var marketId: Long,
 )
 
 /** Grocery Lists **/
@@ -72,7 +87,7 @@ data class ItemToPurchaseEntity(
 @Entity
 data class GroceryListEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0,
+    var id: Long,
 
     @ColumnInfo(name = "list_name")
     var listName: String,

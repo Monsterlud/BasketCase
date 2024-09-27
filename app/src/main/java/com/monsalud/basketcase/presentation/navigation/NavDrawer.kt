@@ -3,10 +3,15 @@ package com.monsalud.basketcase.presentation.navigation
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,7 +29,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -50,21 +54,27 @@ fun NavDrawer(
     val items = listOf(
         NavigationItem(
             title = "Shopping Lists",
-            selectedIcon = Icons.Filled.Home,
-            unselectedIcon = Icons.Outlined.Home,
+            selectedIcon = Icons.Filled.List,
+            unselectedIcon = Icons.Outlined.List,
             badgeCount = 45,
             route = Screen.MainScreen.route
         ),
         NavigationItem(
+            title = "Shopping Cart",
+            selectedIcon = Icons.Filled.ShoppingCart,
+            unselectedIcon = Icons.Outlined.ShoppingCart,
+            route = Screen.ShoppingCartScreen.route
+        ),
+        NavigationItem(
             title = "Food Items (Add/Edit)",
-            selectedIcon = Icons.Filled.Home,
-            unselectedIcon = Icons.Outlined.Home,
+            selectedIcon = Icons.Filled.AddCircle,
+            unselectedIcon = Icons.Outlined.AddCircle,
             route = Screen.FoodItemsScreen.route
         ),
         NavigationItem(
             title = "Markets (Add/Edit)",
-            selectedIcon = Icons.Filled.Home,
-            unselectedIcon = Icons.Outlined.Home,
+            selectedIcon = Icons.Filled.LocationOn,
+            unselectedIcon = Icons.Outlined.LocationOn,
             route = Screen.MarketsScreen.route
         )
     )

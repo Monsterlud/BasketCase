@@ -11,7 +11,7 @@ import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.screens.FoodItemsScreen
 import com.monsalud.basketcase.presentation.screens.MainScreen
 import com.monsalud.basketcase.presentation.screens.MarketsScreen
-import com.monsalud.basketcase.presentation.screens.ShoppingListScreen
+import com.monsalud.basketcase.presentation.screens.GroceryListScreen
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -39,9 +39,9 @@ fun BasketCaseNavigation(
             MarketsScreen()
             onScreenChange(Screen.MarketsScreen)
         }
-        composable(route = Screen.ShoppingListScreen.route) {
-            ShoppingListScreen()
-            onScreenChange(Screen.ShoppingListScreen)
+        composable(route = Screen.ShoppingCartScreen.route) {
+            GroceryListScreen()
+            onScreenChange(Screen.ShoppingCartScreen)
         }
     }
 }

@@ -11,7 +11,10 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FoodItemDao {
     @Insert
-    suspend fun insert(foodItem: FoodItemEntity): Long
+    suspend fun insert(foodItem: FoodItemEntity)
+
+    @Insert
+    suspend fun insertAll(foodItems: List<FoodItemEntity>)
 
     @Update
     suspend fun update(foodItem: FoodItemEntity)
@@ -19,17 +22,23 @@ interface FoodItemDao {
     @Delete
     suspend fun delete(foodItem: FoodItemEntity)
 
+    @Query("DELETE FROM FoodItemEntity")
+    fun deleteAll()
+
     @Query("SELECT * FROM FoodItemEntity")
-    fun getAllFoodItems(): Flow<List<FoodItemEntity>>
+    fun getAll(): Flow<List<FoodItemEntity>>
 
     @Query("SELECT * FROM FoodItemEntity WHERE id = :id")
-    suspend fun getFoodItemById(id: Long): FoodItemEntity?
+    fun getById(id: Long): Flow<FoodItemEntity>
 }
 
 @Dao
 interface MarketDao {
     @Insert
-    suspend fun insert(market: MarketEntity): Long
+    suspend fun insert(market: MarketEntity)
+
+    @Insert
+    suspend fun insertAll(markets: List<MarketEntity>)
 
     @Update
     suspend fun update(market: MarketEntity)
@@ -37,17 +46,23 @@ interface MarketDao {
     @Delete
     suspend fun delete(market: MarketEntity)
 
+    @Query("DELETE FROM MarketEntity")
+    fun deleteAll()
+
     @Query("SELECT * FROM MarketEntity")
-    fun getAllMarkets(): Flow<List<MarketEntity>>
+    fun getAll(): Flow<List<MarketEntity>>
 
     @Query("SELECT * FROM MarketEntity WHERE id = :id")
-    suspend fun getMarketById(id: Long): MarketEntity?
+    fun getById(id: Long): Flow<MarketEntity>
 }
 
 @Dao
 interface ItemToPurchaseDao {
     @Insert
-    suspend fun insert(itemToPurchase: ItemToPurchaseEntity): Long
+    suspend fun insert(itemToPurchase: ItemToPurchaseEntity)
+
+    @Insert
+    suspend fun insertAll(itemsToPurchase: List<ItemToPurchaseEntity>)
 
     @Update
     suspend fun update(itemToPurchase: ItemToPurchaseEntity)
@@ -55,17 +70,23 @@ interface ItemToPurchaseDao {
     @Delete
     suspend fun delete(itemToPurchase: ItemToPurchaseEntity)
 
+    @Query("DELETE FROM ItemToPurchaseEntity")
+    fun deleteAll()
+
     @Query("SELECT * FROM ItemToPurchaseEntity")
-    fun getAllItemsToPurchase(): Flow<List<ItemToPurchaseEntity>>
+    fun getAll(): Flow<List<ItemToPurchaseEntity>>
 
     @Query("SELECT * FROM ItemToPurchaseEntity WHERE id = :id")
-    suspend fun getItemToPurchaseById(id: Long): ItemToPurchaseEntity?
+    fun getById(id: Long): Flow<ItemToPurchaseEntity>
 }
 
 @Dao
 interface GroceryListDao {
     @Insert
-    suspend fun insert(groceryList: GroceryListEntity): Long
+    suspend fun insert(groceryList: GroceryListEntity)
+
+    @Insert
+    suspend fun insertAll(groceryLists: List<GroceryListEntity>)
 
     @Update
     suspend fun update(groceryList: GroceryListEntity)
@@ -73,32 +94,29 @@ interface GroceryListDao {
     @Delete
     suspend fun delete(groceryList: GroceryListEntity)
 
-    @Query("SELECT * FROM GroceryListEntity")
-    fun getAllGroceryLists(): Flow<List<GroceryListEntity>>
+    @Query("DELETE FROM GroceryListEntity")
+    fun deleteAll()
 
+    @Transaction
+    @Query("SELECT * FROM GroceryListEntity")
+    fun getAllWithItems(): Flow<List<GroceryListWithItems>>
+
+    @Transaction
     @Query("SELECT * FROM GroceryListEntity WHERE id = :id")
-    suspend fun getGroceryListById(id: Long): GroceryListEntity?
-
-    @Transaction
-    @Query("SELECT * FROM GroceryListEntity")
-    fun getGroceryListsWithItems(): Flow<List<GroceryListWithItems>>
-
-    @Transaction
-    @Query("SELECT * FROM GroceryListEntity WHERE id = :groceryListId")
-    fun getGroceryListWithItems(groceryListId: Long): Flow<GroceryListWithItems>
+    fun getByIdWithItems(id: Long): Flow<GroceryListWithItems>
 }
 
 @Dao
 interface GroceryListItemAssociationDao {
     @Insert
-    suspend fun insert(association: GroceryListItemAssociation): Long
+    suspend fun insert(association: GroceryListItemAssociation)
+
+    @Insert
+    suspend fun insertAll(associations: List<GroceryListItemAssociation>)
 
     @Delete
     suspend fun delete(association: GroceryListItemAssociation)
 
-    @Query("DELETE FROM GroceryListItemAssociation WHERE grocery_list_id = :groceryListId AND item_to_purchase_id = :itemToPurchaseId")
-    suspend fun deleteAssociation(groceryListId: Long, itemToPurchaseId: Long)
-
-    @Query("SELECT * FROM GroceryListItemAssociation WHERE grocery_list_id = :groceryListId")
-    fun getAssociationsForGroceryList(groceryListId: Long): Flow<List<GroceryListItemAssociation>>
+    @Query("DELETE FROM GroceryListItemAssociation")
+    fun deleteAll()
 }
