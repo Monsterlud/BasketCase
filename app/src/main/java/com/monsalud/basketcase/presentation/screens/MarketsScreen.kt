@@ -12,8 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.monsalud.basketcase.R
 import com.monsalud.basketcase.ui.theme.spacing
 
 @Composable
@@ -24,8 +27,10 @@ fun MarketsScreen(
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
-            text = "Markets Screen",
-            modifier = modifier.align(Alignment.Center),
+            text = "add or edit your favorite markets here",
+            fontFamily = FontFamily(Font(R.font.playwriteitmoderna_extralight)),
+            modifier = modifier.align(Alignment.TopStart)
+                .padding(16.dp),
         )
         FloatingActionButton(
             onClick = { /* Handle FAB click */ },

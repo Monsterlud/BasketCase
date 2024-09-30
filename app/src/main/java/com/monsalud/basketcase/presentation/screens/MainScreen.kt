@@ -40,12 +40,6 @@ fun MainScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(
-            text = "Shopping Lists",
-            fontFamily = FontFamily(Font(R.font.playwriteitmoderna_extralight)),
-            modifier = modifier.align(Alignment.TopStart)
-                .padding(16.dp),
-        )
         FloatingActionButton(
             onClick = { isBottomSheetOpen = true },
             modifier = Modifier.align(Alignment.BottomEnd).padding(MaterialTheme.spacing.extraLarge)

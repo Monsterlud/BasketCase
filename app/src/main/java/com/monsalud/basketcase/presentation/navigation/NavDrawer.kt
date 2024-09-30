@@ -60,19 +60,19 @@ fun NavDrawer(
             route = Screen.MainScreen.route
         ),
         NavigationItem(
-            title = "Shopping Cart",
+            title = "Grocery Basket (items to buy)",
             selectedIcon = Icons.Filled.ShoppingCart,
             unselectedIcon = Icons.Outlined.ShoppingCart,
-            route = Screen.ShoppingCartScreen.route
+            route = Screen.GroceryBasketScreen.route
         ),
         NavigationItem(
-            title = "Food Items (Add/Edit)",
+            title = "Food Items",
             selectedIcon = Icons.Filled.AddCircle,
             unselectedIcon = Icons.Outlined.AddCircle,
             route = Screen.FoodItemsScreen.route
         ),
         NavigationItem(
-            title = "Markets (Add/Edit)",
+            title = "Markets",
             selectedIcon = Icons.Filled.LocationOn,
             unselectedIcon = Icons.Outlined.LocationOn,
             route = Screen.MarketsScreen.route

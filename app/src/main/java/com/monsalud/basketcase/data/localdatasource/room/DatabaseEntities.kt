@@ -23,6 +23,9 @@ data class FoodItemEntity(
     @ColumnInfo(name = "food_name")
     var foodName: String,
 
+    @ColumnInfo(name = "food_description")
+    var foodDescription: String? = null,
+
     @ColumnInfo(name = "food_category")
     var foodCategory: FoodCategory
 )

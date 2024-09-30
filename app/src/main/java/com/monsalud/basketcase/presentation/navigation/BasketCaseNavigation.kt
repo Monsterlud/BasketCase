@@ -7,12 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.monsalud.basketcase.data.localdatasource.DummyData
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.screens.FoodItemsScreen
 import com.monsalud.basketcase.presentation.screens.MainScreen
 import com.monsalud.basketcase.presentation.screens.MarketsScreen
-import com.monsalud.basketcase.presentation.screens.GroceryListScreen
-import org.koin.androidx.compose.getViewModel
+import com.monsalud.basketcase.presentation.screens.GroceryBasketScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -33,16 +33,16 @@ fun BasketCaseNavigation(
             onScreenChange(Screen.MainScreen)
         }
         composable(route = Screen.FoodItemsScreen.route) {
-            FoodItemsScreen()
+            FoodItemsScreen(foodItems = DummyData.foodItems, onAddFoodItemClick = {})
             onScreenChange(Screen.FoodItemsScreen)
         }
         composable(route = Screen.MarketsScreen.route) {
             MarketsScreen()
             onScreenChange(Screen.MarketsScreen)
         }
-        composable(route = Screen.ShoppingCartScreen.route) {
-            GroceryListScreen()
-            onScreenChange(Screen.ShoppingCartScreen)
+        composable(route = Screen.GroceryBasketScreen.route) {
+            GroceryBasketScreen()
+            onScreenChange(Screen.GroceryBasketScreen)
         }
     }
 }

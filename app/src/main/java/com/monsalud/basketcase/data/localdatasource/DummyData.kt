@@ -65,37 +65,44 @@ object DummyData {
         ),
         FoodItemEntity(
             id = 4,
-            foodName = "Salmon, Filet",
+            foodName = "Salmon",
+            foodDescription = "Filet",
             foodCategory = FoodCategory.SEAFOOD
         ),
         FoodItemEntity(
             id = 5,
-            foodName = "Milk, Whole",
+            foodName = "Milk",
+            foodDescription = "Skim",
             foodCategory = FoodCategory.DAIRY
         ),
         FoodItemEntity(
             id = 6,
-            foodName = "Hot Sauce, Tabasco",
+            foodName = "Hot Sauce",
+            foodDescription = "Tabasco",
             foodCategory = FoodCategory.DRYGOOD
         ),
         FoodItemEntity(
             id = 7,
-            foodName = "Cheese, Cheddar",
+            foodName = "Cheese",
+            foodDescription = "Cheddar",
             foodCategory = FoodCategory.DAIRY
         ),
         FoodItemEntity(
             id = 8,
-            foodName = "Garlic, Whole",
+            foodName = "Garlic",
+            foodDescription = "Whole",
             foodCategory = FoodCategory.VEGETABLE
         ),
         FoodItemEntity(
             id = 9,
-            foodName = "Bread, Whole Grain",
+            foodName = "Bread",
+            foodDescription = "Sourdough",
             foodCategory = FoodCategory.BAKESHOP
         ),
         FoodItemEntity(
             id = 10,
-            foodName = "Bread, Sourdough",
+            foodName = "Bread",
+            foodDescription = "Whole Wheat",
             foodCategory = FoodCategory.BAKESHOP
         ),
         FoodItemEntity(
@@ -110,12 +117,14 @@ object DummyData {
         ),
         FoodItemEntity(
             id = 13,
-            foodName = "Kale, Dinosaur",
+            foodName = "Kale",
+            foodDescription = "Russian",
             foodCategory = FoodCategory.VEGETABLE
         ),
         FoodItemEntity(
             id = 14,
-            foodName = "Cheese, Parmesan",
+            foodName = "Cheese",
+            foodDescription = "Parmesan",
             foodCategory = FoodCategory.DAIRY
         )
     )

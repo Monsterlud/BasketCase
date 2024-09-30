@@ -13,6 +13,7 @@ import com.monsalud.basketcase.presentation.BasketCaseTopBar
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.navigation.BasketCaseNavigation
 import com.monsalud.basketcase.presentation.navigation.NavDrawer
+import com.monsalud.basketcase.presentation.navigation.toRoute
 import com.monsalud.basketcase.ui.theme.BasketCaseTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.scope.scope
@@ -40,6 +41,7 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         topBar = {
                             BasketCaseTopBar(
+                                currentRoute = viewModel.currentScreen,
                                 onMenuClick = {
                                     scope.launch {
                                         drawerState.open()

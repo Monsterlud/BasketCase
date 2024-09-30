@@ -12,24 +12,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.monsalud.basketcase.R
 import com.monsalud.basketcase.ui.theme.spacing
 
 @Composable
-fun GroceryListScreen(
+fun GroceryBasketScreen(
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(
-            text = "Shopping Cart Screen with filtering options",
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = modifier
-                .align(Alignment.TopStart)
-                .padding(16.dp),
-        )
         FloatingActionButton(
             onClick = { /* Handle FAB click */ },
             modifier = Modifier.align(Alignment.BottomEnd).padding(MaterialTheme.spacing.medium)
@@ -42,5 +38,5 @@ fun GroceryListScreen(
 @Composable
 @Preview
 fun ShoppingListScreenPreview() {
-    GroceryListScreen()
+    GroceryBasketScreen()
 }
