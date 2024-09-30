@@ -10,8 +10,6 @@ import androidx.room.Relation
 import androidx.room.TypeConverters
 import com.monsalud.basketcase.domain.model.AmountType
 import com.monsalud.basketcase.domain.model.FoodCategory
-import com.monsalud.basketcase.domain.model.FoodItem
-import com.monsalud.basketcase.domain.model.Market
 import com.monsalud.basketcase.domain.model.MarketType
 
 /** Basic Entities **/
@@ -85,7 +83,7 @@ data class ItemToPurchaseEntity(
 /** Grocery Lists **/
 
 @Entity
-data class GroceryListEntity(
+data class ShoppingListEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long,
 
@@ -104,9 +102,9 @@ data class GroceryListEntity(
 @Entity(
     foreignKeys = [
         ForeignKey(
-            entity = GroceryListEntity::class,
+            entity = ShoppingListEntity::class,
             parentColumns = ["id"],
-            childColumns = ["grocery_list_id"],
+            childColumns = ["shopping_list_id"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
@@ -117,11 +115,11 @@ data class GroceryListEntity(
         )
     ]
 )
-data class GroceryListItemAssociation(
+data class ShoppingListItemAssociation(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
 
-    @ColumnInfo(name = "grocery_list_id")
+    @ColumnInfo(name = "shopping_list_id")
     var groceryListId: Long,
 
     @ColumnInfo(name = "item_to_purchase_id")
@@ -130,14 +128,14 @@ data class GroceryListItemAssociation(
 
 /** Data Retrieval **/
 
-data class GroceryListWithItems(
-    @Embedded val groceryList: GroceryListEntity,
+data class ShoppingListWithItems(
+    @Embedded val shoppingList: ShoppingListEntity,
     @Relation(
         parentColumn = "id",
         entityColumn = "id",
         associateBy = Junction(
-            value = GroceryListItemAssociation::class,
-            parentColumn = "grocery_list_id",
+            value = ShoppingListItemAssociation::class,
+            parentColumn = "shopping_list_id",
             entityColumn = "item_to_purchase_id"
         )
     )

@@ -1,7 +1,7 @@
 package com.monsalud.basketcase.data.localdatasource
 
 import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
-import com.monsalud.basketcase.data.localdatasource.room.GroceryListEntity
+import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
 import com.monsalud.basketcase.domain.model.FoodCategory
 import com.monsalud.basketcase.domain.model.MarketType
@@ -121,7 +121,7 @@ object DummyData {
     )
 
     val shoppingLists = listOf(
-        GroceryListEntity(1, "Weekly Groceries", System.currentTimeMillis()),
-        GroceryListEntity(2, "Goodbye Natalie...", System.currentTimeMillis()),
+        ShoppingListEntity(1, "Weekly Groceries", System.currentTimeMillis()),
+        ShoppingListEntity(2, "Goodbye Natalie...", System.currentTimeMillis()),
     )
 }

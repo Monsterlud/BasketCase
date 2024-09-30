@@ -4,17 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.monsalud.basketcase.domain.model.FoodItem
-import com.monsalud.basketcase.domain.model.ItemToPurchase
-import com.monsalud.basketcase.domain.model.Market
 
 @Database(
     entities = [
         FoodItemEntity::class,
         ItemToPurchaseEntity::class,
         MarketEntity::class,
-        GroceryListEntity::class,
-        GroceryListItemAssociation::class
+        ShoppingListEntity::class,
+        ShoppingListItemAssociation::class
     ],
     version = 1,
     exportSchema = false)
@@ -23,8 +20,8 @@ abstract class BasketCaseDatabase : RoomDatabase() {
     abstract fun foodItemDao(): FoodItemDao
     abstract fun itemToPurchaseDao(): ItemToPurchaseDao
     abstract fun marketDao(): MarketDao
-    abstract fun groceryListDao(): GroceryListDao
-    abstract fun groceryListItemAssociationDao(): GroceryListItemAssociationDao
+    abstract fun groceryListDao(): ShoppingListDao
+    abstract fun groceryListItemAssociationDao(): ShoppingListItemAssociationDao
 
 
     companion object {

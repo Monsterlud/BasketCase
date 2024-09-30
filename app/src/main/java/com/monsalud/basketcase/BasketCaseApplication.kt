@@ -43,7 +43,7 @@ class BasketCaseApplication : Application() {
 
             foodItemDao.insertAll(foodItems = foodItems)
             marketDao.insertAll(markets = markets)
-            groceryListDao.insertAll(groceryLists = shoppingLists)
+            groceryListDao.insertAll(shoppingList = shoppingLists)
         }
     }
 }

@@ -81,42 +81,54 @@ interface ItemToPurchaseDao {
 }
 
 @Dao
-interface GroceryListDao {
+interface ShoppingListDao {
     @Insert
-    suspend fun insert(groceryList: GroceryListEntity)
+    suspend fun insert(shoppingList: ShoppingListEntity)
 
     @Insert
-    suspend fun insertAll(groceryLists: List<GroceryListEntity>)
+    suspend fun insertAll(shoppingList: List<ShoppingListEntity>)
 
     @Update
-    suspend fun update(groceryList: GroceryListEntity)
+    suspend fun update(shoppingList: ShoppingListEntity)
 
     @Delete
-    suspend fun delete(groceryList: GroceryListEntity)
+    suspend fun delete(shoppingList: ShoppingListEntity)
 
-    @Query("DELETE FROM GroceryListEntity")
+    @Query("DELETE FROM ShoppingListEntity")
     fun deleteAll()
 
     @Transaction
-    @Query("SELECT * FROM GroceryListEntity")
-    fun getAllWithItems(): Flow<List<GroceryListWithItems>>
+    @Query("SELECT * FROM ShoppingListEntity")
+    fun getAllWithItems(): Flow<List<ShoppingListWithItems>>
 
     @Transaction
-    @Query("SELECT * FROM GroceryListEntity WHERE id = :id")
-    fun getByIdWithItems(id: Long): Flow<GroceryListWithItems>
+    @Query("SELECT * FROM ShoppingListEntity WHERE id = :id")
+    fun getByIdWithItems(id: Long): Flow<ShoppingListWithItems>
 }
 
 @Dao
-interface GroceryListItemAssociationDao {
+interface ShoppingListItemAssociationDao {
     @Insert
-    suspend fun insert(association: GroceryListItemAssociation)
+    suspend fun insert(association: ShoppingListItemAssociation)
 
     @Insert
-    suspend fun insertAll(associations: List<GroceryListItemAssociation>)
+    suspend fun insertAll(associations: List<ShoppingListItemAssociation>)
 
     @Delete
-    suspend fun delete(association: GroceryListItemAssociation)
+    suspend fun delete(association: ShoppingListItemAssociation)
 
-    @Query("DELETE FROM GroceryListItemAssociation")
+    @Query("DELETE FROM ShoppingListItemAssociation")
     fun deleteAll()
+
+    @Query("SELECT * FROM ShoppingListItemAssociation WHERE shopping_list_id = :listId")
+    suspend fun getItemsForList(listId: Long): List<ShoppingListItemAssociation>
+
+    @Query("SELECT * FROM ShoppingListItemAssociation WHERE item_to_purchase_id = :itemId")
+    suspend fun getListsForItem(itemId: Long): List<ShoppingListItemAssociation>
+
+    @Query("SELECT EXISTS(SELECT * FROM ShoppingListItemAssociation WHERE shopping_list_id = :listId AND item_to_purchase_id = :itemId)")
+    suspend fun isItemInList(listId: Long, itemId: Long): Boolean
+
+    @Query("SELECT * FROM ShoppingListItemAssociation")
+    suspend fun getAllAssociations(): List<ShoppingListItemAssociation>
 }

@@ -13,6 +13,7 @@ import com.monsalud.basketcase.presentation.screens.MainScreen
 import com.monsalud.basketcase.presentation.screens.MarketsScreen
 import com.monsalud.basketcase.presentation.screens.GroceryListScreen
 import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun BasketCaseNavigation(
@@ -20,7 +21,7 @@ fun BasketCaseNavigation(
     innerPadding: PaddingValues,
     onScreenChange: (Screen) -> Unit,
 ) {
-    val viewModel: BasketCaseViewModel = getViewModel()
+    val viewModel: BasketCaseViewModel = koinViewModel()
 
     NavHost(
         navController = navController,
