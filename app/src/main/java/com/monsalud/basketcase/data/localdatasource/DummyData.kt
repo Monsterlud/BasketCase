@@ -18,11 +18,13 @@ object DummyData {
         MarketEntity(
             id = 2,
             marketName = "Trader Joe's",
+            marketAddress = "1906 28th St, Boulder, CO 80301",
             marketType = MarketType.GROCERYSTORE
         ),
         MarketEntity(
             id = 3,
             marketName = "Cure Farm",
+            marketAddress = "7416 Valmont Rd, Boulder, CO 80301",
             marketType = MarketType.FARMERSMARKET
         ),
         MarketEntity(

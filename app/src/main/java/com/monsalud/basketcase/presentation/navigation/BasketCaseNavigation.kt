@@ -3,17 +3,19 @@ package com.monsalud.basketcase.presentation.navigation
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.monsalud.basketcase.data.localdatasource.DummyData
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.screens.FoodItemsScreen
 import com.monsalud.basketcase.presentation.screens.MainScreen
 import com.monsalud.basketcase.presentation.screens.MarketsScreen
 import com.monsalud.basketcase.presentation.screens.GroceryBasketScreen
 import org.koin.androidx.compose.koinViewModel
+import timber.log.Timber
 
 @Composable
 fun BasketCaseNavigation(
@@ -22,6 +24,10 @@ fun BasketCaseNavigation(
     onScreenChange: (Screen) -> Unit,
 ) {
     val viewModel: BasketCaseViewModel = koinViewModel()
+    val foodItems by viewModel.foodItems.collectAsState()
+    val markets by viewModel.markets.collectAsState()
+    Timber.d("navigation foodItems: $foodItems")
+    Timber.d("navigation markets: $markets")
 
     NavHost(
         navController = navController,
@@ -33,11 +39,11 @@ fun BasketCaseNavigation(
             onScreenChange(Screen.MainScreen)
         }
         composable(route = Screen.FoodItemsScreen.route) {
-            FoodItemsScreen(foodItems = DummyData.foodItems, onAddFoodItemClick = {})
+            FoodItemsScreen(foodItems = foodItems, onAddFoodItemClick = {})
             onScreenChange(Screen.FoodItemsScreen)
         }
         composable(route = Screen.MarketsScreen.route) {
-            MarketsScreen()
+            MarketsScreen(markets)
             onScreenChange(Screen.MarketsScreen)
         }
         composable(route = Screen.GroceryBasketScreen.route) {

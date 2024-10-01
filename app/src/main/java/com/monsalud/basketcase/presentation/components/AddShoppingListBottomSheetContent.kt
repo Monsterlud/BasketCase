@@ -12,12 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.monsalud.basketcase.ui.theme.Spacing
 import com.monsalud.basketcase.ui.theme.spacing
 
 @Composable
-fun BottomSheetContent() {
+fun AddShoppingListBottomSheetContent() {
     Column(
         modifier = Modifier
             .fillMaxWidth()

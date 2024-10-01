@@ -66,7 +66,7 @@ fun NavDrawer(
             route = Screen.GroceryBasketScreen.route
         ),
         NavigationItem(
-            title = "Food Items",
+            title = "Items",
             selectedIcon = Icons.Filled.AddCircle,
             unselectedIcon = Icons.Outlined.AddCircle,
             route = Screen.FoodItemsScreen.route

@@ -51,39 +51,58 @@ fun FoodItemsScreen(
                 modifier = modifier
                     .padding(16.dp),
             )
-
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(16.dp)
+                    .padding(8.dp)
             ) {
                 items(foodItems) { foodItem ->
-                    // Replace Card with Row or Column and apply styling
-                    Row(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp)
-                            .background(
-                                Color.White,
-                                shape = RoundedCornerShape(8.dp)
-                            ) // Simulate card background
-                            .clip(RoundedCornerShape(8.dp)) // Clip content to rounded corners
-                            .clickable { /* Handle item click */ } // Make item clickable
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable { /* Handle item click */ }
                     ) {
-                        Text(
-                            text = foodItem.foodName + if (foodItem.foodDescription != null) ", " + foodItem.foodDescription else "",
-                            fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
-                            fontSize = 14.sp,
+                        // Food Item Type block with colored background
+                        Box(
                             modifier = Modifier
-                                .padding(16.dp),
-                        )
-                        Spacer(modifier = Modifier.weight(1f))
-                        Text(
-                            text = foodItem.foodCategory.getFoodCategoryName(),
-                            fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
-                            fontSize = 12.sp,
-                            modifier = Modifier.padding(16.dp),
-                        )
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.secondaryContainer)
+                                .padding(8.dp)
+                        ) {
+                            Text(
+                                text = foodItem.foodCategory.getFoodCategoryName(),
+                                fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
+                                fontSize = 12.sp,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                modifier = Modifier.align(Alignment.CenterEnd)
+                            )
+                        }
+                        // Food Item Name block
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.surface)
+                                .padding(0.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(0.dp)
+                                    .clip(RoundedCornerShape(8.dp)) // Clip content to rounded corners
+                                    .clickable { /* Handle item click */ } // Make item clickable
+                            ) {
+                                Text(
+                                    text = foodItem.foodName + if (foodItem.foodDescription != null) ", " + foodItem.foodDescription else "",
+                                    fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
+                                    fontSize = 14.sp,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    modifier = Modifier
+                                        .padding(8.dp),
+                                )
+                            }
+                        }
                     }
                 }
             }
