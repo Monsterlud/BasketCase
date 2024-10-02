@@ -9,7 +9,7 @@ class Market(
 )
 
 enum class MarketType {
-    GROCERYSTORE, CORNERSTORE, BUTCHERSHOP, FISHMARKET, SPECIALTYMARKET, FARMERSMARKET, BAKERY, OTHER;
+    GROCERYSTORE, CORNERSTORE, BUTCHERSHOP, FISHMARKET, SPECIALTYMARKET, FARMERSMARKET, BAKERY, BEVERAGESTORE, OTHER;
 
     fun getMarketTypeName() : String {
         return when (this) {
@@ -20,6 +20,7 @@ enum class MarketType {
             SPECIALTYMARKET -> "Specialty Market"
             FARMERSMARKET -> "Farmers Market"
             BAKERY -> "Bakery"
+            BEVERAGESTORE -> "Beverage Store"
             OTHER -> "Other"
             else -> "Market"
         }

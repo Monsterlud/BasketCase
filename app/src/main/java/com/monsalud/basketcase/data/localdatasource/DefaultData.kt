@@ -76,7 +76,30 @@ object DefaultData {
             marketAddress = "3990 Broadway, Boulder, CO 80304",
             marketType = MarketType.BAKERY
         ),
-
+        MarketEntity(
+            id = 12,
+            marketName = "Sprouts",
+            marketAddress = "2525 Arapahoe Ave Unit E65, Boulder, CO 80302",
+            marketType = MarketType.GROCERYSTORE
+        ),
+        MarketEntity(
+            id = 13,
+            marketName = "Ideal Market",
+            marketAddress = "1275 Alpine Ave., Boulder, CO 80304",
+            marketType = MarketType.GROCERYSTORE
+        ),
+        MarketEntity(
+            id = 14,
+            marketName = "Boulder Wine Merchant",
+            marketAddress = "2690 Broadway, Boulder, CO 80304",
+            marketType = MarketType.BEVERAGESTORE
+        ),
+        MarketEntity(
+            id = 15,
+            marketName = "Hazel's Beverage World",
+            marketAddress = "1955 28th St, Boulder, CO 80301",
+            marketType = MarketType.BEVERAGESTORE
+        ),
     )
 
     val foodItems = listOf(
@@ -88,12 +111,12 @@ object DefaultData {
         FoodItemEntity(
             id = 2,
             foodName = "Anchovies",
-            foodCategory = FoodCategory.DRYGOOD
+            foodCategory = FoodCategory.PANTRY
         ),
         FoodItemEntity(
             id = 3,
             foodName = "AP Flour",
-            foodCategory = FoodCategory.DRYGOOD
+            foodCategory = FoodCategory.PANTRY
         ),
         FoodItemEntity(
             id = 4,
@@ -111,7 +134,7 @@ object DefaultData {
             id = 6,
             foodName = "Hot Sauce",
             foodDescription = "Tabasco",
-            foodCategory = FoodCategory.DRYGOOD
+            foodCategory = FoodCategory.PANTRY
         ),
         FoodItemEntity(
             id = 7,

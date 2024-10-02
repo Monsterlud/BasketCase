@@ -9,6 +9,11 @@
     <color name="tertiaryLight">#38656a</color>
     <color name="errorLight">#ba1a1a</color>
 
+    <color name="onPrimaryLight">#ffffff</color>
+    <color name="onSecondaryLight">#ffffff</color>
+    <color name="onTertiaryLight">#ffffff</color>
+    <color name="onErrorLight">#ffffff</color>
+
     <color name="primaryContainerLight">#bcf0b5</color>
     <color name="secondaryContainerLight">#d5e8cf</color>
     <color name="tertiaryContainerLight">#bcebf1</color>
@@ -30,6 +35,7 @@
     <color name="secondaryDark">#b9ccb4</color>
     <color name="tertiaryDark">#a0cfd4</color>
     <color name="errorDark">#ffb4ab</color>
+
     <color name="onPrimaryDark">#093910</color>
     <color name="onSecondaryDark">#253423</color>
     <color name="onTertiaryDark">#00363b</color>

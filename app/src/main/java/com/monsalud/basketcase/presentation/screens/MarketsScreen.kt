@@ -20,6 +20,8 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,18 +34,26 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.monsalud.basketcase.R
 import com.monsalud.basketcase.data.localdatasource.DefaultData.markets
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
+import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.components.AddMarketBottomSheetContent
 import com.monsalud.basketcase.ui.theme.spacing
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MarketsScreen(
-    markets: List<MarketEntity>,
-    modifier: Modifier = Modifier
+    viewModel: BasketCaseViewModel = koinViewModel(),
+    modifier: Modifier = Modifier,
+    onMarketClick: () -> Unit = {},
 ) {
+    val markets by viewModel.markets.collectAsState(initial = emptyList())
+    val sortedMarkets = remember(markets) {
+        markets.sortedBy { it.marketName.lowercase() }
+    }
     var isBottomSheetOpen by remember { mutableStateOf(false) }
 
     Box(
@@ -53,7 +63,7 @@ fun MarketsScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
-                text = "add or edit your favorite markets",
+                text = "add or edit your favorite places to shop",
                 fontFamily = FontFamily(Font(R.font.playwriteitmoderna_extralight)),
                 modifier = modifier
                     .padding(16.dp),
@@ -63,7 +73,7 @@ fun MarketsScreen(
                     .fillMaxSize()
                     .padding(8.dp)
             ) {
-                items(markets) { market ->
+                items(sortedMarkets) { market ->
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -75,14 +85,13 @@ fun MarketsScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.secondaryContainer)
+                                .background(MaterialTheme.colorScheme.primary)
                                 .padding(8.dp)
                         ) {
                             Text(
                                 text = market.marketType.getMarketTypeName(),
                                 fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
-                                fontSize = 12.sp,
-                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier.align(Alignment.CenterEnd)
                             )
                         }
@@ -90,7 +99,7 @@ fun MarketsScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.surface)
+                                .background(MaterialTheme.colorScheme.secondaryContainer)
                                 .padding(0.dp)
                         ) {
                             Column(
@@ -101,7 +110,7 @@ fun MarketsScreen(
                                     text = market.marketName,
                                     fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
                                     fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.onSurface,
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                                     modifier = Modifier
                                         .padding(start = 8.dp, top = 8.dp, bottom = 4.dp),
                                 )
@@ -135,14 +144,20 @@ fun MarketsScreen(
                 onDismissRequest = { isBottomSheetOpen = false },
                 sheetState = rememberModalBottomSheetState(),
             ) {
-                AddMarketBottomSheetContent()
+                AddMarketBottomSheetContent(onMarketAdded = {
+                    viewModel.addMarketToDatabase(it)
+                    isBottomSheetOpen = false
+                })
             }
         }
     }
 }
 
+
+
+
 @Composable
 @Preview
 fun MarketsScreenPreview() {
-    MarketsScreen(markets = markets)
+    MarketsScreen(onMarketClick = {})
 }

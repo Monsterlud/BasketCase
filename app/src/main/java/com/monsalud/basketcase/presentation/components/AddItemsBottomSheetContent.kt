@@ -29,14 +29,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
+import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
 import com.monsalud.basketcase.domain.model.FoodCategory
 import com.monsalud.basketcase.domain.model.MarketType
 import com.monsalud.basketcase.ui.theme.spacing
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddItemsBottomSheetContent() {
+fun AddItemsBottomSheetContent(
+    onFoodItemAdded: (FoodItemEntity) -> Unit,
+) {
     var selectedFoodCategory by remember { mutableStateOf(FoodCategory.MISCELLANEOUS) }
+    var foodItemName by remember { mutableStateOf("") }
+    var foodItemDescription by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
 
     Column(
@@ -50,15 +56,15 @@ fun AddItemsBottomSheetContent() {
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         OutlinedTextField(
-            value = "",
-            onValueChange = { /* Handle input */ },
+            value = foodItemName,
+            onValueChange = { foodItemName = it },
             label = { Text("Food Item Name (e.g. \"Onion\")") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         OutlinedTextField(
-            value = "",
-            onValueChange = { /* Handle input */ },
+            value = foodItemDescription,
+            onValueChange = { foodItemDescription = it },
             label = { Text("Food Item Description (e.g. \"Yellow\")") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -112,8 +118,17 @@ fun AddItemsBottomSheetContent() {
         }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
         Button(
-            onClick = { /* Handle create list */ },
-            modifier = Modifier.align(Alignment.End)
+            onClick = {
+                Timber.d("Add Food Item Button Clicked")
+                val foodItem = FoodItemEntity(
+                    foodName = foodItemName,
+                    foodDescription = foodItemDescription,
+                    foodCategory = selectedFoodCategory,
+                )
+                onFoodItemAdded(foodItem)
+            },
+            modifier = Modifier.align(Alignment.End),
+            enabled = foodItemName.isNotBlank()
         ) {
             Text("Add Food Item")
         }

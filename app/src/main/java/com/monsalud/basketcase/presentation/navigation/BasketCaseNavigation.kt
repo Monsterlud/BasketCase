@@ -23,12 +23,6 @@ fun BasketCaseNavigation(
     innerPadding: PaddingValues,
     onScreenChange: (Screen) -> Unit,
 ) {
-    val viewModel: BasketCaseViewModel = koinViewModel()
-    val foodItems by viewModel.foodItems.collectAsState()
-    val markets by viewModel.markets.collectAsState()
-    Timber.d("navigation foodItems: $foodItems")
-    Timber.d("navigation markets: $markets")
-
     NavHost(
         navController = navController,
         startDestination = Screen.MainScreen.route,
@@ -39,11 +33,11 @@ fun BasketCaseNavigation(
             onScreenChange(Screen.MainScreen)
         }
         composable(route = Screen.FoodItemsScreen.route) {
-            FoodItemsScreen(foodItems = foodItems, onAddFoodItemClick = {})
+            FoodItemsScreen()
             onScreenChange(Screen.FoodItemsScreen)
         }
         composable(route = Screen.MarketsScreen.route) {
-            MarketsScreen(markets)
+            MarketsScreen()
             onScreenChange(Screen.MarketsScreen)
         }
         composable(route = Screen.GroceryBasketScreen.route) {

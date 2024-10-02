@@ -21,6 +21,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,17 +37,25 @@ import androidx.compose.ui.unit.sp
 import com.monsalud.basketcase.R
 import com.monsalud.basketcase.data.localdatasource.DefaultData.foodItems
 import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
+import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.components.AddItemsBottomSheetContent
 import com.monsalud.basketcase.presentation.components.AddListBottomSheetContent
 import com.monsalud.basketcase.ui.theme.spacing
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodItemsScreen(
-    foodItems: List<FoodItemEntity>,
+    viewModel: BasketCaseViewModel = koinViewModel(),
     modifier: Modifier = Modifier,
-    onAddFoodItemClick: () -> Unit,
+    onAddFoodItemClick: () -> Unit = {},
 ) {
+    val foodItems by viewModel.foodItems.collectAsState(initial = emptyList())
+    val sortedFoodItems = remember(foodItems) {
+        foodItems.sortedWith(
+            compareBy<FoodItemEntity> { it.foodCategory }.thenBy { it.foodName.lowercase() }
+        )
+    }
     var isBottomSheetOpen by remember { mutableStateOf(false) }
 
     Box(
@@ -66,7 +75,7 @@ fun FoodItemsScreen(
                     .fillMaxSize()
                     .padding(8.dp)
             ) {
-                items(foodItems) { foodItem ->
+                items(sortedFoodItems) { foodItem ->
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -78,14 +87,13 @@ fun FoodItemsScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.secondaryContainer)
+                                .background(MaterialTheme.colorScheme.primary)
                                 .padding(8.dp)
                         ) {
                             Text(
                                 text = foodItem.foodCategory.getFoodCategoryName(),
                                 fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
-                                fontSize = 12.sp,
-                                color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier.align(Alignment.CenterEnd)
                             )
                         }
@@ -93,7 +101,7 @@ fun FoodItemsScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.surface)
+                                .background(MaterialTheme.colorScheme.secondaryContainer)
                                 .padding(0.dp)
                         ) {
                             Row(
@@ -101,13 +109,12 @@ fun FoodItemsScreen(
                                     .fillMaxWidth()
                                     .padding(0.dp)
                                     .clip(RoundedCornerShape(8.dp)) // Clip content to rounded corners
-                                    .clickable { /* Handle item click */ } // Make item clickable
                             ) {
                                 Text(
                                     text = foodItem.foodName + if (foodItem.foodDescription != null) ", " + foodItem.foodDescription else "",
                                     fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
                                     fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.onSurface,
+                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                                     modifier = Modifier
                                         .padding(8.dp),
                                 )
@@ -132,7 +139,10 @@ fun FoodItemsScreen(
                 onDismissRequest = { isBottomSheetOpen = false },
                 sheetState = rememberModalBottomSheetState(),
             ) {
-                AddItemsBottomSheetContent()
+                AddItemsBottomSheetContent(onFoodItemAdded = {
+                    viewModel.addFoodItemToDatabase(it)
+                    isBottomSheetOpen = false
+                })
             }
         }
     }
@@ -142,5 +152,5 @@ fun FoodItemsScreen(
 @Composable
 @Preview
 fun FoodItemsScreenPreview() {
-    FoodItemsScreen(foodItems, onAddFoodItemClick = {})
+    FoodItemsScreen(onAddFoodItemClick = {})
 }

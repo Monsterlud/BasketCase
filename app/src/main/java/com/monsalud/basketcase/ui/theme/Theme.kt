@@ -1,34 +1,31 @@
 package com.monsalud.basketcase.ui.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.monsalud.basketcase.ui.theme.Colors.ErrorContainerDark
 import com.monsalud.basketcase.ui.theme.Colors.ErrorContainerLight
 import com.monsalud.basketcase.ui.theme.Colors.ErrorDark
 import com.monsalud.basketcase.ui.theme.Colors.ErrorLight
-import com.monsalud.basketcase.ui.theme.Colors.InverseOnSurfaceLight
 import com.monsalud.basketcase.ui.theme.Colors.OnErrorContainerDark
 import com.monsalud.basketcase.ui.theme.Colors.OnErrorContainerLight
 import com.monsalud.basketcase.ui.theme.Colors.OnErrorDark
 import com.monsalud.basketcase.ui.theme.Colors.OnPrimaryContainerDark
 import com.monsalud.basketcase.ui.theme.Colors.OnPrimaryContainerLight
 import com.monsalud.basketcase.ui.theme.Colors.OnPrimaryDark
+import com.monsalud.basketcase.ui.theme.Colors.OnPrimaryLight
 import com.monsalud.basketcase.ui.theme.Colors.OnSecondaryContainerDark
 import com.monsalud.basketcase.ui.theme.Colors.OnSecondaryContainerLight
 import com.monsalud.basketcase.ui.theme.Colors.OnSecondaryDark
+import com.monsalud.basketcase.ui.theme.Colors.OnSecondaryLight
 import com.monsalud.basketcase.ui.theme.Colors.OnTertiaryContainerDark
 import com.monsalud.basketcase.ui.theme.Colors.OnTertiaryContainerLight
 import com.monsalud.basketcase.ui.theme.Colors.OnTertiaryDark
@@ -71,11 +68,11 @@ private val DarkColorScheme =
 private val LightColorScheme =
     lightColorScheme(
         primary = PrimaryLight,
-        onPrimary = OnPrimaryContainerLight,
+        onPrimary = OnPrimaryLight,
         primaryContainer = PrimaryContainerLight,
         onPrimaryContainer = OnPrimaryContainerLight,
         secondary = SecondaryLight,
-        onSecondary = OnSecondaryContainerLight,
+        onSecondary = OnSecondaryLight,
         secondaryContainer = SecondaryContainerLight,
         onSecondaryContainer = OnSecondaryContainerLight,
         tertiary = TertiaryLight,

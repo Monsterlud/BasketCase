@@ -20,7 +20,7 @@ class EntityTypeConverters {
         return when (value) {
             "Fruit" -> FoodCategory.FRUIT
             "Vegetable" -> FoodCategory.VEGETABLE
-            "Dry Good" -> FoodCategory.DRYGOOD
+            "Pantry" -> FoodCategory.PANTRY
             "Meat" -> FoodCategory.MEAT
             "Seafood" -> FoodCategory.SEAFOOD
             "Dairy" -> FoodCategory.DAIRY
@@ -45,6 +45,8 @@ class EntityTypeConverters {
             "Specialty Market" -> MarketType.SPECIALTYMARKET
             "Farmers Market" -> MarketType.FARMERSMARKET
             "Bakery" -> MarketType.BAKERY
+            "Beverage Store" -> MarketType.BEVERAGESTORE
+            "Other" -> MarketType.OTHER
             else -> MarketType.OTHER
         }
     }

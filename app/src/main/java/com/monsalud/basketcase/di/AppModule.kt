@@ -55,11 +55,11 @@ val appModule = module {
     }
 
     fun provideGroceryListDao(database: BasketCaseDatabase): ShoppingListDao {
-        return database.groceryListDao()
+        return database.shoppingListDao()
     }
 
     fun provideGroceryListItemAssociationDaoO(database: BasketCaseDatabase): ShoppingListItemAssociationDao {
-        return database.groceryListItemAssociationDao()
+        return database.shoppingListItemAssociationDao()
     }
 
 class AppModule {

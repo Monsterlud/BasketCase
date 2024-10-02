@@ -7,20 +7,20 @@ data class FoodItem(
 )
 
 enum class FoodCategory {
-    FRUIT, VEGETABLE, DRYGOOD, MEAT, POULTRY, SEAFOOD, DAIRY, BEVERAGE, KITCHENSUPPLY, BAKESHOP, MISCELLANEOUS;
+    FRUIT, VEGETABLE, PANTRY, MEAT, POULTRY, SEAFOOD, DAIRY, BAKESHOP, BEVERAGE, KITCHENSUPPLY, MISCELLANEOUS;
 
     fun getFoodCategoryName(): String {
         return when (this) {
             FRUIT -> "Fruit"
             VEGETABLE -> "Vegetable"
-            DRYGOOD -> "Dry Good"
+            PANTRY -> "Pantry"
             MEAT -> "Meat"
             POULTRY -> "Poultry"
             SEAFOOD -> "Seafood"
             DAIRY -> "Dairy"
+            BAKESHOP -> "Bake Shop"
             BEVERAGE -> "Beverage"
             KITCHENSUPPLY -> "Kitchen Supply"
-            BAKESHOP -> "Bake Shop"
             MISCELLANEOUS -> "Miscellaneous"
         }
     }

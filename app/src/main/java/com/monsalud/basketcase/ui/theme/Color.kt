@@ -6,10 +6,17 @@ object Colors {
     val Black = Color(0xFF000000)
     val White = Color(0xFFFFFFFF)
 
+    /** Light Theme Colors */
+
     val PrimaryLight = Color(0xFF3B693A)
     val SecondaryLight = Color(0xFF52634F)
     val TertiaryLight = Color(0xFF38656A)
     val ErrorLight = Color(0xFFBA1A1A)
+
+    val OnPrimaryLight = Color(0xFFFFFFFF)
+    val OnSecondaryLight = Color(0xFFFFFFFF)
+    val OnTertiaryLight = Color(0xFFFFFFFF)
+    val OnErrorLight = Color(0xFFFFFFFF)
 
     val PrimaryContainerLight = Color(0xFFBCF0B5)
     val SecondaryContainerLight = Color(0xFFD5E8CF)
@@ -28,10 +35,14 @@ object Colors {
     val InverseOnSurfaceLight = Color(0xFFEEF2E9)
     val InversePrimaryLight = Color(0xFFA0D39A)
 
+
+    /** Dark Theme Colors */
+
     val PrimaryDark = Color(0xFFA0D39A)
     val SecondaryDark = Color(0xFFB9CCB4)
     val TertiaryDark = Color(0xFFA0CFD4)
     val ErrorDark = Color(0xFFFFB4AB)
+
     val OnPrimaryDark = Color(0xFF093910)
     val OnSecondaryDark = Color(0xFF253423)
     val OnTertiaryDark = Color(0xFF00363B)

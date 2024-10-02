@@ -3,6 +3,7 @@ package com.monsalud.basketcase.data.localdatasource.room
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
@@ -10,10 +11,10 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FoodItemDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(foodItem: FoodItemEntity)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(foodItems: List<FoodItemEntity>)
 
     @Update
@@ -30,14 +31,17 @@ interface FoodItemDao {
 
     @Query("SELECT * FROM FoodItemEntity WHERE id = :id")
     fun getById(id: Long): Flow<FoodItemEntity>
+
+    @Query("SELECT COUNT(*) FROM FoodItemEntity")
+    suspend fun getCount(): Int
 }
 
 @Dao
 interface MarketDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(market: MarketEntity)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(markets: List<MarketEntity>)
 
     @Update
@@ -54,14 +58,17 @@ interface MarketDao {
 
     @Query("SELECT * FROM MarketEntity WHERE id = :id")
     fun getById(id: Long): Flow<MarketEntity>
+
+    @Query("SELECT COUNT(*) FROM MarketEntity")
+    suspend fun getCount(): Int
 }
 
 @Dao
 interface ItemToPurchaseDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(itemToPurchase: ItemToPurchaseEntity)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(itemsToPurchase: List<ItemToPurchaseEntity>)
 
     @Update
@@ -82,10 +89,11 @@ interface ItemToPurchaseDao {
 
 @Dao
 interface ShoppingListDao {
-    @Insert
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(shoppingList: ShoppingListEntity)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(shoppingList: List<ShoppingListEntity>)
 
     @Update
@@ -104,14 +112,17 @@ interface ShoppingListDao {
     @Transaction
     @Query("SELECT * FROM ShoppingListEntity WHERE id = :id")
     fun getByIdWithItems(id: Long): Flow<ShoppingListWithItems>
+
+    @Query("SELECT COUNT(*) FROM ShoppingListEntity")
+    suspend fun getCount(): Int
 }
 
 @Dao
 interface ShoppingListItemAssociationDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(association: ShoppingListItemAssociation)
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(associations: List<ShoppingListItemAssociation>)
 
     @Delete

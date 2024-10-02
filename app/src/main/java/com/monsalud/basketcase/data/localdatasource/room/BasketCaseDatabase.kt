@@ -4,6 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.monsalud.basketcase.data.localdatasource.DefaultData
+import com.monsalud.basketcase.data.localdatasource.DefaultData.foodItems
+import com.monsalud.basketcase.data.localdatasource.DefaultData.markets
+import com.monsalud.basketcase.data.localdatasource.DefaultData.shoppingLists
+import kotlinx.coroutines.flow.first
+import timber.log.Timber
 
 @Database(
     entities = [
@@ -20,9 +26,25 @@ abstract class BasketCaseDatabase : RoomDatabase() {
     abstract fun foodItemDao(): FoodItemDao
     abstract fun itemToPurchaseDao(): ItemToPurchaseDao
     abstract fun marketDao(): MarketDao
-    abstract fun groceryListDao(): ShoppingListDao
-    abstract fun groceryListItemAssociationDao(): ShoppingListItemAssociationDao
+    abstract fun shoppingListDao(): ShoppingListDao
+    abstract fun shoppingListItemAssociationDao(): ShoppingListItemAssociationDao
 
+    suspend fun populateInitialData() {
+        if (marketDao().getCount() == 0) {
+            marketDao().insertAll(markets = markets)
+        }
+        if (foodItemDao().getCount() == 0) {
+            foodItemDao().insertAll(foodItems = foodItems)
+        }
+        if (shoppingListDao().getCount() == 0) {
+            shoppingListDao().insertAll(shoppingList = shoppingLists)
+        }
+
+        val insertedMarkets = marketDao().getAll()
+        insertedMarkets.first().forEach { market ->
+            Timber.d("Inserted market: ${market.marketName}, Type: ${market.marketType}")
+        }
+    }
 
     companion object {
         @Volatile
@@ -38,7 +60,9 @@ abstract class BasketCaseDatabase : RoomDatabase() {
                     context = context.applicationContext,
                     klass = BasketCaseDatabase::class.java,
                     name = "basketcase_database"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 return instance
             }

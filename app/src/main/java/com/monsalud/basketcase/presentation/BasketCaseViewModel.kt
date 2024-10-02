@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
+import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.domain.BasketCaseRepository
 import com.monsalud.basketcase.domain.model.FoodItem
 import com.monsalud.basketcase.presentation.navigation.Screen
@@ -19,6 +20,9 @@ class BasketCaseViewModel(
 
     private val _currentScreen = MutableStateFlow<Screen>(Screen.MainScreen)
     val currentScreen = _currentScreen.asStateFlow()
+
+    private val _shoppingLists = MutableStateFlow<List<ShoppingListEntity>>(emptyList())
+    val shoppingLists: StateFlow<List<ShoppingListEntity>> = _shoppingLists.asStateFlow()
 
     private val _foodItems = MutableStateFlow<List<FoodItemEntity>>(emptyList())
     val foodItems: StateFlow<List<FoodItemEntity>> = _foodItems.asStateFlow()
@@ -41,5 +45,19 @@ class BasketCaseViewModel(
 
     fun setCurrentScreen(screen: Screen) {
         _currentScreen.value = screen
+    }
+
+    fun addMarketToDatabase(market: MarketEntity) {
+        viewModelScope.launch {
+            repository.insertMarket(market)
+
+        }
+    }
+
+    fun addFoodItemToDatabase(foodItem: FoodItemEntity) {
+        viewModelScope.launch {
+            repository.insertFoodItem(foodItem)
+
+        }
     }
 }

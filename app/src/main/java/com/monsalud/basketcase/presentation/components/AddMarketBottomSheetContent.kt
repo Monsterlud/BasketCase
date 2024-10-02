@@ -31,13 +31,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
+import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
 import com.monsalud.basketcase.domain.model.MarketType
+import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.ui.theme.spacing
+import org.koin.androidx.compose.koinViewModel
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddMarketBottomSheetContent() {
+fun AddMarketBottomSheetContent(
+    onMarketAdded: (MarketEntity) -> Unit,
+) {
     var selectedMarketType by remember { mutableStateOf(MarketType.GROCERYSTORE) }
+    var marketName by remember { mutableStateOf("") }
+    var marketAddress by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
 
     Column(
@@ -51,15 +59,15 @@ fun AddMarketBottomSheetContent() {
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         OutlinedTextField(
-            value = "",
-            onValueChange = { /* Handle input */ },
+            value = marketName,
+            onValueChange = { marketName = it },
             label = { Text("Market Name") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         OutlinedTextField(
-            value = "",
-            onValueChange = { /* Handle input */ },
+            value = marketAddress,
+            onValueChange = { marketAddress = it },
             label = { Text("Market Address") },
             modifier = Modifier.fillMaxWidth()
         )
@@ -113,8 +121,17 @@ fun AddMarketBottomSheetContent() {
         }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
         Button(
-            onClick = { /* Handle create list */ },
-            modifier = Modifier.align(Alignment.End)
+            onClick = {
+                Timber.d("Add Market Button Clicked")
+                val market = MarketEntity(
+                    marketName = marketName,
+                    marketAddress = marketAddress,
+                    marketType = selectedMarketType,
+                )
+                onMarketAdded(market)
+            },
+            modifier = Modifier.align(Alignment.End),
+            enabled = marketName.isNotBlank()
         ) {
             Text("Add Market")
         }

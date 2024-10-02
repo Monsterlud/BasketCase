@@ -18,7 +18,7 @@ import com.monsalud.basketcase.domain.model.MarketType
 @TypeConverters(EntityTypeConverters::class)
 data class FoodItemEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Long,
+    var id: Long = 0,
 
     @ColumnInfo(name = "food_name")
     var foodName: String,
@@ -34,7 +34,7 @@ data class FoodItemEntity(
 @TypeConverters(EntityTypeConverters::class)
 data class MarketEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Long,
+    var id: Long = 0,
 
     @ColumnInfo(name = "market_name")
     var marketName: String,
@@ -68,7 +68,7 @@ data class MarketEntity(
 @TypeConverters(EntityTypeConverters::class)
 data class ItemToPurchaseEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Long,
+    var id: Long = 0,
 
     @ColumnInfo(name = "food_item_id")
     var foodItemId: Long,
@@ -88,7 +88,7 @@ data class ItemToPurchaseEntity(
 @Entity
 data class ShoppingListEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Long,
+    var id: Long = 0,
 
     @ColumnInfo(name = "list_name")
     var listName: String,
