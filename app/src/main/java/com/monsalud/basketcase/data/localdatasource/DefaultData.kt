@@ -6,13 +6,14 @@ import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
 import com.monsalud.basketcase.domain.model.FoodCategory
 import com.monsalud.basketcase.domain.model.MarketType
 
-object DummyData {
-    // todo: remove this dummy data after setting up ui
+object DefaultData {
+    // todo: remove the dummy data after setting up ui. keep only foodItems.
 
     val markets = listOf(
         MarketEntity(
             id = 1,
-            marketName = "Whole Foods",
+            marketName = "Whole Foods Market",
+            marketAddress = "2905 Pearl St, Boulder, CO 80301",
             marketType = MarketType.GROCERYSTORE
         ),
         MarketEntity(
@@ -23,30 +24,59 @@ object DummyData {
         ),
         MarketEntity(
             id = 3,
-            marketName = "Cure Farm",
+            marketName = "Cure Organic Farm",
             marketAddress = "7416 Valmont Rd, Boulder, CO 80301",
             marketType = MarketType.FARMERSMARKET
         ),
         MarketEntity(
             id = 4,
             marketName = "Moxie Bread Company",
+            marketAddress = "4593 Broadway, Boulder, CO 80304",
             marketType = MarketType.BAKERY
         ),
         MarketEntity(
             id = 5,
             marketName = "Blackbelly Market",
+            marketAddress = "1606 Conestoga St Suite 1, Boulder, CO 80301",
             marketType = MarketType.BUTCHERSHOP
         ),
         MarketEntity(
             id = 6,
             marketName = "H Mart",
-            marketType = MarketType.GROCERYSTORE
+            marketAddress = "Northview Shopping Center, 5036 W 92nd Ave, Westminster, CO 80031",
+            marketType = MarketType.SPECIALTYMARKET
         ),
         MarketEntity(
             id = 7,
             marketName = "Costco",
+            marketAddress = "600 Marshall Rd, Superior, CO 80027",
             marketType = MarketType.OTHER
-        )
+        ),
+        MarketEntity(
+            id = 8,
+            marketName = "Asian Market",
+            marketAddress = "2829 28th St, Boulder, CO 80301",
+            marketType = MarketType.SPECIALTYMARKET
+        ),
+        MarketEntity(
+            id = 9,
+            marketName = "Safeway",
+            marketAddress = "3325 28th St, Boulder, CO 80301",
+            marketType = MarketType.GROCERYSTORE
+        ),
+        MarketEntity(
+            id = 10,
+            marketName = "King Soopers",
+            marketAddress = "1650 30th St, Boulder, CO 80301",
+            marketType = MarketType.GROCERYSTORE
+        ),
+        MarketEntity(
+            id = 11,
+            marketName = "Lucky's Bakehouse",
+            marketAddress = "3990 Broadway, Boulder, CO 80304",
+            marketType = MarketType.BAKERY
+        ),
+
     )
 
     val foodItems = listOf(
@@ -128,6 +158,60 @@ object DummyData {
             foodName = "Cheese",
             foodDescription = "Parmesan",
             foodCategory = FoodCategory.DAIRY
+        ),
+        FoodItemEntity(
+            id = 15,
+            foodName = "Onions",
+            foodDescription = "Yellow",
+            foodCategory = FoodCategory.VEGETABLE
+        ),
+        FoodItemEntity(
+            id = 16,
+            foodName = "Onions",
+            foodDescription = "Green",
+            foodCategory = FoodCategory.VEGETABLE
+        ),
+        FoodItemEntity(
+            id = 17,
+            foodName = "Onions",
+            foodDescription = "White",
+            foodCategory = FoodCategory.VEGETABLE
+        ),
+        FoodItemEntity(
+            id = 18,
+            foodName = "Onions",
+            foodDescription = "Red",
+            foodCategory = FoodCategory.VEGETABLE
+        ),
+        FoodItemEntity(
+            id = 19,
+            foodName = "Onions",
+            foodDescription = "Sweet",
+            foodCategory = FoodCategory.VEGETABLE
+        ),
+        FoodItemEntity(
+            id = 20,
+            foodName = "Onions",
+            foodDescription = "Pearl",
+            foodCategory = FoodCategory.VEGETABLE
+        ),
+        FoodItemEntity(
+            id = 21,
+            foodName = "Potatoes",
+            foodDescription = "Russet",
+            foodCategory = FoodCategory.VEGETABLE
+        ),
+        FoodItemEntity(
+            id = 22,
+            foodName = "Potatoes",
+            foodDescription = "Gold",
+            foodCategory = FoodCategory.VEGETABLE
+        ),
+        FoodItemEntity(
+            id = 23,
+            foodName = "Potatoes",
+            foodDescription = "New",
+            foodCategory = FoodCategory.VEGETABLE
         )
     )
 

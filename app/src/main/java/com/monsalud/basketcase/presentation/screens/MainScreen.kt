@@ -20,7 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
-import com.monsalud.basketcase.presentation.components.AddShoppingListBottomSheetContent
+import com.monsalud.basketcase.presentation.components.AddListBottomSheetContent
+import com.monsalud.basketcase.presentation.components.AddMarketBottomSheetContent
 import com.monsalud.basketcase.ui.theme.spacing
 import org.koin.androidx.compose.koinViewModel
 
@@ -47,7 +48,7 @@ fun MainScreen(
             onDismissRequest = { isBottomSheetOpen = false },
             sheetState = rememberModalBottomSheetState(),
         ) {
-            AddShoppingListBottomSheetContent()
+            AddListBottomSheetContent()
         }
     }
 }

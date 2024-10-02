@@ -29,6 +29,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -60,21 +63,21 @@ fun NavDrawer(
             route = Screen.MainScreen.route
         ),
         NavigationItem(
-            title = "Grocery Basket (items to buy)",
-            selectedIcon = Icons.Filled.ShoppingCart,
-            unselectedIcon = Icons.Outlined.ShoppingCart,
+            title = "Basket (your shopping list)",
+            selectedIcon = ImageVector.vectorResource(id = R.drawable.shoppingbasket),
+            unselectedIcon = ImageVector.vectorResource(id = R.drawable.shoppingbasket),
             route = Screen.GroceryBasketScreen.route
         ),
         NavigationItem(
             title = "Items",
-            selectedIcon = Icons.Filled.AddCircle,
-            unselectedIcon = Icons.Outlined.AddCircle,
+            selectedIcon = ImageVector.vectorResource(id = R.drawable.groceries),
+            unselectedIcon = ImageVector.vectorResource(id = R.drawable.groceries),
             route = Screen.FoodItemsScreen.route
         ),
         NavigationItem(
             title = "Markets",
-            selectedIcon = Icons.Filled.LocationOn,
-            unselectedIcon = Icons.Outlined.LocationOn,
+            selectedIcon = ImageVector.vectorResource(id = R.drawable.market),
+            unselectedIcon = ImageVector.vectorResource(id = R.drawable.market),
             route = Screen.MarketsScreen.route
         )
     )

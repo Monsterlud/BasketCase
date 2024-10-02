@@ -1,6 +1,7 @@
 [versions]
 
 activity-compose = "1.9.0"
+androidsvgAar = "1.4"
 androidx-junit = "1.1.5"
 core-ktx = "1.13.1"
 espresso-core = "3.5.1"
@@ -25,10 +26,12 @@ compose-compiler = "1.5.12"
 safeArgs = "2.7.7"
 googleGson = "2.10.1"
 timber = "5.0.1"
+androidSvg = "1.4"
 
 [libraries]
 
 # Android
+androidsvg-aar = { module = "com.caverock:androidsvg-aar", version.ref = "androidsvgAar" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
@@ -42,6 +45,7 @@ compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 material3 = { module = "androidx.compose.material3:material3" }
+android-svg = { group = "com.caverock", name = "androidsvg-aar", version.ref = "androidSvg" }
 
 # Google
 androidx-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "googleFonts" }

@@ -74,7 +74,7 @@ data class ItemToPurchaseEntity(
     var foodItemId: Long,
 
     @ColumnInfo(name = "amount_to_purchase")
-    var amountToPurchase: Double,
+    var amountToPurchase: Double? = null,
 
     @ColumnInfo(name = "amount_type")
     var amountType: AmountType,

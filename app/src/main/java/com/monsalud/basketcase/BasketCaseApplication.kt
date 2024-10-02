@@ -1,9 +1,9 @@
 package com.monsalud.basketcase
 
 import android.app.Application
-import com.monsalud.basketcase.data.localdatasource.DummyData.foodItems
-import com.monsalud.basketcase.data.localdatasource.DummyData.markets
-import com.monsalud.basketcase.data.localdatasource.DummyData.shoppingLists
+import com.monsalud.basketcase.data.localdatasource.DefaultData.foodItems
+import com.monsalud.basketcase.data.localdatasource.DefaultData.markets
+import com.monsalud.basketcase.data.localdatasource.DefaultData.shoppingLists
 import com.monsalud.basketcase.data.localdatasource.room.BasketCaseDatabase
 import com.monsalud.basketcase.di.appModule
 import kotlinx.coroutines.Dispatchers

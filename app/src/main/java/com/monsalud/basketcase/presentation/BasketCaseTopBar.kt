@@ -31,8 +31,8 @@ fun BasketCaseTopBar(
     val currentRoute by currentRoute.collectAsState()
 
     val text = when (currentRoute.toRoute()) {
-        "main_screen" -> "BasketCase | Shopping Lists"
-        "grocery_basket_screen" -> "BasketCase | Grocery Basket"
+        "main_screen" -> "BasketCase | Lists"
+        "grocery_basket_screen" -> "BasketCase | Basket"
         "food_items_screen" -> "BasketCase | Items"
         "markets_screen" -> "BasketCase | Markets"
         else -> "BasketCase"

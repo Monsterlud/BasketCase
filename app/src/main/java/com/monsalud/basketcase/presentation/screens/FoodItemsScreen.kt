@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,31 +13,42 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.monsalud.basketcase.R
-import com.monsalud.basketcase.data.localdatasource.DummyData.foodItems
+import com.monsalud.basketcase.data.localdatasource.DefaultData.foodItems
 import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
+import com.monsalud.basketcase.presentation.components.AddItemsBottomSheetContent
+import com.monsalud.basketcase.presentation.components.AddListBottomSheetContent
 import com.monsalud.basketcase.ui.theme.spacing
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodItemsScreen(
     foodItems: List<FoodItemEntity>,
     modifier: Modifier = Modifier,
     onAddFoodItemClick: () -> Unit,
 ) {
+    var isBottomSheetOpen by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -46,7 +56,7 @@ fun FoodItemsScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
-                text = "add or edit items here that you might want to add to your grocery basket",
+                text = "add or edit items here that you might want to purchase in the future",
                 fontFamily = FontFamily(Font(R.font.playwriteitmoderna_extralight)),
                 modifier = modifier
                     .padding(16.dp),
@@ -109,12 +119,21 @@ fun FoodItemsScreen(
         }
 
         FloatingActionButton(
-            onClick = { /* Handle FAB click */ },
+            onClick = { isBottomSheetOpen = true },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(MaterialTheme.spacing.extraLarge)
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+        }
+
+        if (isBottomSheetOpen) {
+            ModalBottomSheet(
+                onDismissRequest = { isBottomSheetOpen = false },
+                sheetState = rememberModalBottomSheetState(),
+            ) {
+                AddItemsBottomSheetContent()
+            }
         }
     }
 }

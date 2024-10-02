@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import com.monsalud.basketcase.ui.theme.spacing
 
 @Composable
-fun AddShoppingListBottomSheetContent() {
+fun AddListBottomSheetContent() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
