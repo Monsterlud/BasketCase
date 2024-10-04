@@ -1,5 +1,6 @@
 package com.monsalud.basketcase.presentation.screens
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -12,13 +13,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,59 +80,101 @@ fun MarketsScreen(
                     .fillMaxSize()
                     .padding(8.dp)
             ) {
-                items(sortedMarkets) { market ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .clickable { /* Handle item click */ }
-                    ) {
-                        // Market Type block with colored background
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.primary)
-                                .padding(8.dp)
-                        ) {
-                            Text(
-                                text = market.marketType.getMarketTypeName(),
-                                fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
-                                color = MaterialTheme.colorScheme.onPrimary,
-                                modifier = Modifier.align(Alignment.CenterEnd)
-                            )
-                        }
-                        // Market Name and Address block
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.secondaryContainer)
-                                .padding(0.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .padding(vertical = 0.dp, horizontal = 0.dp)
-                            ) {
-                                Text(
-                                    text = market.marketName,
-                                    fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    modifier = Modifier
-                                        .padding(start = 8.dp, top = 8.dp, bottom = 4.dp),
-                                )
-                                market.marketAddress?.let {
-                                    Text(
-                                        text = it,
-                                        fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
-                                        fontSize = 12.sp,
-                                        modifier = Modifier
-                                            .padding(start = 8.dp, bottom = 8.dp),
-                                    )
-                                }
+                items(
+                    items = sortedMarkets,
+                    key = { it.id }
+                ) { market ->
+                    val dismissState = rememberSwipeToDismissBoxState(
+                        confirmValueChange = { dismissValue ->
+                            if (dismissValue == SwipeToDismissBoxValue.EndToStart) {
+                                viewModel.deleteMarketFromDatabase(market)
+                                true
+                            } else {
+                                false
                             }
                         }
-                    }
+                    )
+                    SwipeToDismissBox(
+                        state = dismissState,
+                        backgroundContent = {
+                            val color by animateColorAsState(
+                                when (dismissState.targetValue) {
+                                    SwipeToDismissBoxValue.Settled -> MaterialTheme.colorScheme.surface
+                                    else -> Color.Red
+                                }, label = "backgroundColorAnimation"
+                            )
+                            Box(
+                                Modifier
+                                    .fillMaxSize()
+                                    .padding(8.dp)
+                                    .background(color)
+                                    .padding(horizontal = 20.dp),
+                                contentAlignment = Alignment.CenterEnd
+                            ) {
+                                Icon(
+                                    Icons.Default.Delete,
+                                    contentDescription = "Delete",
+                                    tint = Color.White
+                                )
+                            }
+                        },
+                        content = {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(8.dp)
+                                    .clip(RoundedCornerShape(8.dp))
+                            ) {
+                                // Market Type block with colored background
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(MaterialTheme.colorScheme.primary)
+                                        .padding(8.dp)
+                                ) {
+                                    Text(
+                                        text = market.marketType.getMarketTypeName(),
+                                        fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
+                                        color = MaterialTheme.colorScheme.onPrimary,
+                                        modifier = Modifier.align(Alignment.CenterEnd)
+                                    )
+                                }
+                                // Market Name and Address block
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                                        .padding(0.dp)
+                                ) {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(vertical = 0.dp, horizontal = 0.dp)
+                                    ) {
+                                        Text(
+                                            text = market.marketName,
+                                            fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
+                                            fontSize = 14.sp,
+                                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                            modifier = Modifier
+                                                .padding(start = 8.dp, top = 8.dp, bottom = 4.dp),
+                                        )
+                                        market.marketAddress?.let {
+                                            Text(
+                                                text = it,
+                                                fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
+                                                fontSize = 12.sp,
+                                                modifier = Modifier
+                                                    .padding(start = 8.dp, bottom = 8.dp),
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+
+                        },
+                        enableDismissFromEndToStart = true,
+                        enableDismissFromStartToEnd = false,
+                    )
                 }
             }
         }
@@ -145,7 +194,7 @@ fun MarketsScreen(
                 sheetState = rememberModalBottomSheetState(),
             ) {
                 AddMarketBottomSheetContent(onMarketAdded = {
-                    viewModel.addMarketToDatabase(it)
+                    viewModel.upsertMarketToDatabase(it)
                     isBottomSheetOpen = false
                 })
             }

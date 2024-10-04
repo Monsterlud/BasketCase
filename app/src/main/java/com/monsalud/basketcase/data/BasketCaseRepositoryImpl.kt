@@ -8,6 +8,8 @@ import com.monsalud.basketcase.data.localdatasource.room.ShoppingListItemAssocia
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListWithItems
 import com.monsalud.basketcase.domain.BasketCaseRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEmpty
 
 class BasketCaseRepositoryImpl(
     private val localDataSource: LocalDataSource,
@@ -34,6 +36,15 @@ class BasketCaseRepositoryImpl(
 
     override fun getFoodItemById(id: Long): Flow<FoodItemEntity> =
         localDataSource.getFoodItemById(id)
+
+    override suspend fun getFoodItemByNameAndDescription(
+        name: String,
+        description: String?
+    ): Flow<FoodItemEntity?> {
+        return localDataSource.getFoodItemByNameAndDescription(name, description)
+            .map { it }
+            .onEmpty { emit(null) }
+    }
 
     // MarketEntity
     override suspend fun insertMarket(market: MarketEntity) = localDataSource.insertMarket(market)

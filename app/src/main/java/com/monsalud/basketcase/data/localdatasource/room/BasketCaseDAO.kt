@@ -17,6 +17,8 @@ interface FoodItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(foodItems: List<FoodItemEntity>)
 
+    @Query("SELECT * FROM FoodItemEntity WHERE food_name = :name AND food_description = :description LIMIT 1")
+    fun getFoodItemByNameAndDescription(name: String, description: String? =  null): Flow<FoodItemEntity?>
     @Update
     suspend fun update(foodItem: FoodItemEntity)
 

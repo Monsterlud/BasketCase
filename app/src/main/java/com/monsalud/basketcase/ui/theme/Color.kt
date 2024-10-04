@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 object Colors {
     val Black = Color(0xFF000000)
     val White = Color(0xFFFFFFFF)
+    val EditGreen = Color(0xFF308E4E)
 
     /** Light Theme Colors */
 

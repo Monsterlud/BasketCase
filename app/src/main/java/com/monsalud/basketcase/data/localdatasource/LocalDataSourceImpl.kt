@@ -37,6 +37,16 @@ class LocalDataSourceImpl(
     override fun getAllFoodItems(): Flow<List<FoodItemEntity>> = foodItemDao.getAll()
 
     override fun getFoodItemById(id: Long): Flow<FoodItemEntity> = foodItemDao.getById(id)
+    override suspend fun getFoodItemByNameAndDescription(
+        name: String,
+        description: String?
+    ): Flow<FoodItemEntity?> {
+        return if (description == null) {
+            foodItemDao.getFoodItemByNameAndDescription(name)
+        } else {
+            foodItemDao.getFoodItemByNameAndDescription(name, description)
+        }
+    }
 
     //MarketEntity
     override suspend fun insertMarket(market: MarketEntity) = marketDao.insert(market)

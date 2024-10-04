@@ -38,11 +38,18 @@ import timber.log.Timber
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddItemsBottomSheetContent(
+    foodItem: FoodItemEntity? = null,
     onFoodItemAdded: (FoodItemEntity) -> Unit,
 ) {
-    var selectedFoodCategory by remember { mutableStateOf(FoodCategory.MISCELLANEOUS) }
-    var foodItemName by remember { mutableStateOf("") }
-    var foodItemDescription by remember { mutableStateOf("") }
+    var selectedFoodCategory by remember(foodItem) {
+        mutableStateOf(foodItem?.foodCategory ?: FoodCategory.MISCELLANEOUS)
+    }
+    var foodItemName by remember(foodItem) { mutableStateOf(foodItem?.foodName ?: "") }
+    var foodItemDescription by remember(foodItem) {
+        mutableStateOf(
+            foodItem?.foodDescription ?: ""
+        )
+    }
     var expanded by remember { mutableStateOf(false) }
 
     Column(
@@ -51,7 +58,7 @@ fun AddItemsBottomSheetContent(
             .padding(MaterialTheme.spacing.medium)
     ) {
         Text(
-            text = "Add New Food Item",
+            text = "Add/Update Food Item",
             style = MaterialTheme.typography.headlineSmall
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
@@ -119,18 +126,27 @@ fun AddItemsBottomSheetContent(
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
         Button(
             onClick = {
-                Timber.d("Add Food Item Button Clicked")
-                val foodItem = FoodItemEntity(
-                    foodName = foodItemName,
-                    foodDescription = foodItemDescription,
-                    foodCategory = selectedFoodCategory,
-                )
-                onFoodItemAdded(foodItem)
+                Timber.d("Add/Update Food Item Button Clicked")
+                var newFoodItem: FoodItemEntity? = null
+                if (foodItem != null) {
+                    newFoodItem = foodItem.copy(
+                        foodName = foodItemName,
+                        foodDescription = foodItemDescription,
+                        foodCategory = selectedFoodCategory,
+                    )
+                } else {
+                    newFoodItem = FoodItemEntity(
+                        foodName = foodItemName,
+                        foodDescription = foodItemDescription,
+                        foodCategory = selectedFoodCategory,
+                    )
+                }
+                onFoodItemAdded(newFoodItem)
             },
             modifier = Modifier.align(Alignment.End),
             enabled = foodItemName.isNotBlank()
         ) {
-            Text("Add Food Item")
+            Text("Add/Update Food Item")
         }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
     }

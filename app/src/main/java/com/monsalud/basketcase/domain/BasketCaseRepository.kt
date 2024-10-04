@@ -18,6 +18,7 @@ interface BasketCaseRepository {
     suspend fun deleteAllFoodItems()
     fun getAllFoodItems(): Flow<List<FoodItemEntity>>
     fun getFoodItemById(id: Long): Flow<FoodItemEntity>
+    suspend fun getFoodItemByNameAndDescription(name: String, description: String? = null): Flow<FoodItemEntity?>
 
     // MarketEntity
     suspend fun insertMarket(market: MarketEntity)

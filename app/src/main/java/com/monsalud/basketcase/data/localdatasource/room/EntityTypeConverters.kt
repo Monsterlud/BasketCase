@@ -22,8 +22,10 @@ class EntityTypeConverters {
             "Vegetable" -> FoodCategory.VEGETABLE
             "Pantry" -> FoodCategory.PANTRY
             "Meat" -> FoodCategory.MEAT
+            "Poultry" -> FoodCategory.POULTRY
             "Seafood" -> FoodCategory.SEAFOOD
             "Dairy" -> FoodCategory.DAIRY
+            "Baked Good" -> FoodCategory.BAKEDGOOD
             "Beverage" -> FoodCategory.BEVERAGE
             "Kitchen Supply" -> FoodCategory.KITCHENSUPPLY
             else -> FoodCategory.MISCELLANEOUS

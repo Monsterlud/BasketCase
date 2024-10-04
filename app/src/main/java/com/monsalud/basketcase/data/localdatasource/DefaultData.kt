@@ -152,13 +152,13 @@ object DefaultData {
             id = 9,
             foodName = "Bread",
             foodDescription = "Sourdough",
-            foodCategory = FoodCategory.BAKESHOP
+            foodCategory = FoodCategory.BAKEDGOOD
         ),
         FoodItemEntity(
             id = 10,
             foodName = "Bread",
             foodDescription = "Whole Wheat",
-            foodCategory = FoodCategory.BAKESHOP
+            foodCategory = FoodCategory.BAKEDGOOD
         ),
         FoodItemEntity(
             id = 11,

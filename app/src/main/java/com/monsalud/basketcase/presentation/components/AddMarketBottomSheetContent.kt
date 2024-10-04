@@ -133,7 +133,7 @@ fun AddMarketBottomSheetContent(
             modifier = Modifier.align(Alignment.End),
             enabled = marketName.isNotBlank()
         ) {
-            Text("Add Market")
+            Text("Add/Update Market")
         }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
     }
