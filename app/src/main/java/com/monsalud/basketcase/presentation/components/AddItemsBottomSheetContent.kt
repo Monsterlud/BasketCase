@@ -128,19 +128,16 @@ fun AddItemsBottomSheetContent(
             onClick = {
                 Timber.d("Add/Update Food Item Button Clicked")
                 var newFoodItem: FoodItemEntity? = null
-                if (foodItem != null) {
-                    newFoodItem = foodItem.copy(
+                newFoodItem = foodItem?.copy(
+                    foodName = foodItemName,
+                    foodDescription = foodItemDescription,
+                    foodCategory = selectedFoodCategory,
+                )
+                    ?: FoodItemEntity(
                         foodName = foodItemName,
                         foodDescription = foodItemDescription,
                         foodCategory = selectedFoodCategory,
                     )
-                } else {
-                    newFoodItem = FoodItemEntity(
-                        foodName = foodItemName,
-                        foodDescription = foodItemDescription,
-                        foodCategory = selectedFoodCategory,
-                    )
-                }
                 onFoodItemAdded(newFoodItem)
             },
             modifier = Modifier.align(Alignment.End),

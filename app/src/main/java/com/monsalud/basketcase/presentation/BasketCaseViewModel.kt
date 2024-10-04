@@ -65,9 +65,6 @@ class BasketCaseViewModel(
                     repository.updateFoodItem(foodItem)
                     _foodItemUpsertResult.value = FoodItemUpsertResult.Updated(foodItem)
 
-                    val updatedFoodItems = repository.getAllFoodItems().toList()
-                    Timber.d("fooditems after updating: $updatedFoodItems")
-
                     repository.getFoodItemById(foodItem.id).collect { updatedItem ->
                         _foodItems.value = _foodItems.value.map {
                             if (it.id == updatedItem.id) updatedItem else it
@@ -93,15 +90,19 @@ class BasketCaseViewModel(
     fun upsertMarketToDatabase(market: MarketEntity) {
         viewModelScope.launch {
             try {
-                val existingMarket = repository.getMarketById(
-                    market.id
-                ).firstOrNull()
-
-                if (existingMarket != null) {
-                    Timber.d("Updating existing market: $existingMarket.id, ${existingMarket.marketName}")
-                    repository.updateMarket(market.copy(id = existingMarket.id))
+                if (market.id != 0L) {
+                    // Update the existing market in the database
+                    Timber.d("Updating existing market: $market.id, ${market.marketName}, ${market.marketAddress}")
+                    repository.updateMarket(market)
                     _marketUpsertResult.value = MarketUpsertResult.Updated(market)
+
+                    repository.getMarketById(market.id).collect { updatedMarket ->
+                        _markets.value = _markets.value.map {
+                            if (it.id == updatedMarket.id) updatedMarket else it
+                        }
+                    }
                 } else {
+                    // Insert the new market into the database
                     repository.insertMarket(market)
                     _marketUpsertResult.value = MarketUpsertResult.Inserted(market)
                 }

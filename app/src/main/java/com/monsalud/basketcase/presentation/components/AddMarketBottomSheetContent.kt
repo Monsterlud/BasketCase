@@ -41,11 +41,12 @@ import timber.log.Timber
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddMarketBottomSheetContent(
+    market: MarketEntity? = null,
     onMarketAdded: (MarketEntity) -> Unit,
 ) {
-    var selectedMarketType by remember { mutableStateOf(MarketType.GROCERYSTORE) }
-    var marketName by remember { mutableStateOf("") }
-    var marketAddress by remember { mutableStateOf("") }
+    var selectedMarketType by remember(market) { mutableStateOf(market?.marketType ?: MarketType.GROCERYSTORE) }
+    var marketName by remember(market) { mutableStateOf(market?.marketName ?: "") }
+    var marketAddress by remember(market) { mutableStateOf(market?.marketAddress ?: "") }
     var expanded by remember { mutableStateOf(false) }
 
     Column(
@@ -123,12 +124,18 @@ fun AddMarketBottomSheetContent(
         Button(
             onClick = {
                 Timber.d("Add Market Button Clicked")
-                val market = MarketEntity(
+                var newMarket: MarketEntity? = null
+                newMarket = market?.copy(
                     marketName = marketName,
                     marketAddress = marketAddress,
                     marketType = selectedMarketType,
                 )
-                onMarketAdded(market)
+                    ?: MarketEntity(
+                        marketName = marketName,
+                        marketAddress = marketAddress,
+                        marketType = selectedMarketType,
+                    )
+                onMarketAdded(newMarket)
             },
             modifier = Modifier.align(Alignment.End),
             enabled = marketName.isNotBlank()
