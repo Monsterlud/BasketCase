@@ -6,6 +6,7 @@ object Colors {
     val Black = Color(0xFF000000)
     val White = Color(0xFFFFFFFF)
     val EditGreen = Color(0xFF308E4E)
+    val DeleteRed = Color(0xFFBD0727)
 
     /** Light Theme Colors */
 

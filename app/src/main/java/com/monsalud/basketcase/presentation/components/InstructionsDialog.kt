@@ -53,25 +53,25 @@ fun InstructionsDialog(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "ITEMS: add, remove, or edit items that you may need to buy",
+                    text = "ITEMS: add, remove, or edit items that you might want to purchase in the future",
                     style = MaterialTheme.typography.titleSmall,
                     fontFamily = FontFamily(Font(R.font.playwriteitmoderna_regular))
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "MARKETS: add, remove, or edit markets that you may need to purchase from",
+                    text = "MARKETS: add, remove, or edit your favorite places to shop",
                     style = MaterialTheme.typography.titleSmall,
                     fontFamily = FontFamily(Font(R.font.playwriteitmoderna_regular))
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "SHOPPING LISTS: create and manage your shopping lists",
+                    text = "SHOPPING LISTS: create and manage your shopping lists. As an example, you may have one weekly grocery list and another list for a special dinner party.",
                     style = MaterialTheme.typography.titleSmall,
                     fontFamily = FontFamily(Font(R.font.playwriteitmoderna_regular))
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "BASKET: this is your shopping list. Filter this list by market or by list(s) to make is easy to focus on what you need to buy!",
+                    text = "BASKET: this is your all-in-one shopping list that you can filter by market or by list(s). When you are at a specific market to shop for that dinner party, just filter the list to that market and that list. Your basket is now focused on only what you need to see.",
                     style = MaterialTheme.typography.titleSmall,
                     fontFamily = FontFamily(Font(R.font.playwriteitmoderna_regular))
                 )

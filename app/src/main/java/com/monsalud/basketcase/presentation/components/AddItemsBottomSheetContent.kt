@@ -31,7 +31,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
 import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
 import com.monsalud.basketcase.domain.model.FoodCategory
-import com.monsalud.basketcase.domain.model.MarketType
 import com.monsalud.basketcase.ui.theme.spacing
 import timber.log.Timber
 
@@ -58,7 +57,7 @@ fun AddItemsBottomSheetContent(
             .padding(MaterialTheme.spacing.medium)
     ) {
         Text(
-            text = "Add/Update Food Item",
+            text = if(foodItem == null) "Add Food Item" else "Update Food Item",
             style = MaterialTheme.typography.headlineSmall
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
@@ -143,7 +142,7 @@ fun AddItemsBottomSheetContent(
             modifier = Modifier.align(Alignment.End),
             enabled = foodItemName.isNotBlank()
         ) {
-            Text("Add/Update Food Item")
+            Text(if(foodItem == null) "Add Food Item" else "Update Food Item")
         }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
     }

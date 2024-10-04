@@ -1,8 +1,6 @@
 package com.monsalud.basketcase.presentation.screens
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.DismissValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -27,7 +24,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -43,13 +39,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.monsalud.basketcase.R
-import com.monsalud.basketcase.data.localdatasource.DefaultData.markets
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.components.AddMarketBottomSheetContent
-import com.monsalud.basketcase.ui.theme.Colors
+import com.monsalud.basketcase.ui.theme.Colors.DeleteRed
+import com.monsalud.basketcase.ui.theme.Colors.EditGreen
 import com.monsalud.basketcase.ui.theme.spacing
 import org.koin.androidx.compose.koinViewModel
 
@@ -114,8 +109,8 @@ fun MarketsScreen(
                             state = dismissState,
                             backgroundContent = {
                                 val (color, icon) = when (dismissState.targetValue) {
-                                    SwipeToDismissBoxValue.EndToStart -> Color.Red to Icons.Default.Delete
-                                    SwipeToDismissBoxValue.StartToEnd -> Colors.EditGreen to Icons.Default.Edit
+                                    SwipeToDismissBoxValue.EndToStart -> DeleteRed to Icons.Default.Delete
+                                    SwipeToDismissBoxValue.StartToEnd -> EditGreen to Icons.Default.Edit
                                     SwipeToDismissBoxValue.Settled -> MaterialTheme.colorScheme.surface to null
                                     else -> Pair(
                                         MaterialTheme.colorScheme.surface,

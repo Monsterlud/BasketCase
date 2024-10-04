@@ -44,6 +44,7 @@ import com.monsalud.basketcase.R
 import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.components.AddItemsBottomSheetContent
+import com.monsalud.basketcase.ui.theme.Colors.DeleteRed
 import com.monsalud.basketcase.ui.theme.Colors.EditGreen
 import com.monsalud.basketcase.ui.theme.spacing
 import org.koin.androidx.compose.koinViewModel
@@ -111,7 +112,7 @@ fun FoodItemsScreen(
                             state = dismissState,
                             backgroundContent = {
                                 val (color, icon) = when (dismissState.targetValue) {
-                                    SwipeToDismissBoxValue.EndToStart -> Color.Red to Icons.Default.Delete
+                                    SwipeToDismissBoxValue.EndToStart -> DeleteRed to Icons.Default.Delete
                                     SwipeToDismissBoxValue.StartToEnd -> EditGreen to Icons.Default.Edit
                                     SwipeToDismissBoxValue.Settled -> MaterialTheme.colorScheme.surface to null
                                     else -> Pair(

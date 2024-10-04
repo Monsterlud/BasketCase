@@ -16,12 +16,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,9 +31,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
 import com.monsalud.basketcase.domain.model.MarketType
-import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.ui.theme.spacing
-import org.koin.androidx.compose.koinViewModel
 import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,7 +51,7 @@ fun AddMarketBottomSheetContent(
             .padding(MaterialTheme.spacing.medium)
     ) {
         Text(
-            text = "Add New Market",
+            text = if (market == null) "Add New Market" else "Update Market",
             style = MaterialTheme.typography.headlineSmall
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
@@ -140,7 +136,7 @@ fun AddMarketBottomSheetContent(
             modifier = Modifier.align(Alignment.End),
             enabled = marketName.isNotBlank()
         ) {
-            Text("Add/Update Market")
+            Text(if (market == null) "Add Market" else "Update Market")
         }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
     }
