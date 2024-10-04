@@ -5,10 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -30,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,8 +38,7 @@ import com.monsalud.basketcase.data.localdatasource.DefaultData
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.components.AddListBottomSheetContent
-import com.monsalud.basketcase.presentation.components.AddMarketBottomSheetContent
-import com.monsalud.basketcase.ui.theme.Spacing
+import com.monsalud.basketcase.presentation.components.InstructionsDialog
 import com.monsalud.basketcase.ui.theme.spacing
 import org.koin.androidx.compose.koinViewModel
 
@@ -54,6 +50,7 @@ fun MainScreen(
 ) {
     val viewModel: BasketCaseViewModel = koinViewModel()
     var isBottomSheetOpen by remember { mutableStateOf(false) }
+    var showInstructionsDialog by remember { mutableStateOf(true) }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -123,7 +120,9 @@ fun MainScreen(
         }
         FloatingActionButton(
             onClick = { isBottomSheetOpen = true },
-            modifier = Modifier.align(Alignment.BottomEnd).padding(MaterialTheme.spacing.extraLarge)
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(MaterialTheme.spacing.extraLarge)
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
         }
@@ -136,9 +135,12 @@ fun MainScreen(
             AddListBottomSheetContent()
         }
     }
+    if (showInstructionsDialog) {
+        InstructionsDialog(
+            onDismiss = { showInstructionsDialog = false },
+        )
+    }
 }
-
-
 
 
 @Composable
