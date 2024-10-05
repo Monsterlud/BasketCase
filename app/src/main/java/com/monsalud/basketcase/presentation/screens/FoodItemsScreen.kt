@@ -27,6 +27,7 @@ import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberSwipeToDismissBoxState
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
@@ -121,13 +122,13 @@ fun FoodItemsScreen(
                             state = dismissState,
                             backgroundContent = {
                                 val (color, icon) = when (dismissState.targetValue) {
+                                    SwipeToDismissBoxValue.Settled -> {
+                                        val elevatedColor = MaterialTheme.colorScheme.surfaceColorAtElevation(5.dp)
+                                        elevatedColor to null
+                                    }
                                     SwipeToDismissBoxValue.EndToStart -> deleteRed to Icons.Default.Delete
                                     SwipeToDismissBoxValue.StartToEnd -> editGreen to Icons.Default.Edit
-                                    SwipeToDismissBoxValue.Settled -> MaterialTheme.colorScheme.surface to null
-                                    else -> Pair(
-                                        MaterialTheme.colorScheme.surface,
-                                        Icons.Default.Delete
-                                    )
+                                    else -> MaterialTheme.colorScheme.background to null
                                 }
                                 Box(
                                     Modifier
@@ -137,11 +138,13 @@ fun FoodItemsScreen(
                                         .padding(horizontal = 20.dp),
                                     contentAlignment = if (dismissState.targetValue == SwipeToDismissBoxValue.StartToEnd) Alignment.CenterStart else Alignment.CenterEnd
                                 ) {
-                                    Icon(
-                                        if (dismissState.targetValue == SwipeToDismissBoxValue.StartToEnd) Icons.Default.Edit else Icons.Default.Delete,
-                                        contentDescription = if (dismissState.targetValue == SwipeToDismissBoxValue.StartToEnd) "Edit" else "Delete",
-                                        tint = Color.White
-                                    )
+                                    icon?.let {
+                                        Icon(
+                                            imageVector = icon,
+                                            contentDescription = if (dismissState.targetValue == SwipeToDismissBoxValue.StartToEnd) "Edit" else "Delete",
+                                            tint = Color.White
+                                        )
+                                    }
                                 }
                             },
                             content = {
