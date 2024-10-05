@@ -1,5 +1,8 @@
 package com.monsalud.basketcase.presentation.screens
 
+//import com.monsalud.basketcase.ui.theme.Colors.DeleteRed
+//import com.monsalud.basketcase.ui.theme.Colors.EditGreen
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,17 +37,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.monsalud.basketcase.R
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.components.AddMarketBottomSheetContent
-import com.monsalud.basketcase.ui.theme.Colors.DeleteRed
-import com.monsalud.basketcase.ui.theme.Colors.EditGreen
+import com.monsalud.basketcase.ui.theme.deleteRed
+import com.monsalud.basketcase.ui.theme.editGreen
 import com.monsalud.basketcase.ui.theme.spacing
 import org.koin.androidx.compose.koinViewModel
 
@@ -55,6 +56,8 @@ fun MarketsScreen(
     modifier: Modifier = Modifier,
     onMarketClick: () -> Unit = {},
 ) {
+    val context = LocalContext.current
+
     val markets by viewModel.markets.collectAsState(initial = emptyList())
     val sortedMarkets = remember(markets) {
         markets.sortedBy { it.marketName.lowercase() }
@@ -71,7 +74,6 @@ fun MarketsScreen(
         ) {
             Text(
                 text = "add or edit your favorite places to shop",
-                fontFamily = FontFamily(Font(R.font.playwriteitmoderna_extralight)),
                 modifier = modifier
                     .padding(16.dp),
             )
@@ -90,6 +92,7 @@ fun MarketsScreen(
                                 when (dismissValue) {
                                     SwipeToDismissBoxValue.EndToStart -> {
                                         viewModel.deleteMarketFromDatabase(market)
+                                        Toast.makeText(context, "Market deleted!", Toast.LENGTH_SHORT).show()
                                         true
                                     }
 
@@ -109,8 +112,8 @@ fun MarketsScreen(
                             state = dismissState,
                             backgroundContent = {
                                 val (color, icon) = when (dismissState.targetValue) {
-                                    SwipeToDismissBoxValue.EndToStart -> DeleteRed to Icons.Default.Delete
-                                    SwipeToDismissBoxValue.StartToEnd -> EditGreen to Icons.Default.Edit
+                                    SwipeToDismissBoxValue.EndToStart -> deleteRed to Icons.Default.Delete
+                                    SwipeToDismissBoxValue.StartToEnd -> editGreen to Icons.Default.Edit
                                     SwipeToDismissBoxValue.Settled -> MaterialTheme.colorScheme.surface to null
                                     else -> Pair(
                                         MaterialTheme.colorScheme.surface,
@@ -143,13 +146,12 @@ fun MarketsScreen(
                                     Box(
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .background(MaterialTheme.colorScheme.primary)
+                                            .background(MaterialTheme.colorScheme.secondary)
                                             .padding(8.dp)
                                     ) {
                                         Text(
                                             text = market.marketType.getMarketTypeName(),
-                                            fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
-                                            color = MaterialTheme.colorScheme.onPrimary,
+                                            color = MaterialTheme.colorScheme.onSecondary,
                                             modifier = Modifier.align(Alignment.CenterEnd)
                                         )
                                     }
@@ -166,7 +168,6 @@ fun MarketsScreen(
                                         ) {
                                             Text(
                                                 text = market.marketName,
-                                                fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
                                                 fontSize = 14.sp,
                                                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                                                 modifier = Modifier
@@ -179,7 +180,6 @@ fun MarketsScreen(
                                             market.marketAddress?.let {
                                                 Text(
                                                     text = it,
-                                                    fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
                                                     fontSize = 12.sp,
                                                     modifier = Modifier
                                                         .padding(start = 8.dp, bottom = 8.dp),
@@ -220,6 +220,7 @@ fun MarketsScreen(
                     onMarketAdded = {
                         viewModel.upsertMarketToDatabase(it)
                         isBottomSheetOpen = false
+                        Toast.makeText(context, if (marketToEdit == null) "Market added!" else "Market updated!", Toast.LENGTH_SHORT).show()
                         marketToEdit = null
                     })
             }

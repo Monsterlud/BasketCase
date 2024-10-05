@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.parcelize) apply false
     alias(libs.plugins.safeArgs) apply false
+
 }
 
 buildscript {

@@ -57,7 +57,7 @@ fun AddItemsBottomSheetContent(
             .padding(MaterialTheme.spacing.medium)
     ) {
         Text(
-            text = if(foodItem == null) "Add Food Item" else "Update Food Item",
+            text = if (foodItem == null) "Add Food Item" else "Update Food Item",
             style = MaterialTheme.typography.headlineSmall
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
@@ -142,7 +142,7 @@ fun AddItemsBottomSheetContent(
             modifier = Modifier.align(Alignment.End),
             enabled = foodItemName.isNotBlank()
         ) {
-            Text(if(foodItem == null) "Add Food Item" else "Update Food Item")
+            Text(if (foodItem == null) "Add Food Item" else "Update Food Item")
         }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
     }

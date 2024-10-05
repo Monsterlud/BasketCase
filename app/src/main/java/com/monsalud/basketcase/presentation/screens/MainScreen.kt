@@ -28,12 +28,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.monsalud.basketcase.R
 import com.monsalud.basketcase.data.localdatasource.DefaultData
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
@@ -60,7 +57,6 @@ fun MainScreen(
         ) {
             Text(
                 text = "add as many different shopping lists as you like",
-                fontFamily = FontFamily(Font(R.font.playwriteitmoderna_extralight)),
                 modifier = Modifier.padding(16.dp)
             )
             LazyColumn(
@@ -80,13 +76,12 @@ fun MainScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.primary)
+                                .background(MaterialTheme.colorScheme.secondary)
                                 .padding(8.dp)
                         ) {
                             Text(
                                 text = "Shopping List",
-                                fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
-                                color = MaterialTheme.colorScheme.onPrimary,
+                                color = MaterialTheme.colorScheme.onSecondary,
                                 modifier = Modifier.align(Alignment.CenterEnd)
                             )
                         }
@@ -106,7 +101,6 @@ fun MainScreen(
                             ) {
                                 Text(
                                     text = shoppingList.listName,
-                                    fontFamily = FontFamily(Font(R.font.loravariablefont_wght)),
                                     fontSize = 14.sp,
                                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                                     modifier = Modifier
