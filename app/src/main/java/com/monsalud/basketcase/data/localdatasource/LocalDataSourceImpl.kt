@@ -1,12 +1,12 @@
 package com.monsalud.basketcase.data.localdatasource
 
 import com.monsalud.basketcase.data.LocalDataSource
-import com.monsalud.basketcase.data.localdatasource.room.FoodItemDao
-import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
 import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseDao
 import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseEntity
 import com.monsalud.basketcase.data.localdatasource.room.MarketDao
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
+import com.monsalud.basketcase.data.localdatasource.room.PantryItemDao
+import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListDao
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListItemAssociation
@@ -15,36 +15,36 @@ import com.monsalud.basketcase.data.localdatasource.room.ShoppingListWithItems
 import kotlinx.coroutines.flow.Flow
 
 class LocalDataSourceImpl(
-    private val foodItemDao: FoodItemDao,
+    private val pantryItemDao: PantryItemDao,
     private val marketDao: MarketDao,
     private val itemToPurchaseDao: ItemToPurchaseDao,
     private val shoppingListDao: ShoppingListDao,
     private val shoppingListItemAssociationDao: ShoppingListItemAssociationDao,
 ) : LocalDataSource {
 
-    // FoodItemEntity
-    override suspend fun insertFoodItem(foodItem: FoodItemEntity) = foodItemDao.insert(foodItem)
+    // PantryItemEntity
+    override suspend fun insertPantryItem(pantryItem: PantryItemEntity) = pantryItemDao.insert(pantryItem)
 
-    override suspend fun insertAllFoodItems(foodItems: List<FoodItemEntity>) =
-        foodItemDao.insertAll(foodItems)
+    override suspend fun insertAllPantryItems(pantryItems: List<PantryItemEntity>) =
+        pantryItemDao.insertAll(pantryItems)
 
-    override suspend fun updateFoodItem(foodItem: FoodItemEntity) = foodItemDao.update(foodItem)
+    override suspend fun updatePantryItem(pantryItem: PantryItemEntity) = pantryItemDao.update(pantryItem)
 
-    override suspend fun deleteFoodItem(foodItem: FoodItemEntity) = foodItemDao.delete(foodItem)
+    override suspend fun deletePantryItem(pantryItem: PantryItemEntity) = pantryItemDao.delete(pantryItem)
 
-    override suspend fun deleteAllFoodItems() = foodItemDao.deleteAll()
+    override suspend fun deleteAllPantryItems() = pantryItemDao.deleteAll()
 
-    override fun getAllFoodItems(): Flow<List<FoodItemEntity>> = foodItemDao.getAll()
+    override fun getAllPantryItems(): Flow<List<PantryItemEntity>> = pantryItemDao.getAll()
 
-    override fun getFoodItemById(id: Long): Flow<FoodItemEntity> = foodItemDao.getById(id)
-    override suspend fun getFoodItemByNameAndDescription(
+    override fun getPantryItemById(id: Long): Flow<PantryItemEntity> = pantryItemDao.getById(id)
+    override suspend fun getPantryItemByNameAndDescription(
         name: String,
         description: String?
-    ): Flow<FoodItemEntity?> {
+    ): Flow<PantryItemEntity?> {
         return if (description == null) {
-            foodItemDao.getFoodItemByNameAndDescription(name)
+            pantryItemDao.getPantryItemByNameAndDescription(name)
         } else {
-            foodItemDao.getFoodItemByNameAndDescription(name, description)
+            pantryItemDao.getPantryItemByNameAndDescription(name, description)
         }
     }
 

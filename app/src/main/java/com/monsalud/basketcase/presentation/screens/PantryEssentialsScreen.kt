@@ -43,9 +43,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
+import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
-import com.monsalud.basketcase.presentation.components.AddItemsBottomSheetContent
+import com.monsalud.basketcase.presentation.components.AddPantryItemBottomSheetContent
 import com.monsalud.basketcase.ui.theme.deleteRed
 import com.monsalud.basketcase.ui.theme.editGreen
 import com.monsalud.basketcase.ui.theme.spacing
@@ -53,20 +53,20 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FoodItemsScreen(
+fun PantryEssentialsScreen(
     viewModel: BasketCaseViewModel = koinViewModel(),
     modifier: Modifier = Modifier,
-    onAddFoodItemClick: () -> Unit = {},
+    onAddPantryItemClick: () -> Unit = {},
 ) {
     val context = LocalContext.current
 
-    val foodItems by viewModel.foodItems.collectAsStateWithLifecycle()
-    val sortedFoodItems = remember(foodItems) {
-        foodItems.sortedWith(
-            compareBy<FoodItemEntity> { it.foodCategory }.thenBy { it.foodName.lowercase() }
+    val pantryItems by viewModel.pantryItems.collectAsStateWithLifecycle()
+    val sortedPantryItems = remember(pantryItems) {
+        pantryItems.sortedWith(
+            compareBy<PantryItemEntity> { it.pantryItemCategory }.thenBy { it.pantryItemName.lowercase() }
         )
     }
-    var foodItemToEdit by remember { mutableStateOf<FoodItemEntity?>(null) }
+    var pantryItemToEdit by remember { mutableStateOf<PantryItemEntity?>(null) }
 
     var isBottomSheetOpen by remember { mutableStateOf(false) }
     var editActionCounter by remember { mutableStateOf(0) }
@@ -88,26 +88,26 @@ fun FoodItemsScreen(
                     .padding(8.dp)
             ) {
                 items(
-                    items = sortedFoodItems,
+                    items = sortedPantryItems,
                     key = { it.id },
-                ) { foodItem ->
+                ) { pantryItem ->
 
-                    key(foodItem.id, editActionCounter) {
+                    key(pantryItem.id, editActionCounter) {
                         val dismissState = rememberSwipeToDismissBoxState(
                             confirmValueChange = { dismissValue ->
                                 when (dismissValue) {
                                     SwipeToDismissBoxValue.EndToStart -> {
-                                        viewModel.deleteFoodItemFromDatabase(foodItem)
+                                        viewModel.deletePantryItemFromDatabase(pantryItem)
                                         Toast.makeText(
                                             context,
-                                            "Food Item deleted!",
+                                            "Pantry Item deleted!",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                         true
                                     }
 
                                     SwipeToDismissBoxValue.StartToEnd -> {
-                                        foodItemToEdit = foodItem
+                                        pantryItemToEdit = pantryItem
                                         isBottomSheetOpen = true
                                         editActionCounter++
                                         true
@@ -154,7 +154,7 @@ fun FoodItemsScreen(
                                         .padding(8.dp)
                                         .clip(RoundedCornerShape(8.dp))
                                 ) {
-                                    // Food Item Type block with colored background
+                                    // Pantry Item Type block with colored background
                                     Box(
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -162,12 +162,12 @@ fun FoodItemsScreen(
                                             .padding(8.dp)
                                     ) {
                                         Text(
-                                            text = foodItem.foodCategory.getFoodCategoryName(),
+                                            text = pantryItem.pantryItemCategory.getPantryCategoryName(),
                                             color = MaterialTheme.colorScheme.onSecondary,
                                             modifier = Modifier.align(Alignment.CenterEnd)
                                         )
                                     }
-                                    // Food Item Name block
+                                    // Pantry Item Name block
                                     Box(
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -182,10 +182,10 @@ fun FoodItemsScreen(
                                         ) {
                                             Text(
                                                 text = buildString {
-                                                    append(foodItem.foodName)
-                                                    if (!foodItem.foodDescription.isNullOrBlank()) {
+                                                    append(pantryItem.pantryItemName)
+                                                    if (!pantryItem.pantryItemDescription.isNullOrBlank()) {
                                                         append(", ")
-                                                        append(foodItem.foodDescription)
+                                                        append(pantryItem.pantryItemDescription)
                                                     }
                                                 },
                                                 fontSize = 14.sp,
@@ -220,22 +220,22 @@ fun FoodItemsScreen(
             ModalBottomSheet(
                 onDismissRequest = {
                     isBottomSheetOpen = false
-                    foodItemToEdit = null
+                    pantryItemToEdit = null
                 },
                 sheetState = rememberModalBottomSheetState(),
                 windowInsets = WindowInsets.ime
             ) {
-                AddItemsBottomSheetContent(
-                    foodItem = foodItemToEdit,
-                    onFoodItemAdded = {
-                        viewModel.upsertFoodItemToDatabase(it)
+                AddPantryItemBottomSheetContent(
+                    pantryItem = pantryItemToEdit,
+                    onPantryItemAdded = {
+                        viewModel.upsertPantryItemToDatabase(it)
                         isBottomSheetOpen = false
                         Toast.makeText(
                             context,
-                            if (foodItemToEdit == null) "Food Item added!" else "Food Item updated!",
+                            if (pantryItemToEdit == null) "Pantry Item added!" else "Pantry Item updated!",
                             Toast.LENGTH_SHORT
                         ).show()
-                        foodItemToEdit = null
+                        pantryItemToEdit = null
                     })
             }
         }
@@ -245,6 +245,6 @@ fun FoodItemsScreen(
 
 @Composable
 @Preview
-fun FoodItemsScreenPreview() {
-    FoodItemsScreen(onAddFoodItemClick = {})
+fun PantryEssentialsScreenPreview() {
+    PantryEssentialsScreen(onAddPantryItemClick = {})
 }

@@ -9,25 +9,25 @@ import androidx.room.PrimaryKey
 import androidx.room.Relation
 import androidx.room.TypeConverters
 import com.monsalud.basketcase.domain.model.AmountType
-import com.monsalud.basketcase.domain.model.FoodCategory
 import com.monsalud.basketcase.domain.model.MarketType
+import com.monsalud.basketcase.domain.model.PantryCategory
 
 /** Basic Entities **/
 
 @Entity
 @TypeConverters(EntityTypeConverters::class)
-data class FoodItemEntity(
+data class PantryItemEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
 
-    @ColumnInfo(name = "food_name")
-    var foodName: String,
+    @ColumnInfo(name = "pantry_item_name")
+    var pantryItemName: String,
 
-    @ColumnInfo(name = "food_description")
-    var foodDescription: String? = null,
+    @ColumnInfo(name = "pantry_item_description")
+    var pantryItemDescription: String? = null,
 
-    @ColumnInfo(name = "food_category")
-    var foodCategory: FoodCategory
+    @ColumnInfo(name = "pantry_item_category")
+    var pantryItemCategory: PantryCategory
 )
 
 @Entity
@@ -52,9 +52,9 @@ data class MarketEntity(
 @Entity(
     foreignKeys = [
         ForeignKey(
-            entity = FoodItemEntity::class,
+            entity = PantryItemEntity::class,
             parentColumns = ["id"],
-            childColumns = ["food_item_id"],
+            childColumns = ["pantry_item_id"],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
@@ -70,17 +70,20 @@ data class ItemToPurchaseEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
 
-    @ColumnInfo(name = "food_item_id")
-    var foodItemId: Long,
+    @ColumnInfo(name = "pantry_item_id")
+    var pantryItemId: Long,
+
+    @ColumnInfo(name = "market_id")
+    var marketId: Long? = null,
 
     @ColumnInfo(name = "amount_to_purchase")
     var amountToPurchase: Double? = null,
 
     @ColumnInfo(name = "amount_type")
-    var amountType: AmountType,
+    var amountType: AmountType? = null,
 
-    @ColumnInfo(name = "market_id")
-    var marketId: Long,
+    @ColumnInfo(name = "item_notes")
+    var itemNotes: String? = null,
 )
 
 /** Grocery Lists **/

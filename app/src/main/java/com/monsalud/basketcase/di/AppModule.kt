@@ -7,9 +7,9 @@ import com.monsalud.basketcase.data.LocalDataSource
 import com.monsalud.basketcase.data.RemoteDataSource
 import com.monsalud.basketcase.data.localdatasource.LocalDataSourceImpl
 import com.monsalud.basketcase.data.localdatasource.room.BasketCaseDatabase
-import com.monsalud.basketcase.data.localdatasource.room.FoodItemDao
 import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseDao
 import com.monsalud.basketcase.data.localdatasource.room.MarketDao
+import com.monsalud.basketcase.data.localdatasource.room.PantryItemDao
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListDao
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListItemAssociationDao
 import com.monsalud.basketcase.data.remotedatasource.RemoteDataSourceImpl
@@ -28,7 +28,7 @@ val appModule = module {
     single { RemoteDataSourceImpl() } bind RemoteDataSource::class
 
     single { provideDatabase(get()) }
-    single { provideFoodItemDao(get()) }
+    single { providePantryItemDao(get()) }
     single { provideMarketDao(get()) }
     single { provideItemToPurchaseDao(get()) }
     single { provideGroceryListDao(get()) }
@@ -42,8 +42,8 @@ val appModule = module {
         ).build()
     }
 
-    fun provideFoodItemDao(database: BasketCaseDatabase): FoodItemDao {
-        return database.foodItemDao()
+    fun providePantryItemDao(database: BasketCaseDatabase): PantryItemDao {
+        return database.pantryItemDao()
     }
 
     fun provideMarketDao(database: BasketCaseDatabase): MarketDao {

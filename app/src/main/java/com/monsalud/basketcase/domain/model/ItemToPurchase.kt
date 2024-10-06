@@ -2,7 +2,7 @@ package com.monsalud.basketcase.domain.model
 
 data class ItemToPurchase(
     val id: Long,
-    val item: FoodItem,
+    val item: PantryItem,
     val market: Market? = null,
     val amount: Double? = null,
     val amountType: AmountType? = null

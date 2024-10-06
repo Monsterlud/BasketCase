@@ -2,8 +2,8 @@ package com.monsalud.basketcase.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
+import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.domain.BasketCaseRepository
 import com.monsalud.basketcase.presentation.navigation.Screen
@@ -11,10 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -28,14 +24,14 @@ class BasketCaseViewModel(
     private val _shoppingLists = MutableStateFlow<List<ShoppingListEntity>>(emptyList())
     val shoppingLists: StateFlow<List<ShoppingListEntity>> = _shoppingLists.asStateFlow()
 
-    private val _foodItems = MutableStateFlow<List<FoodItemEntity>>(emptyList())
-    val foodItems: StateFlow<List<FoodItemEntity>> = _foodItems.asStateFlow()
+    private val _pantryItems = MutableStateFlow<List<PantryItemEntity>>(emptyList())
+    val pantryItems: StateFlow<List<PantryItemEntity>> = _pantryItems.asStateFlow()
 
     private val _markets = MutableStateFlow<List<MarketEntity>>(emptyList())
     val markets: StateFlow<List<MarketEntity>> = _markets.asStateFlow()
 
-    private val _foodItemUpsertResult = MutableStateFlow<FoodItemUpsertResult?>(null)
-    val foodItemUpsertResult: StateFlow<FoodItemUpsertResult?> = _foodItemUpsertResult.asStateFlow()
+    private val _pantryItemUpsertResult = MutableStateFlow<PantryItemUpsertResult?>(null)
+    val pantryItemUpsertResult: StateFlow<PantryItemUpsertResult?> = _pantryItemUpsertResult.asStateFlow()
 
     private val _marketUpsertResult = MutableStateFlow<MarketUpsertResult?>(null)
     val marketUpsertResult: StateFlow<MarketUpsertResult?> = _marketUpsertResult.asStateFlow()
@@ -43,10 +39,10 @@ class BasketCaseViewModel(
     init {
         viewModelScope.launch {
             combine(
-                repository.getAllFoodItems(),
+                repository.getAllPantryItems(),
                 repository.getAllMarkets()
             ) { items, markets ->
-                _foodItems.value = items
+                _pantryItems.value = items
                 _markets.value = markets
             }.collect {}
         }
@@ -56,34 +52,34 @@ class BasketCaseViewModel(
         _currentScreen.value = screen
     }
 
-    fun upsertFoodItemToDatabase(foodItem: FoodItemEntity) {
+    fun upsertPantryItemToDatabase(pantryItem: PantryItemEntity) {
         viewModelScope.launch {
             try {
-                if (foodItem.id != 0L) {
+                if (pantryItem.id != 0L) {
                     // Update the existing item in the database
-                    Timber.d("Updating existing item: $foodItem.id, ${foodItem.foodName}, ${foodItem.foodDescription}")
-                    repository.updateFoodItem(foodItem)
-                    _foodItemUpsertResult.value = FoodItemUpsertResult.Updated(foodItem)
+                    Timber.d("Updating existing item: $pantryItem.id, ${pantryItem.pantryItemName}, ${pantryItem.pantryItemDescription}")
+                    repository.updatePantryItem(pantryItem)
+                    _pantryItemUpsertResult.value = PantryItemUpsertResult.Updated(pantryItem)
 
-                    repository.getFoodItemById(foodItem.id).collect { updatedItem ->
-                        _foodItems.value = _foodItems.value.map {
+                    repository.getPantryItemById(pantryItem.id).collect { updatedItem ->
+                        _pantryItems.value = _pantryItems.value.map {
                             if (it.id == updatedItem.id) updatedItem else it
                         }
                     }
                 } else {
                     // Insert the new item into the database
-                    repository.insertFoodItem(foodItem)
-                    _foodItemUpsertResult.value = FoodItemUpsertResult.Inserted(foodItem)
+                    repository.insertPantryItem(pantryItem)
+                    _pantryItemUpsertResult.value = PantryItemUpsertResult.Inserted(pantryItem)
                 }
             } catch (e: Exception) {
-                _foodItemUpsertResult.value = FoodItemUpsertResult.Error(e)
+                _pantryItemUpsertResult.value = PantryItemUpsertResult.Error(e)
             }
         }
     }
 
-    fun deleteFoodItemFromDatabase(foodItem: FoodItemEntity) {
+    fun deletePantryItemFromDatabase(pantryItem: PantryItemEntity) {
         viewModelScope.launch {
-            repository.deleteFoodItem(foodItem)
+            repository.deletePantryItem(pantryItem)
         }
     }
 
@@ -119,10 +115,10 @@ class BasketCaseViewModel(
     }
 }
 
-sealed class FoodItemUpsertResult {
-    data class Updated(val foodItem: FoodItemEntity) : FoodItemUpsertResult()
-    data class Inserted(val foodItem: FoodItemEntity) : FoodItemUpsertResult()
-    data class Error(val exception: Exception) : FoodItemUpsertResult()
+sealed class PantryItemUpsertResult {
+    data class Updated(val pantryItem: PantryItemEntity) : PantryItemUpsertResult()
+    data class Inserted(val pantryItem: PantryItemEntity) : PantryItemUpsertResult()
+    data class Error(val exception: Exception) : PantryItemUpsertResult()
 }
 
 sealed class MarketUpsertResult {

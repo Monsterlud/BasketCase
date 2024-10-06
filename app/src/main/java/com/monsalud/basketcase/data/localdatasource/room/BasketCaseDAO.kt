@@ -10,31 +10,31 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FoodItemDao {
+interface PantryItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(foodItem: FoodItemEntity)
+    suspend fun insert(pantryItem: PantryItemEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(foodItems: List<FoodItemEntity>)
+    suspend fun insertAll(pantryItems: List<PantryItemEntity>)
 
-    @Query("SELECT * FROM FoodItemEntity WHERE food_name = :name AND food_description = :description LIMIT 1")
-    fun getFoodItemByNameAndDescription(name: String, description: String? =  null): Flow<FoodItemEntity?>
+    @Query("SELECT * FROM PantryItemEntity WHERE pantry_item_name = :name AND pantry_item_description = :description LIMIT 1")
+    fun getPantryItemByNameAndDescription(name: String, description: String? =  null): Flow<PantryItemEntity?>
     @Update
-    suspend fun update(foodItem: FoodItemEntity)
+    suspend fun update(pantryItem: PantryItemEntity)
 
     @Delete
-    suspend fun delete(foodItem: FoodItemEntity)
+    suspend fun delete(pantryItem: PantryItemEntity)
 
-    @Query("DELETE FROM FoodItemEntity")
+    @Query("DELETE FROM PantryItemEntity")
     fun deleteAll()
 
-    @Query("SELECT * FROM FoodItemEntity")
-    fun getAll(): Flow<List<FoodItemEntity>>
+    @Query("SELECT * FROM PantryItemEntity")
+    fun getAll(): Flow<List<PantryItemEntity>>
 
-    @Query("SELECT * FROM FoodItemEntity WHERE id = :id")
-    fun getById(id: Long): Flow<FoodItemEntity>
+    @Query("SELECT * FROM PantryItemEntity WHERE id = :id")
+    fun getById(id: Long): Flow<PantryItemEntity>
 
-    @Query("SELECT COUNT(*) FROM FoodItemEntity")
+    @Query("SELECT COUNT(*) FROM PantryItemEntity")
     suspend fun getCount(): Int
 }
 

@@ -4,16 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.monsalud.basketcase.data.localdatasource.DefaultData
-import com.monsalud.basketcase.data.localdatasource.DefaultData.foodItems
 import com.monsalud.basketcase.data.localdatasource.DefaultData.markets
+import com.monsalud.basketcase.data.localdatasource.DefaultData.pantryItems
 import com.monsalud.basketcase.data.localdatasource.DefaultData.shoppingLists
 import kotlinx.coroutines.flow.first
 import timber.log.Timber
 
 @Database(
     entities = [
-        FoodItemEntity::class,
+        PantryItemEntity::class,
         ItemToPurchaseEntity::class,
         MarketEntity::class,
         ShoppingListEntity::class,
@@ -23,7 +22,7 @@ import timber.log.Timber
     exportSchema = false)
 abstract class BasketCaseDatabase : RoomDatabase() {
 
-    abstract fun foodItemDao(): FoodItemDao
+    abstract fun pantryItemDao(): PantryItemDao
     abstract fun itemToPurchaseDao(): ItemToPurchaseDao
     abstract fun marketDao(): MarketDao
     abstract fun shoppingListDao(): ShoppingListDao
@@ -33,8 +32,8 @@ abstract class BasketCaseDatabase : RoomDatabase() {
         if (marketDao().getCount() == 0) {
             marketDao().insertAll(markets = markets)
         }
-        if (foodItemDao().getCount() == 0) {
-            foodItemDao().insertAll(foodItems = foodItems)
+        if (pantryItemDao().getCount() == 0) {
+            pantryItemDao().insertAll(pantryItems = pantryItems)
         }
         if (shoppingListDao().getCount() == 0) {
             shoppingListDao().insertAll(shoppingList = shoppingLists)

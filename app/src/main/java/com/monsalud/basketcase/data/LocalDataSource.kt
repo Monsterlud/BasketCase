@@ -1,8 +1,8 @@
 package com.monsalud.basketcase.data
 
-import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
 import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseEntity
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
+import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListItemAssociation
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListWithItems
@@ -10,15 +10,15 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocalDataSource {
 
-    // FoodItemEntity
-    suspend fun insertFoodItem(foodItem: FoodItemEntity)
-    suspend fun insertAllFoodItems(foodItems: List<FoodItemEntity>)
-    suspend fun updateFoodItem(foodItem: FoodItemEntity)
-    suspend fun deleteFoodItem(foodItem: FoodItemEntity)
-    suspend fun deleteAllFoodItems()
-    fun getAllFoodItems(): Flow<List<FoodItemEntity>>
-    fun getFoodItemById(id: Long): Flow<FoodItemEntity>
-    suspend fun getFoodItemByNameAndDescription(name: String, description: String? = null): Flow<FoodItemEntity?>
+    // PantryItemEntity
+    suspend fun insertPantryItem(pantryItem: PantryItemEntity)
+    suspend fun insertAllPantryItems(pantryItem: List<PantryItemEntity>)
+    suspend fun updatePantryItem(pantryItem: PantryItemEntity)
+    suspend fun deletePantryItem(pantryItem: PantryItemEntity)
+    suspend fun deleteAllPantryItems()
+    fun getAllPantryItems(): Flow<List<PantryItemEntity>>
+    fun getPantryItemById(id: Long): Flow<PantryItemEntity>
+    suspend fun getPantryItemByNameAndDescription(name: String, description: String? = null): Flow<PantryItemEntity?>
 
     // MarketEntity
     suspend fun insertMarket(market: MarketEntity)

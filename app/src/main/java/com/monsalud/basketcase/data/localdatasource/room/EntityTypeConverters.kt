@@ -4,31 +4,31 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.monsalud.basketcase.domain.model.AmountType
-import com.monsalud.basketcase.domain.model.FoodCategory
-import com.monsalud.basketcase.domain.model.FoodItem
 import com.monsalud.basketcase.domain.model.Market
 import com.monsalud.basketcase.domain.model.MarketType
+import com.monsalud.basketcase.domain.model.PantryCategory
+import com.monsalud.basketcase.domain.model.PantryItem
 
 class EntityTypeConverters {
     @TypeConverter
-    fun fromFoodCategory(value: FoodCategory): String {
-        return value.getFoodCategoryName()
+    fun fromPantryCategory(value: PantryCategory): String {
+        return value.getPantryCategoryName()
     }
 
     @TypeConverter
-    fun toFoodCategory(value: String): FoodCategory {
+    fun toPantryCategory(value: String): PantryCategory {
         return when (value) {
-            "Fruit" -> FoodCategory.FRUIT
-            "Vegetable" -> FoodCategory.VEGETABLE
-            "Pantry" -> FoodCategory.PANTRY
-            "Meat" -> FoodCategory.MEAT
-            "Poultry" -> FoodCategory.POULTRY
-            "Seafood" -> FoodCategory.SEAFOOD
-            "Dairy" -> FoodCategory.DAIRY
-            "Baked Good" -> FoodCategory.BAKEDGOOD
-            "Beverage" -> FoodCategory.BEVERAGE
-            "Kitchen Supply" -> FoodCategory.KITCHENSUPPLY
-            else -> FoodCategory.MISCELLANEOUS
+            "Fruit" -> PantryCategory.FRUIT
+            "Vegetable" -> PantryCategory.VEGETABLE
+            "Pantry" -> PantryCategory.PANTRY
+            "Meat" -> PantryCategory.MEAT
+            "Poultry" -> PantryCategory.POULTRY
+            "Seafood" -> PantryCategory.SEAFOOD
+            "Dairy" -> PantryCategory.DAIRY
+            "Baked Good" -> PantryCategory.BAKEDGOOD
+            "Beverage" -> PantryCategory.BEVERAGE
+            "Kitchen Supply" -> PantryCategory.KITCHENSUPPLY
+            else -> PantryCategory.MISCELLANEOUS
         }
     }
 
@@ -65,16 +65,16 @@ class EntityTypeConverters {
     }
 
     @TypeConverter
-    fun fromFoodItem(foodItem: FoodItem): String {
+    fun fromPantryItem(pantryItem: PantryItem): String {
         val gson = Gson()
-        return gson.toJson(foodItem)
+        return gson.toJson(pantryItem)
     }
 
     @TypeConverter
-    fun toFoodItem(foodItemString: String): FoodItem {
+    fun toPantryItem(pantryItemString: String): PantryItem {
         val gson = Gson()
-        val type = object : TypeToken<FoodItem>() {}.type
-        return gson.fromJson(foodItemString, type)
+        val type = object : TypeToken<PantryItem>() {}.type
+        return gson.fromJson(pantryItemString, type)
     }
 
     @TypeConverter

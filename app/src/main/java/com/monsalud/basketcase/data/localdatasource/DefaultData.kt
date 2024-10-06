@@ -1,13 +1,13 @@
 package com.monsalud.basketcase.data.localdatasource
 
-import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
-import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
-import com.monsalud.basketcase.domain.model.FoodCategory
+import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
+import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.domain.model.MarketType
+import com.monsalud.basketcase.domain.model.PantryCategory
 
 object DefaultData {
-    // todo: remove the dummy data after setting up ui. keep only foodItems.
+    // todo: remove the dummy data after setting up ui. keep only pantryItems.
 
     val markets = listOf(
         MarketEntity(
@@ -102,144 +102,145 @@ object DefaultData {
         ),
     )
 
-    val foodItems = listOf(
-        FoodItemEntity(
+    val pantryItems = listOf(
+        PantryItemEntity(
             id = 1,
-            foodName = "Bananas",
-            foodCategory = FoodCategory.FRUIT
+            pantryItemName = "Bananas",
+            pantryItemCategory = PantryCategory.FRUIT
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 2,
-            foodName = "Anchovies",
-            foodCategory = FoodCategory.PANTRY
+            pantryItemName = "Anchovies",
+            pantryItemCategory = PantryCategory.PANTRY
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 3,
-            foodName = "AP Flour",
-            foodCategory = FoodCategory.PANTRY
+            pantryItemName = "AP Flour",
+            pantryItemCategory = PantryCategory.PANTRY
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 4,
-            foodName = "Salmon",
-            foodDescription = "Filet",
-            foodCategory = FoodCategory.SEAFOOD
+            pantryItemName = "Salmon",
+            pantryItemDescription = "Filet",
+            pantryItemCategory = PantryCategory.SEAFOOD
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 5,
-            foodName = "Milk",
-            foodDescription = "Skim",
-            foodCategory = FoodCategory.DAIRY
+            pantryItemName = "Milk",
+            pantryItemDescription = "Skim",
+            pantryItemCategory = PantryCategory.DAIRY
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 6,
-            foodName = "Hot Sauce",
-            foodDescription = "Tabasco",
-            foodCategory = FoodCategory.PANTRY
+            pantryItemName = "Hot Sauce",
+            pantryItemDescription = "Tabasco",
+            pantryItemCategory = PantryCategory.PANTRY
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 7,
-            foodName = "Cheese",
-            foodDescription = "Cheddar",
-            foodCategory = FoodCategory.DAIRY
+            pantryItemName = "Cheese",
+            pantryItemDescription = "Cheddar",
+            pantryItemCategory = PantryCategory.DAIRY
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 8,
-            foodName = "Garlic",
-            foodDescription = "Whole",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Garlic",
+            pantryItemDescription = "Whole",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 9,
-            foodName = "Bread",
-            foodDescription = "Sourdough",
-            foodCategory = FoodCategory.BAKEDGOOD
+            pantryItemName = "Bread",
+            pantryItemDescription = "Sourdough",
+            pantryItemCategory = PantryCategory.BAKEDGOOD
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 10,
-            foodName = "Bread",
-            foodDescription = "Whole Wheat",
-            foodCategory = FoodCategory.BAKEDGOOD
+            pantryItemName = "Bread",
+            pantryItemDescription = "Whole Wheat",
+            pantryItemCategory = PantryCategory.BAKEDGOOD
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 11,
-            foodName = "Broccolini",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Broccolini",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 12,
-            foodName = "Broccoli Rabe",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Broccoli Rabe",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 13,
-            foodName = "Kale",
-            foodDescription = "Russian",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Kale",
+            pantryItemDescription = "Russian",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 14,
-            foodName = "Cheese",
-            foodDescription = "Parmesan",
-            foodCategory = FoodCategory.DAIRY
+            pantryItemName = "Cheese",
+            pantryItemDescription = "Parmesan",
+            pantryItemCategory = PantryCategory.DAIRY
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 15,
-            foodName = "Onions",
-            foodDescription = "Yellow",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Onions",
+            pantryItemDescription = "Yellow",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 16,
-            foodName = "Onions",
-            foodDescription = "Green",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Onions",
+            pantryItemDescription = "Green",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 17,
-            foodName = "Onions",
-            foodDescription = "White",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Onions",
+            pantryItemDescription = "White",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 18,
-            foodName = "Onions",
-            foodDescription = "Red",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Onions",
+            pantryItemDescription = "Red",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 19,
-            foodName = "Onions",
-            foodDescription = "Sweet",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Onions",
+            pantryItemDescription = "Sweet",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 20,
-            foodName = "Onions",
-            foodDescription = "Pearl",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Onions",
+            pantryItemDescription = "Pearl",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 21,
-            foodName = "Potatoes",
-            foodDescription = "Russet",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Potatoes",
+            pantryItemDescription = "Russet",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 22,
-            foodName = "Potatoes",
-            foodDescription = "Gold",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Potatoes",
+            pantryItemDescription = "Gold",
+            pantryItemCategory = PantryCategory.VEGETABLE
         ),
-        FoodItemEntity(
+        PantryItemEntity(
             id = 23,
-            foodName = "Potatoes",
-            foodDescription = "New",
-            foodCategory = FoodCategory.VEGETABLE
+            pantryItemName = "Potatoes",
+            pantryItemDescription = "New",
+            pantryItemCategory = PantryCategory.VEGETABLE
         )
     )
 
     val shoppingLists = listOf(
         ShoppingListEntity(1, "Weekly Groceries", System.currentTimeMillis()),
-        ShoppingListEntity(2, "Goodbye Natalie...", System.currentTimeMillis()),
+        ShoppingListEntity(2, "Spanish Tapas Party", System.currentTimeMillis()),
+        ShoppingListEntity(3, "Meatloaf"), System.currentTimeMillis(),
     )
 }

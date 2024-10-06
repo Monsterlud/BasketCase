@@ -1,15 +1,15 @@
 package com.monsalud.basketcase.domain.model
 
-data class FoodItem(
+data class PantryItem(
     val id: Long,
     val name: String,
-    val category: FoodCategory = FoodCategory.MISCELLANEOUS,
+    val category: PantryCategory = PantryCategory.MISCELLANEOUS,
 )
 
-enum class FoodCategory {
+enum class PantryCategory {
     FRUIT, VEGETABLE, PANTRY, MEAT, POULTRY, SEAFOOD, DAIRY, BAKEDGOOD, BEVERAGE, KITCHENSUPPLY, MISCELLANEOUS;
 
-    fun getFoodCategoryName(): String {
+    fun getPantryCategoryName(): String {
         return when (this) {
             FRUIT -> "Fruit"
             VEGETABLE -> "Vegetable"

@@ -29,24 +29,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
-import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
-import com.monsalud.basketcase.domain.model.FoodCategory
+import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
+import com.monsalud.basketcase.domain.model.PantryCategory
 import com.monsalud.basketcase.ui.theme.spacing
 import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddItemsBottomSheetContent(
-    foodItem: FoodItemEntity? = null,
-    onFoodItemAdded: (FoodItemEntity) -> Unit,
+fun AddPantryItemBottomSheetContent(
+    pantryItem: PantryItemEntity? = null,
+    onPantryItemAdded: (PantryItemEntity) -> Unit,
 ) {
-    var selectedFoodCategory by remember(foodItem) {
-        mutableStateOf(foodItem?.foodCategory ?: FoodCategory.MISCELLANEOUS)
+    var selectedPantryItemCategory by remember(pantryItem) {
+        mutableStateOf(pantryItem?.pantryItemCategory ?: PantryCategory.MISCELLANEOUS)
     }
-    var foodItemName by remember(foodItem) { mutableStateOf(foodItem?.foodName ?: "") }
-    var foodItemDescription by remember(foodItem) {
+    var pantryItemName by remember(pantryItem) { mutableStateOf(pantryItem?.pantryItemName ?: "") }
+    var pantryItemDescription by remember(pantryItem) {
         mutableStateOf(
-            foodItem?.foodDescription ?: ""
+            pantryItem?.pantryItemDescription ?: ""
         )
     }
     var expanded by remember { mutableStateOf(false) }
@@ -57,21 +57,21 @@ fun AddItemsBottomSheetContent(
             .padding(MaterialTheme.spacing.medium)
     ) {
         Text(
-            text = if (foodItem == null) "Add Food Item" else "Update Food Item",
+            text = if (pantryItem == null) "Add Pantry Item" else "Update Pantry Item",
             style = MaterialTheme.typography.headlineSmall
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         OutlinedTextField(
-            value = foodItemName,
-            onValueChange = { foodItemName = it },
-            label = { Text("Food Item Name (e.g. \"Onion\")") },
+            value = pantryItemName,
+            onValueChange = { pantryItemName = it },
+            label = { Text("Pantry Item Name (e.g. \"Onion\")") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         OutlinedTextField(
-            value = foodItemDescription,
-            onValueChange = { foodItemDescription = it },
-            label = { Text("Food Item Description (e.g. \"Yellow\")") },
+            value = pantryItemDescription,
+            onValueChange = { pantryItemDescription = it },
+            label = { Text("Pantry Item Description (e.g. \"Yellow\")") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
@@ -96,7 +96,7 @@ fun AddItemsBottomSheetContent(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = selectedFoodCategory.getFoodCategoryName(),
+                        text = selectedPantryItemCategory.getPantryCategoryName(),
                         modifier = Modifier
                             .weight(1f)
                     )
@@ -111,13 +111,13 @@ fun AddItemsBottomSheetContent(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-                FoodCategory.entries.forEach { foodCategory ->
+                PantryCategory.entries.forEach { pantryItemCategory ->
                     DropdownMenuItem(
                         onClick = {
-                            selectedFoodCategory = foodCategory
+                            selectedPantryItemCategory = pantryItemCategory
                             expanded = false
                         },
-                        text = { Text(foodCategory.getFoodCategoryName()) }
+                        text = { Text(pantryItemCategory.getPantryCategoryName()) }
                     )
                 }
             }
@@ -125,24 +125,24 @@ fun AddItemsBottomSheetContent(
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
         Button(
             onClick = {
-                Timber.d("Add/Update Food Item Button Clicked")
-                var newFoodItem: FoodItemEntity? = null
-                newFoodItem = foodItem?.copy(
-                    foodName = foodItemName,
-                    foodDescription = foodItemDescription,
-                    foodCategory = selectedFoodCategory,
+                Timber.d("Add/Update Pantry Item Button Clicked")
+                var newPantryItem: PantryItemEntity? = null
+                newPantryItem = pantryItem?.copy(
+                    pantryItemName = pantryItemName,
+                    pantryItemDescription = pantryItemDescription,
+                    pantryItemCategory = selectedPantryItemCategory,
                 )
-                    ?: FoodItemEntity(
-                        foodName = foodItemName,
-                        foodDescription = foodItemDescription,
-                        foodCategory = selectedFoodCategory,
+                    ?: PantryItemEntity(
+                        pantryItemName = pantryItemName,
+                        pantryItemDescription = pantryItemDescription,
+                        pantryItemCategory = selectedPantryItemCategory,
                     )
-                onFoodItemAdded(newFoodItem)
+                onPantryItemAdded(newPantryItem)
             },
             modifier = Modifier.align(Alignment.End),
-            enabled = foodItemName.isNotBlank()
+            enabled = pantryItemName.isNotBlank()
         ) {
-            Text(if (foodItem == null) "Add Food Item" else "Update Food Item")
+            Text(if (pantryItem == null) "Add Pantry Item" else "Update Pantry Item")
         }
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
     }

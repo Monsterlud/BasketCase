@@ -1,14 +1,10 @@
 package com.monsalud.basketcase
 
 import android.app.Application
-import com.monsalud.basketcase.data.localdatasource.DefaultData.foodItems
-import com.monsalud.basketcase.data.localdatasource.DefaultData.markets
-import com.monsalud.basketcase.data.localdatasource.DefaultData.shoppingLists
 import com.monsalud.basketcase.data.localdatasource.room.BasketCaseDatabase
 import com.monsalud.basketcase.di.appModule
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext

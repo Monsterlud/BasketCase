@@ -1,8 +1,8 @@
 package com.monsalud.basketcase.data
 
-import com.monsalud.basketcase.data.localdatasource.room.FoodItemEntity
 import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseEntity
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
+import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListItemAssociation
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListWithItems
@@ -16,32 +16,31 @@ class BasketCaseRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
 ) : BasketCaseRepository {
 
-    // FoodItemEntity
-    override suspend fun insertFoodItem(foodItem: FoodItemEntity) =
-        localDataSource.insertFoodItem(foodItem)
+    // PantryItemEntity
+    override suspend fun insertPantryItem(pantryItem: PantryItemEntity) =
+        localDataSource.insertPantryItem(pantryItem)
 
-    override suspend fun insertAllFoodItems(foodItems: List<FoodItemEntity>) =
-        localDataSource.insertAllFoodItems(foodItems)
+    override suspend fun insertAllPantryItems(pantryItem: List<PantryItemEntity>) =
+        localDataSource.insertAllPantryItems(pantryItem)
 
-    override suspend fun updateFoodItem(foodItem: FoodItemEntity) =
-        localDataSource.updateFoodItem(foodItem)
+    override suspend fun updatePantryItem(pantryItem: PantryItemEntity) =
+        localDataSource.updatePantryItem(pantryItem)
 
+    override suspend fun deletePantryItem(pantryItem: PantryItemEntity) =
+        localDataSource.deletePantryItem(pantryItem)
 
-    override suspend fun deleteFoodItem(foodItem: FoodItemEntity) =
-        localDataSource.deleteFoodItem(foodItem)
+    override suspend fun deleteAllPantryItems() = localDataSource.deleteAllPantryItems()
 
-    override suspend fun deleteAllFoodItems() = localDataSource.deleteAllFoodItems()
+    override fun getAllPantryItems(): Flow<List<PantryItemEntity>> = localDataSource.getAllPantryItems()
 
-    override fun getAllFoodItems(): Flow<List<FoodItemEntity>> = localDataSource.getAllFoodItems()
+    override fun getPantryItemById(id: Long): Flow<PantryItemEntity> =
+        localDataSource.getPantryItemById(id)
 
-    override fun getFoodItemById(id: Long): Flow<FoodItemEntity> =
-        localDataSource.getFoodItemById(id)
-
-    override suspend fun getFoodItemByNameAndDescription(
+    override suspend fun getPantryItemByNameAndDescription(
         name: String,
         description: String?
-    ): Flow<FoodItemEntity?> {
-        return localDataSource.getFoodItemByNameAndDescription(name, description)
+    ): Flow<PantryItemEntity?> {
+        return localDataSource.getPantryItemByNameAndDescription(name, description)
             .map { it }
             .onEmpty { emit(null) }
     }
