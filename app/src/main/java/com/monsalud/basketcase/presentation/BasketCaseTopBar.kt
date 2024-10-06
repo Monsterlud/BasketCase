@@ -1,6 +1,7 @@
 package com.monsalud.basketcase.presentation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -10,7 +11,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.monsalud.basketcase.presentation.components.InstructionsDialog
 import com.monsalud.basketcase.presentation.navigation.Screen
 import com.monsalud.basketcase.presentation.navigation.toRoute
 import kotlinx.coroutines.flow.StateFlow
@@ -24,6 +29,7 @@ fun BasketCaseTopBar(
     modifier: Modifier = Modifier
 ) {
     val currentRoute by currentRoute.collectAsState()
+    var showInstructionsDialog by remember { mutableStateOf(false) }
 
     val text = when (currentRoute.toRoute()) {
         "main_screen" -> "BasketCase | Lists"
@@ -42,7 +48,21 @@ fun BasketCaseTopBar(
                 )
             }
         },
+        actions = {
+            IconButton(onClick = { showInstructionsDialog = true }) {
+                Icon(
+                    imageVector = Icons.Filled.Info,
+                    contentDescription = "Open Instructions Dialog"
+                )
+            }
+
+        },
 
         modifier = modifier
     )
+    if (showInstructionsDialog) {
+        InstructionsDialog(
+            onDismiss = { showInstructionsDialog = false },
+        )
+    }
 }

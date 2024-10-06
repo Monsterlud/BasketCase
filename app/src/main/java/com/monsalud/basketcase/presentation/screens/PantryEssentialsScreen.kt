@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -25,6 +27,8 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.material3.surfaceColorAtElevation
@@ -61,7 +65,19 @@ fun PantryEssentialsScreen(
     val context = LocalContext.current
 
     val pantryItems by viewModel.pantryItems.collectAsStateWithLifecycle()
-    val sortedPantryItems = remember(pantryItems) {
+
+    var searchText by remember { mutableStateOf("") }
+    val filteredPantryItems = remember(pantryItems, searchText) {
+        pantryItems.filter { pantryItem ->
+            pantryItem.pantryItemName.contains(searchText, ignoreCase = true) ||
+                    pantryItem.pantryItemDescription?.contains(
+                        searchText,
+                        ignoreCase = true
+                    ) == true
+        }
+    }
+
+    val sortedPantryItems = remember(filteredPantryItems) {
         pantryItems.sortedWith(
             compareBy<PantryItemEntity> { it.pantryItemCategory }.thenBy { it.pantryItemName.lowercase() }
         )
@@ -77,8 +93,28 @@ fun PantryEssentialsScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
+            TextField(
+                value = searchText,
+                onValueChange = { searchText = it },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search"
+                    )
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    focusedIndicatorColor = Color.Transparent, // Hide the focused indicator
+                    unfocusedIndicatorColor = Color.Transparent, // Hide the unfocused indicator
+                    // ... other color customizations if needed ...
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .clip(CircleShape),
+                placeholder = { Text(text = "Search pantry items") }
+            )
             Text(
-                text = "add or edit items here that you might want to purchase in the future",
+                text = "add or edit items here that you might want to purchase in the future. consider this your master inventory of food items.",
                 modifier = modifier
                     .padding(16.dp),
             )
@@ -88,7 +124,7 @@ fun PantryEssentialsScreen(
                     .padding(8.dp)
             ) {
                 items(
-                    items = sortedPantryItems,
+                    items = filteredPantryItems,
                     key = { it.id },
                 ) { pantryItem ->
 
@@ -123,9 +159,11 @@ fun PantryEssentialsScreen(
                             backgroundContent = {
                                 val (color, icon) = when (dismissState.targetValue) {
                                     SwipeToDismissBoxValue.Settled -> {
-                                        val elevatedColor = MaterialTheme.colorScheme.surfaceColorAtElevation(5.dp)
+                                        val elevatedColor =
+                                            MaterialTheme.colorScheme.surfaceColorAtElevation(5.dp)
                                         elevatedColor to null
                                     }
+
                                     SwipeToDismissBoxValue.EndToStart -> deleteRed to Icons.Default.Delete
                                     SwipeToDismissBoxValue.StartToEnd -> editGreen to Icons.Default.Edit
                                     else -> MaterialTheme.colorScheme.background to null

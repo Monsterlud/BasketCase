@@ -241,6 +241,6 @@ object DefaultData {
     val shoppingLists = listOf(
         ShoppingListEntity(1, "Weekly Groceries", System.currentTimeMillis()),
         ShoppingListEntity(2, "Spanish Tapas Party", System.currentTimeMillis()),
-        ShoppingListEntity(3, "Meatloaf"), System.currentTimeMillis(),
+        ShoppingListEntity(3, "Meatloaf", System.currentTimeMillis()),
     )
 }
