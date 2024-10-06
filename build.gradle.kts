@@ -1,5 +1,17 @@
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
-    id("com.android.application") version "8.2.0" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.0" apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.kotlin) apply false
+    alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.parcelize) apply false
+    alias(libs.plugins.safeArgs) apply false
+
+}
+
+buildscript {
+    dependencies {
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:12.1.0")
+    }
 }
