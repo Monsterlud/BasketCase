@@ -73,7 +73,8 @@ fun PantryEssentialsScreen(
                     pantryItem.pantryItemDescription?.contains(
                         searchText,
                         ignoreCase = true
-                    ) == true
+                    ) == true ||
+                    pantryItem.pantryItemCategory.name.contains(searchText, ignoreCase = true)
         }.sortedWith(
             compareBy<PantryItemEntity> { it.pantryItemCategory }.thenBy { it.pantryItemName.lowercase() }
         )
@@ -104,6 +105,7 @@ fun PantryEssentialsScreen(
                     unfocusedIndicatorColor = Color.Transparent, // Hide the unfocused indicator
                     // ... other color customizations if needed ...
                 ),
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -111,7 +113,7 @@ fun PantryEssentialsScreen(
                 placeholder = { Text(text = "Search pantry items") }
             )
             Text(
-                text = "add or edit items here that you might want to purchase in the future. consider this your master inventory of food items.",
+                text = "add or edit items here that you might want to purchase in the future. consider this your master inventory of food items. Swipe to edit or delete an item.",
                 modifier = modifier
                     .padding(16.dp),
             )

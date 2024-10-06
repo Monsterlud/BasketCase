@@ -1,7 +1,5 @@
 package com.monsalud.basketcase.presentation.screens
 
-//import com.monsalud.basketcase.ui.theme.Colors.DeleteRed
-//import com.monsalud.basketcase.ui.theme.Colors.EditGreen
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -64,6 +62,7 @@ fun MarketsScreen(
         markets.sortedBy { it.marketName.lowercase() }
     }
     var marketToEdit by remember { mutableStateOf<MarketEntity?>(null) }
+
     var isBottomSheetOpen by remember { mutableStateOf(false) }
     var editActionCounter by remember { mutableStateOf(0) }
 
@@ -74,7 +73,7 @@ fun MarketsScreen(
             modifier = Modifier.fillMaxSize()
         ) {
             Text(
-                text = "add or edit your favorite places to shop",
+                text = "add or edit your favorite places to shop. Swipe to edit or delete or edit",
                 modifier = modifier
                     .padding(16.dp),
             )
