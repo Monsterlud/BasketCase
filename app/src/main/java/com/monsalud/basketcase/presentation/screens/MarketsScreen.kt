@@ -212,12 +212,15 @@ fun MarketsScreen(
         }
 
         if (isBottomSheetOpen) {
+            val modalBottomSheetState = rememberModalBottomSheetState(
+                skipPartiallyExpanded = true
+            )
             ModalBottomSheet(
                 onDismissRequest = {
                     isBottomSheetOpen = false
                     marketToEdit = null
                 },
-                sheetState = rememberModalBottomSheetState(),
+                sheetState = modalBottomSheetState,
             ) {
                 AddMarketBottomSheetContent(
                     market = marketToEdit,

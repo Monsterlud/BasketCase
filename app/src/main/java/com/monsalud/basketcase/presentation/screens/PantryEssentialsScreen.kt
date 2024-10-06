@@ -74,14 +74,11 @@ fun PantryEssentialsScreen(
                         searchText,
                         ignoreCase = true
                     ) == true
-        }
-    }
-
-    val sortedPantryItems = remember(filteredPantryItems) {
-        pantryItems.sortedWith(
+        }.sortedWith(
             compareBy<PantryItemEntity> { it.pantryItemCategory }.thenBy { it.pantryItemName.lowercase() }
         )
     }
+
     var pantryItemToEdit by remember { mutableStateOf<PantryItemEntity?>(null) }
 
     var isBottomSheetOpen by remember { mutableStateOf(false) }
@@ -255,12 +252,15 @@ fun PantryEssentialsScreen(
         }
 
         if (isBottomSheetOpen) {
+            val modalBottomSheetState = rememberModalBottomSheetState(
+                skipPartiallyExpanded = true,
+            )
             ModalBottomSheet(
                 onDismissRequest = {
                     isBottomSheetOpen = false
                     pantryItemToEdit = null
                 },
-                sheetState = rememberModalBottomSheetState(),
+                sheetState = modalBottomSheetState,
                 windowInsets = WindowInsets.ime
             ) {
                 AddPantryItemBottomSheetContent(
