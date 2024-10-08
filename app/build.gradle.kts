@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.compose.graphics)
     implementation(libs.compose.tooling)
     implementation(libs.material3)
+    implementation(libs.material.icons.extended)
     implementation(libs.androidx.google.fonts)
     implementation(libs.android.svg)
 

@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import com.monsalud.basketcase.presentation.screens.GroceryBasketScreen
 import com.monsalud.basketcase.presentation.screens.MainScreen
 import com.monsalud.basketcase.presentation.screens.MarketsScreen
-import com.monsalud.basketcase.presentation.screens.PantryEssentialsScreen
+import com.monsalud.basketcase.presentation.screens.PantryScreen
 
 @Composable
 fun BasketCaseNavigation(
@@ -28,7 +28,7 @@ fun BasketCaseNavigation(
             onScreenChange(Screen.MainScreen)
         }
         composable(route = Screen.PantryEssentialsScreen.route) {
-            PantryEssentialsScreen()
+            PantryScreen()
             onScreenChange(Screen.PantryEssentialsScreen)
         }
         composable(route = Screen.MarketsScreen.route) {

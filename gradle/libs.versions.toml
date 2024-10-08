@@ -47,6 +47,7 @@ compose-ui-test = { module = "androidx.compose.ui:ui-test-junit4" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 material3 = { module = "androidx.compose.material3:material3" }
+material-icons-extended = { module = "androidx.compose.material:material-icons-extended"}
 android-svg = { group = "com.caverock", name = "androidsvg-aar", version.ref = "androidSvg" }
 
 # Google

@@ -40,17 +40,19 @@ fun InstructionsDialog(
 ) {
     val titles = listOf(
         "Welcome to BasketCase!",
-        "Pantry Essentials:",
+        "Pantry:",
         "Markets:",
         "Shopping Lists:",
-        "Basket:"
+        "Basket:",
+        "Pro Tip:"
     )
     val items = listOf(
-        "BasketCase is a simple, yet powerful app that allows you to create and manage your shopping lists. \n\nHere are some easy instructions to get started.",
-        "Start by Adding, removing, or editing items in your Pantry that you might want to purchase in the future. \n\nThink of this as your own personal master inventory of food items.",
-        "Add, remove, or edit your favorite places to shop on the Markets Screen. \n\nYou will be able to assign a specific Market to anything you want to buy.",
-        "Create and manage your shopping lists. \n\nAs an example, you can have one weekly grocery list and another list for a special dinner party. \n\nIf you are shopping only for your dinner party just filter your Basket to that list.",
-        "This is your all-in-one shopping list that you can filter by market or by list. \n\nWhen you are at a specific market to shop for that special dinner party, just filter the list to that market and that list. \n\nYour basket is now focused on only what you need to buy!"
+        "BasketCase is a simple, yet powerful app that allows you to create and manage your shopping lists. \n\nHere are some easy instructions to get you started!",
+        "Start with your Pantry, which is an inventory of items that you might want to purchase in the future. \n\nWe've pre-loaded some items for you but feel free to add, remove, or edit this list to make it your own.",
+        "Next set up your Markets. \n\nThese can be grocery stores, butcher shops, bakeries, farmers markets, or any place that you will want to shop.",
+        "Finally, create and manage your Shopping Lists for different needs. \n\nThink 'Weekly Groceries' or 'Italian Dinner Party with Friends'. These lists help you stay organized.",
+        "This is where the magic happens! \n\nWhen you add items to a Shopping List, you are adding them to your Basket. Items in your Basket can be assigned to a specific Market. \n\nUse your Basket while shopping. Filter by Shopping List and/or Market to see exactly what you need, where you need it. No more forgotten items!",
+        "Your Basket contains items from all your Shopping Lists. It's the central hub for your shopping, making it easy to stay organized! \n\n(You can revisit these instructions at any time by clicking the 'Information' button on the top right of the screen)"
     )
     val pagerState = rememberPagerState(pageCount = { items.size })
 
@@ -61,7 +63,7 @@ fun InstructionsDialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .heightIn(max = 500.dp),
+                .heightIn(max = 600.dp),
             shape = RoundedCornerShape(16.dp),
             color = MaterialTheme.colorScheme.surface,
             tonalElevation = 8.dp

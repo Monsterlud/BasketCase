@@ -56,13 +56,13 @@ fun NavDrawer(
             route = Screen.MainScreen.route
         ),
         NavigationItem(
-            title = "Basket (your shopping list)",
+            title = "Basket",
             selectedIcon = ImageVector.vectorResource(id = R.drawable.shoppingbasket),
             unselectedIcon = ImageVector.vectorResource(id = R.drawable.shoppingbasket),
             route = Screen.GroceryBasketScreen.route
         ),
         NavigationItem(
-            title = "Pantry Essentials",
+            title = "Pantry",
             selectedIcon = ImageVector.vectorResource(id = R.drawable.groceries),
             unselectedIcon = ImageVector.vectorResource(id = R.drawable.groceries),
             route = Screen.PantryEssentialsScreen.route

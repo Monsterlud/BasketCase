@@ -57,7 +57,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PantryEssentialsScreen(
+fun PantryScreen(
     viewModel: BasketCaseViewModel = koinViewModel(),
     modifier: Modifier = Modifier,
     onAddPantryItemClick: () -> Unit = {},
@@ -126,7 +126,6 @@ fun PantryEssentialsScreen(
                     items = filteredPantryItems,
                     key = { it.id },
                 ) { pantryItem ->
-
                     key(pantryItem.id, editActionCounter) {
                         val dismissState = rememberSwipeToDismissBoxState(
                             confirmValueChange = { dismissValue ->
@@ -150,6 +149,9 @@ fun PantryEssentialsScreen(
 
                                     else -> false
                                 }
+                            },
+                            positionalThreshold = { distance: Float ->
+                                distance * 0.28f
                             }
                         )
 
@@ -286,5 +288,5 @@ fun PantryEssentialsScreen(
 @Composable
 @Preview
 fun PantryEssentialsScreenPreview() {
-    PantryEssentialsScreen(onAddPantryItemClick = {})
+    PantryScreen(onAddPantryItemClick = {})
 }

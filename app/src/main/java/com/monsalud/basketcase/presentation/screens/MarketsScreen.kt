@@ -105,6 +105,9 @@ fun MarketsScreen(
 
                                     else -> false
                                 }
+                            },
+                            positionalThreshold = { distance: Float ->
+                                distance * 0.28f
                             }
                         )
 
