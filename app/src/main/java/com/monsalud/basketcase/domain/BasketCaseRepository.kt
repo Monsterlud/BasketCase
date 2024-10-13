@@ -1,5 +1,6 @@
 package com.monsalud.basketcase.domain
 
+import com.monsalud.basketcase.data.localdatasource.datastore.BasketCaseDataStore
 import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseEntity
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
 import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
@@ -56,4 +57,12 @@ interface BasketCaseRepository {
     suspend fun getShoppingListsForItem(itemId: Long): List<ShoppingListItemAssociation>
     suspend fun isItemInShoppingList(listId: Long, itemId: Long): Boolean
     suspend fun getAllShoppingListItemAssociations(): List<ShoppingListItemAssociation>
+
+    // DataStore
+    suspend fun getUserPreferencesFlow(): Flow<BasketCaseDataStore.UserPreferences>
+    suspend fun updateHasSeenOnboardingInstructions(hasSeen: Boolean)
+    suspend fun updateHasSeenShoppingListInstructions(hasSeen: Boolean)
+    suspend fun updateHasSeenBasketInstructions(hasSeen: Boolean)
+    suspend fun updateHasSeenPantryInstructions(hasSeen: Boolean)
+    suspend fun updateHasSeenMarketInstructions(hasSeen: Boolean)
 }

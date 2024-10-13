@@ -1,5 +1,6 @@
 package com.monsalud.basketcase.data
 
+import com.monsalud.basketcase.data.localdatasource.datastore.BasketCaseDataStore
 import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseEntity
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
 import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
@@ -15,6 +16,8 @@ class BasketCaseRepositoryImpl(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
 ) : BasketCaseRepository {
+
+    /** Room Database Methods */
 
     // PantryItemEntity
     override suspend fun insertPantryItem(pantryItem: PantryItemEntity) =
@@ -127,4 +130,30 @@ class BasketCaseRepositoryImpl(
 
     override suspend fun getAllShoppingListItemAssociations(): List<ShoppingListItemAssociation> =
         localDataSource.getAllShoppingListItemAssociations()
+
+    /** Preferences DataStore Methods */
+
+    override suspend fun getUserPreferencesFlow(): Flow<BasketCaseDataStore.UserPreferences> {
+        return localDataSource.getUserPreferencesFlow()
+    }
+
+    override suspend fun updateHasSeenOnboardingInstructions(hasSeen: Boolean) {
+        localDataSource.updateHasSeenOnboardingInstructions(hasSeen)
+    }
+
+    override suspend fun updateHasSeenShoppingListInstructions(hasSeen: Boolean) {
+        localDataSource.updateHasSeenShoppingListInstructions(hasSeen)
+    }
+
+    override suspend fun updateHasSeenBasketInstructions(hasSeen: Boolean) {
+        localDataSource.updateHasSeenBasketInstructions(hasSeen)
+    }
+
+    override suspend fun updateHasSeenPantryInstructions(hasSeen: Boolean) {
+        localDataSource.updateHasSeenPantryInstructions(hasSeen)
+    }
+
+    override suspend fun updateHasSeenMarketInstructions(hasSeen: Boolean) {
+        localDataSource.updateHasSeenMarketInstructions(hasSeen)
+    }
 }

@@ -2,15 +2,22 @@ package com.monsalud.basketcase.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.monsalud.basketcase.data.localdatasource.datastore.BasketCaseDataStore
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
 import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.domain.BasketCaseRepository
 import com.monsalud.basketcase.presentation.navigation.Screen
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -31,10 +38,31 @@ class BasketCaseViewModel(
     val markets: StateFlow<List<MarketEntity>> = _markets.asStateFlow()
 
     private val _pantryItemUpsertResult = MutableStateFlow<PantryItemUpsertResult?>(null)
-    val pantryItemUpsertResult: StateFlow<PantryItemUpsertResult?> = _pantryItemUpsertResult.asStateFlow()
+    val pantryItemUpsertResult: StateFlow<PantryItemUpsertResult?> =
+        _pantryItemUpsertResult.asStateFlow()
 
     private val _marketUpsertResult = MutableStateFlow<MarketUpsertResult?>(null)
     val marketUpsertResult: StateFlow<MarketUpsertResult?> = _marketUpsertResult.asStateFlow()
+
+    private val _isLoadingPreferences = MutableStateFlow(true)
+    val isLoadingPreferences: StateFlow<Boolean> = _isLoadingPreferences.asStateFlow()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val userPreferencesFlow: StateFlow<BasketCaseDataStore.UserPreferences> = flow {
+        emit(repository.getUserPreferencesFlow())
+    }.onEach { _isLoadingPreferences.value = false }
+        .flatMapLatest { it }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = BasketCaseDataStore.UserPreferences(
+                hasSeenOnboardingInstructions = true,
+                hasSeenShoppingListInstructions = true,
+                hasSeenBasketInstructions = true,
+                hasSeenPantryInstructions = true,
+                hasSeenMarketInstructions = true,
+            )
+        )
 
     init {
         viewModelScope.launch {
@@ -113,6 +141,42 @@ class BasketCaseViewModel(
             repository.deleteMarket(market)
         }
     }
+
+    fun updateHasSeenOnboardingInstructions(hasSeen: Boolean) {
+        viewModelScope.launch {
+            repository.updateHasSeenOnboardingInstructions(hasSeen)
+        }
+    }
+
+    fun updateHasSeenShoppingListInstructions(hasSeen: Boolean) {
+        viewModelScope.launch {
+            repository.updateHasSeenShoppingListInstructions(hasSeen)
+        }
+    }
+
+    fun updateHasSeenBasketInstructions(hasSeen: Boolean) {
+        viewModelScope.launch {
+            repository.updateHasSeenBasketInstructions(hasSeen)
+        }
+    }
+
+    fun updateHasSeenPantryInstructions(hasSeen: Boolean) {
+        viewModelScope.launch {
+            repository.updateHasSeenPantryInstructions(hasSeen)
+        }
+    }
+
+    fun updateHasSeenMarketInstructions(hasSeen: Boolean) {
+        viewModelScope.launch {
+            repository.updateHasSeenMarketInstructions(hasSeen)
+        }
+    }
+
+    fun onOnboardingInstructionsSeen() {
+        viewModelScope.launch {
+            repository.updateHasSeenOnboardingInstructions(true)
+        }
+    }
 }
 
 sealed class PantryItemUpsertResult {
@@ -125,5 +189,4 @@ sealed class MarketUpsertResult {
     data class Updated(val market: MarketEntity) : MarketUpsertResult()
     data class Inserted(val market: MarketEntity) : MarketUpsertResult()
     data class Error(val exception: Exception) : MarketUpsertResult()
-
 }

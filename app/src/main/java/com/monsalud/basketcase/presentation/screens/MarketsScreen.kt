@@ -12,11 +12,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SwipeToDismissBox
@@ -27,6 +29,7 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -40,6 +43,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
 import com.monsalud.basketcase.presentation.components.AddMarketBottomSheetContent
@@ -66,17 +70,48 @@ fun MarketsScreen(
     var isBottomSheetOpen by remember { mutableStateOf(false) }
     var editActionCounter by remember { mutableStateOf(0) }
 
+    val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle()
+    val isLoadingPreferences by viewModel.isLoadingPreferences.collectAsStateWithLifecycle()
+
+    val showMarketInstructions by remember {
+        derivedStateOf {
+            !isLoadingPreferences && !userPreferences.hasSeenMarketInstructions
+        }
+    }
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(
-                text = "add or edit your favorite places to shop. Swipe to edit or delete or edit",
-                modifier = modifier
-                    .padding(16.dp),
-            )
+            if (showMarketInstructions) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                ) {
+                    Text(
+                        text = "add or edit your favorite places to shop. Swipe to edit or delete or edit",
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        modifier = modifier
+                            .padding(start = 24.dp, top = 12.dp, bottom = 12.dp, end = 64.dp),
+                    )
+                    IconButton(
+                        onClick = { viewModel.updateHasSeenMarketInstructions(true) },
+                        modifier = Modifier.align(Alignment.TopEnd)
+                            .padding(0.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Close Instructions",
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                    }
+                }
+            }
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()

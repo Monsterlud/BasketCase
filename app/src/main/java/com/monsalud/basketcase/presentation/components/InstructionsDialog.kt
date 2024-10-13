@@ -47,7 +47,7 @@ fun InstructionsDialog(
         "Pro Tip:"
     )
     val items = listOf(
-        "BasketCase is a simple, yet powerful app that allows you to create and manage your shopping lists. \n\nHere are some easy instructions to get you started!",
+        "BasketCase is a simple, yet powerful app that allows you to create and manage your shopping lists. \n\nSwipe for some easy instructions to get you started!",
         "Start with your Pantry, which is an inventory of items that you might want to purchase in the future. \n\nWe've pre-loaded some items for you but feel free to add, remove, or edit this list to make it your own.",
         "Next set up your Markets. \n\nThese can be grocery stores, butcher shops, bakeries, farmers markets, or any place that you will want to shop.",
         "Finally, create and manage your Shopping Lists for different needs. \n\nThink 'Weekly Groceries' or 'Italian Dinner Party with Friends'. These lists help you stay organized.",

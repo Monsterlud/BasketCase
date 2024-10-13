@@ -1,6 +1,7 @@
 package com.monsalud.basketcase.data.localdatasource
 
 import com.monsalud.basketcase.data.LocalDataSource
+import com.monsalud.basketcase.data.localdatasource.datastore.BasketCaseDataStore
 import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseDao
 import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseEntity
 import com.monsalud.basketcase.data.localdatasource.room.MarketDao
@@ -20,7 +21,10 @@ class LocalDataSourceImpl(
     private val itemToPurchaseDao: ItemToPurchaseDao,
     private val shoppingListDao: ShoppingListDao,
     private val shoppingListItemAssociationDao: ShoppingListItemAssociationDao,
+    private val dataStore: BasketCaseDataStore,
 ) : LocalDataSource {
+
+    /** Room Database Methods */
 
     // PantryItemEntity
     override suspend fun insertPantryItem(pantryItem: PantryItemEntity) = pantryItemDao.insert(pantryItem)
@@ -131,4 +135,29 @@ class LocalDataSourceImpl(
     override suspend fun getAllShoppingListItemAssociations(): List<ShoppingListItemAssociation> =
         shoppingListItemAssociationDao.getAllAssociations()
 
+    /** Preferences DataStore Methods */
+
+    override suspend fun getUserPreferencesFlow(): Flow<BasketCaseDataStore.UserPreferences> {
+        return dataStore.preferencesFlow
+    }
+
+    override suspend fun updateHasSeenOnboardingInstructions(hasSeen: Boolean) {
+        dataStore.updateHasSeenOnboardingInstructions(hasSeen)
+    }
+
+    override suspend fun updateHasSeenShoppingListInstructions(hasSeen: Boolean) {
+        dataStore.updateHasSeenShoppingListInstructions(hasSeen)
+    }
+
+    override suspend fun updateHasSeenBasketInstructions(hasSeen: Boolean) {
+        dataStore.updateHasSeenBasketInstructions(hasSeen)
+    }
+
+    override suspend fun updateHasSeenPantryInstructions(hasSeen: Boolean) {
+        dataStore.updateHasSeenPantryInstructions(hasSeen)
+    }
+
+    override suspend fun updateHasSeenMarketInstructions(hasSeen: Boolean) {
+        dataStore.updateHasSeenMarketInstructions(hasSeen)
+    }
 }

@@ -39,5 +39,6 @@ fun AddListBottomSheetContent() {
         ) {
             Text("Create List")
         }
+        Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
     }
 }

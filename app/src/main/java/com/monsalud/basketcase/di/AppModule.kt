@@ -6,6 +6,7 @@ import com.monsalud.basketcase.data.BasketCaseRepositoryImpl
 import com.monsalud.basketcase.data.LocalDataSource
 import com.monsalud.basketcase.data.RemoteDataSource
 import com.monsalud.basketcase.data.localdatasource.LocalDataSourceImpl
+import com.monsalud.basketcase.data.localdatasource.datastore.BasketCaseDataStore
 import com.monsalud.basketcase.data.localdatasource.room.BasketCaseDatabase
 import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseDao
 import com.monsalud.basketcase.data.localdatasource.room.MarketDao
@@ -24,7 +25,7 @@ val appModule = module {
 
     viewModel { BasketCaseViewModel(get()) }
     single { BasketCaseRepositoryImpl(get(), get()) } bind BasketCaseRepository::class
-    single { LocalDataSourceImpl(get(), get(), get(), get(), get()) } bind LocalDataSource::class
+    single { LocalDataSourceImpl(get(), get(), get(), get(), get(), get()) } bind LocalDataSource::class
     single { RemoteDataSourceImpl() } bind RemoteDataSource::class
 
     single { provideDatabase(get()) }
@@ -33,6 +34,8 @@ val appModule = module {
     single { provideItemToPurchaseDao(get()) }
     single { provideGroceryListDao(get()) }
     single { provideGroceryListItemAssociationDaoO(get()) }
+
+    single { BasketCaseDataStore(get()) }
 }
     fun provideDatabase(application: Application): BasketCaseDatabase {
         return Room.databaseBuilder(
@@ -61,6 +64,8 @@ val appModule = module {
     fun provideGroceryListItemAssociationDaoO(database: BasketCaseDatabase): ShoppingListItemAssociationDao {
         return database.shoppingListItemAssociationDao()
     }
+
+
 
 class AppModule {
     companion object {

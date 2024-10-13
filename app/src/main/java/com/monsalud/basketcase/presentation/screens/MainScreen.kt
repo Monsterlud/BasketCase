@@ -13,14 +13,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.monsalud.basketcase.data.localdatasource.DefaultData
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
@@ -43,11 +47,23 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MainScreen(
     shoppingLists: List<ShoppingListEntity> = DefaultData.shoppingLists,
-    modifier: Modifier = Modifier,
 ) {
     val viewModel: BasketCaseViewModel = koinViewModel()
     var isBottomSheetOpen by remember { mutableStateOf(false) }
-    var showInstructionsDialog by remember { mutableStateOf(true) }
+
+    val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle()
+    val isLoadingPreferences by viewModel.isLoadingPreferences.collectAsStateWithLifecycle()
+
+    val showOnboardingDialog by remember {
+        derivedStateOf {
+            !isLoadingPreferences && !userPreferences.hasSeenOnboardingInstructions
+        }
+    }
+    val showShoppingListInstructions by remember {
+        derivedStateOf {
+            !isLoadingPreferences && !userPreferences.hasSeenShoppingListInstructions
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -55,10 +71,34 @@ fun MainScreen(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(
-                text = "add as many different shopping lists as you like",
-                modifier = Modifier.padding(16.dp)
-            )
+            if (showShoppingListInstructions) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .padding(8.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                ) {
+                    Text(
+                        text = "add as many different shopping lists as you like",
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        modifier = Modifier.padding(start = 24.dp, top = 12.dp, bottom = 12.dp, end = 64.dp),
+                    )
+                    IconButton(
+                        onClick = { viewModel.updateHasSeenShoppingListInstructions(true) },
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(0.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Close Instructions",
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                        )
+                    }
+
+                }
+            }
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -129,9 +169,11 @@ fun MainScreen(
             AddListBottomSheetContent()
         }
     }
-    if (showInstructionsDialog) {
+    if (showOnboardingDialog) {
         InstructionsDialog(
-            onDismiss = { showInstructionsDialog = false },
+            onDismiss = {
+                viewModel.updateHasSeenOnboardingInstructions(true)
+            }
         )
     }
 }
