@@ -1,5 +1,6 @@
 package com.monsalud.basketcase.presentation.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -31,10 +33,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.monsalud.basketcase.R
 import com.monsalud.basketcase.data.localdatasource.DefaultData
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
 import com.monsalud.basketcase.presentation.BasketCaseViewModel
@@ -112,41 +118,41 @@ fun MainScreen(
                             .clip(RoundedCornerShape(8.dp))
                             .clickable { /* Handle item click */ }
                     ) {
-                        // Shopping List Block with default "Shopping List" title
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .background(MaterialTheme.colorScheme.secondary)
                                 .padding(8.dp)
                         ) {
-                            Text(
-                                text = "Shopping List",
-                                color = MaterialTheme.colorScheme.onSecondary,
-                                modifier = Modifier.align(Alignment.CenterEnd)
-                            )
-                        }
-                        // Shopping List Title block
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.secondaryContainer)
-                                .padding(0.dp)
-                        ) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(0.dp)
-                                    .clip(RoundedCornerShape(8.dp)) // Clip content to rounded corners
-                                    .clickable { /* Handle item click */ } // Make item clickable
+                                    .align(Alignment.CenterStart)
                             ) {
+                                Image(
+                                    imageVector = Icons.Filled.List,
+                                    contentDescription = "List Icon",
+                                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSecondary),
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                )
                                 Text(
                                     text = shoppingList.listName,
-                                    fontSize = 14.sp,
-                                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSecondary,
                                     modifier = Modifier
                                         .padding(8.dp),
                                 )
                             }
+                            Image(
+                                painter = painterResource(id = R.drawable.groceries),
+                                contentDescription = "Groceries Icon",
+                                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSecondary),
+                                modifier = Modifier
+                                    .align(Alignment.CenterEnd)
+                                    .padding(8.dp)
+                            )
                         }
                     }
                 }

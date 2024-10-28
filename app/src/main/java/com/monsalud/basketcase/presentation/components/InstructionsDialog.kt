@@ -1,6 +1,7 @@
 package com.monsalud.basketcase.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,9 +29,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.monsalud.basketcase.R
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,6 +62,13 @@ fun InstructionsDialog(
         "Your Basket contains items from all your Shopping Lists. It's the central hub for your shopping, making it easy to stay organized! \n\n(You can revisit these instructions at any time by clicking the 'Information' button on the top right of the screen)"
     )
     val pagerState = rememberPagerState(pageCount = { items.size })
+    val backgroundImage = painterResource(id = R.drawable.instructions_image)
+
+    val tintColor = if (isSystemInDarkTheme()) {
+        Color.Black.copy(alpha = 0.7f)
+    } else {
+        Color.White.copy(alpha = 0.7f)
+    }
 
     BasicAlertDialog(
         onDismissRequest = onDismiss,
@@ -70,7 +84,15 @@ fun InstructionsDialog(
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .paint(
+                        painter = backgroundImage,
+                        contentScale = ContentScale.Crop,
+                        colorFilter = ColorFilter.tint(
+                            color = tintColor,
+                            blendMode = BlendMode.SrcOver
+                        )
+                    ),
             ) {
                 IconButton(
                     onClick = onDismiss,
