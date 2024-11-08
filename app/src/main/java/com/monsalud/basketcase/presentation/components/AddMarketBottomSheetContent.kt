@@ -46,44 +46,46 @@ fun AddMarketBottomSheetContent(
     var expanded by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(MaterialTheme.spacing.medium)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(MaterialTheme.spacing.medium),
     ) {
         Text(
             text = if (market == null) "Add New Market" else "Update Market",
-            style = MaterialTheme.typography.headlineSmall
+            style = MaterialTheme.typography.headlineSmall,
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         OutlinedTextField(
             value = marketName,
             onValueChange = { marketName = it },
             label = { Text("Market Name") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         OutlinedTextField(
             value = marketAddress,
             onValueChange = { marketAddress = it },
             label = { Text("Market Address") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         ExposedDropdownMenuBox(
             expanded = expanded,
-            onExpandedChange = { expanded = !expanded }
+            onExpandedChange = { expanded = !expanded },
         ) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = RoundedCornerShape(4.dp)
-                    )
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(16.dp)
-                    .menuAnchor()
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.outline,
+                            shape = RoundedCornerShape(4.dp),
+                        )
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(16.dp)
+                        .menuAnchor(),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -91,19 +93,20 @@ fun AddMarketBottomSheetContent(
                 ) {
                     Text(
                         text = selectedMarketType.getMarketTypeName(),
-                        modifier = Modifier
-                            .weight(1f)
+                        modifier =
+                            Modifier
+                                .weight(1f),
                     )
                     Icon(
                         imageVector = Icons.Filled.ArrowDropDown,
                         contentDescription = "Dropdown arrow",
-                        modifier = Modifier.rotate(if (expanded) 180f else 0f)
+                        modifier = Modifier.rotate(if (expanded) 180f else 0f),
                     )
                 }
             }
             ExposedDropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false },
             ) {
                 MarketType.entries.forEach { marketType ->
                     DropdownMenuItem(
@@ -111,7 +114,7 @@ fun AddMarketBottomSheetContent(
                             selectedMarketType = marketType
                             expanded = false
                         },
-                        text = { Text(marketType.getMarketTypeName()) }
+                        text = { Text(marketType.getMarketTypeName()) },
                     )
                 }
             }
@@ -134,7 +137,7 @@ fun AddMarketBottomSheetContent(
                 onMarketAdded(newMarket)
             },
             modifier = Modifier.align(Alignment.End),
-            enabled = marketName.isNotBlank()
+            enabled = marketName.isNotBlank(),
         ) {
             Text(if (market == null) "Add Market" else "Update Market")
         }

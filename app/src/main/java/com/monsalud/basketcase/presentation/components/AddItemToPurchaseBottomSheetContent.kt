@@ -54,13 +54,14 @@ fun AddItemToPurchaseBottomSheetContent(
     var expanded by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(MaterialTheme.spacing.medium)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(MaterialTheme.spacing.medium),
     ) {
         Text(
             text = if (itemToPurchase == null) "Add Item to your Basket" else "Update Item in your Basket",
-            style = MaterialTheme.typography.headlineSmall
+            style = MaterialTheme.typography.headlineSmall,
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
 
@@ -69,15 +70,16 @@ fun AddItemToPurchaseBottomSheetContent(
             onExpandedChange = { expanded = !expanded },
         ) {
             Box(
-                modifier = Modifier
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = RoundedCornerShape(4.dp)
-                    )
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(16.dp)
-                    .menuAnchor()
+                modifier =
+                    Modifier
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.outline,
+                            shape = RoundedCornerShape(4.dp),
+                        )
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(16.dp)
+                        .menuAnchor(),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -85,19 +87,20 @@ fun AddItemToPurchaseBottomSheetContent(
                 ) {
                     Text(
                         text = "Item to Purchase",
-                        modifier = Modifier
-                            .weight(1f)
+                        modifier =
+                            Modifier
+                                .weight(1f),
                     )
                     Icon(
                         imageVector = Icons.Filled.ArrowDropDown,
                         contentDescription = "Dropdown arrow",
-                        modifier = Modifier.rotate(if (expanded) 180f else 0f)
+                        modifier = Modifier.rotate(if (expanded) 180f else 0f),
                     )
                 }
             }
             ExposedDropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false },
             ) {
                 PantryCategory.entries.forEach { pantryItemCategory ->
                     DropdownMenuItem(
@@ -105,7 +108,7 @@ fun AddItemToPurchaseBottomSheetContent(
                             selectedPantryItem = 1
                             expanded = false
                         },
-                        text = { Text(pantryItemCategory.getPantryCategoryName()) }
+                        text = { Text(pantryItemCategory.getPantryCategoryName()) },
                     )
                 }
             }
@@ -113,19 +116,20 @@ fun AddItemToPurchaseBottomSheetContent(
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.extraLarge))
         ExposedDropdownMenuBox(
             expanded = expanded,
-            onExpandedChange = { expanded = !expanded }
+            onExpandedChange = { expanded = !expanded },
         ) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = RoundedCornerShape(4.dp)
-                    )
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(16.dp)
-                    .menuAnchor()
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.outline,
+                            shape = RoundedCornerShape(4.dp),
+                        )
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(16.dp)
+                        .menuAnchor(),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -133,19 +137,20 @@ fun AddItemToPurchaseBottomSheetContent(
                 ) {
                     Text(
                         text = "Market Name",
-                        modifier = Modifier
-                            .weight(1f)
+                        modifier =
+                            Modifier
+                                .weight(1f),
                     )
                     Icon(
                         imageVector = Icons.Filled.ArrowDropDown,
                         contentDescription = "Dropdown arrow",
-                        modifier = Modifier.rotate(if (expanded) 180f else 0f)
+                        modifier = Modifier.rotate(if (expanded) 180f else 0f),
                     )
                 }
             }
             ExposedDropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false },
             ) {
                 PantryCategory.entries.forEach { pantryCategory ->
                     DropdownMenuItem(
@@ -153,7 +158,7 @@ fun AddItemToPurchaseBottomSheetContent(
                             selectedPantryItem = 1
                             expanded = false
                         },
-                        text = { Text(pantryCategory.getPantryCategoryName()) }
+                        text = { Text(pantryCategory.getPantryCategoryName()) },
                     )
                 }
             }
@@ -167,7 +172,7 @@ fun AddItemToPurchaseBottomSheetContent(
                 value = amountToPurchase,
                 onValueChange = { amountToPurchase = it },
                 label = { Text("Amount to Purchase") },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             )
             Spacer(modifier = Modifier.width(MaterialTheme.spacing.medium))
             ExposedDropdownMenuBox(
@@ -176,16 +181,17 @@ fun AddItemToPurchaseBottomSheetContent(
                 modifier = Modifier.weight(2f),
             ) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .border(
-                            width = 1.dp,
-                            color = MaterialTheme.colorScheme.outline,
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .background(MaterialTheme.colorScheme.surface)
-                        .padding(16.dp)
-                        .menuAnchor()
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .border(
+                                width = 1.dp,
+                                color = MaterialTheme.colorScheme.outline,
+                                shape = RoundedCornerShape(4.dp),
+                            )
+                            .background(MaterialTheme.colorScheme.surface)
+                            .padding(16.dp)
+                            .menuAnchor(),
                 ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -193,19 +199,18 @@ fun AddItemToPurchaseBottomSheetContent(
                     ) {
                         Text(
                             text = "Amount Type",
-                            modifier = Modifier
-
+                            modifier = Modifier,
                         )
                         Icon(
                             imageVector = Icons.Filled.ArrowDropDown,
                             contentDescription = "Dropdown arrow",
-                            modifier = Modifier.rotate(if (expanded) 180f else 0f)
+                            modifier = Modifier.rotate(if (expanded) 180f else 0f),
                         )
                     }
                 }
                 ExposedDropdownMenu(
                     expanded = expanded,
-                    onDismissRequest = { expanded = false }
+                    onDismissRequest = { expanded = false },
                 ) {
                     PantryCategory.entries.forEach { pantryCategory ->
                         DropdownMenuItem(
@@ -213,7 +218,7 @@ fun AddItemToPurchaseBottomSheetContent(
                                 selectedPantryItem = 1
                                 expanded = false
                             },
-                            text = { Text(pantryCategory.getPantryCategoryName()) }
+                            text = { Text(pantryCategory.getPantryCategoryName()) },
                         )
                     }
                 }
@@ -225,14 +230,14 @@ fun AddItemToPurchaseBottomSheetContent(
         ) {
             Button(
                 onClick = {},
-                modifier = Modifier.width(180.dp)
+                modifier = Modifier.width(180.dp),
             ) {
                 Text(text = "Add New Pantry Item")
             }
             Spacer(modifier = Modifier.width(MaterialTheme.spacing.medium))
             Button(
                 onClick = {},
-                modifier = Modifier.width(180.dp)
+                modifier = Modifier.width(180.dp),
             ) {
                 Text(text = if (itemToPurchase == null) "Add to Basket" else "Update Basket")
             }
@@ -244,14 +249,15 @@ fun AddItemToPurchaseBottomSheetContent(
 @Composable
 fun AddItemToPurchaseBottomSheetContentPreview() {
     AddItemToPurchaseBottomSheetContent(
-        itemToPurchase = ItemToPurchaseEntity(
-            id = 10000,
-            pantryItemId = 1,
-            marketId = 1,
-            amountToPurchase = 1.0,
-            amountType = AmountType.LB,
-            itemNotes = "only need 1 lb"
-        ),
-        onItemToPurchaseAdded = {}
+        itemToPurchase =
+            ItemToPurchaseEntity(
+                id = 10000,
+                pantryItemId = 1,
+                marketId = 1,
+                amountToPurchase = 1.0,
+                amountType = AmountType.LB,
+                itemNotes = "only need 1 lb",
+            ),
+        onItemToPurchaseAdded = {},
     )
 }

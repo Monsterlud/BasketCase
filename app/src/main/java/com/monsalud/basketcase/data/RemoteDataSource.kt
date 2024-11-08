@@ -1,4 +1,3 @@
 package com.monsalud.basketcase.data
 
-interface RemoteDataSource {
-}
+interface RemoteDataSource

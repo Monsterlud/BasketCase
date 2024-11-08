@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     // UI: Jetpack Compose & Material
     implementation(platform(libs.compose.bom))
@@ -78,6 +79,7 @@ dependencies {
     // Navigation
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.navigation.compose)
+    implementation(libs.kotlin.serialization)
 
     // Koin
     implementation(libs.koin.core)

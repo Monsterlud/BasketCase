@@ -5,11 +5,22 @@ data class ItemToPurchase(
     val item: PantryItem,
     val market: Market? = null,
     val amount: Double? = null,
-    val amountType: AmountType? = null
+    val amountType: AmountType? = null,
 )
 
 enum class AmountType {
-    EACH, BUNCH, DZ, LB, OZ, GRAM, TABLESPOON, TEASPOON, HALFTEASPOON, QUARTERTEASPOON, EIGTHTEASPOON;
+    EACH,
+    BUNCH,
+    DZ,
+    LB,
+    OZ,
+    GRAM,
+    TABLESPOON,
+    TEASPOON,
+    HALFTEASPOON,
+    QUARTERTEASPOON,
+    EIGTHTEASPOON,
+    ;
 
     fun getAmountTypeName(): String {
         return when (this) {
@@ -27,4 +38,3 @@ enum class AmountType {
         }
     }
 }
-

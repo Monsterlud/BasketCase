@@ -16,16 +16,20 @@ import timber.log.Timber
         ItemToPurchaseEntity::class,
         MarketEntity::class,
         ShoppingListEntity::class,
-        ShoppingListItemAssociation::class
+        ShoppingListItemAssociation::class,
     ],
     version = 1,
-    exportSchema = false)
+    exportSchema = false,
+)
 abstract class BasketCaseDatabase : RoomDatabase() {
-
     abstract fun pantryItemDao(): PantryItemDao
+
     abstract fun itemToPurchaseDao(): ItemToPurchaseDao
+
     abstract fun marketDao(): MarketDao
+
     abstract fun shoppingListDao(): ShoppingListDao
+
     abstract fun shoppingListItemAssociationDao(): ShoppingListItemAssociationDao
 
     suspend fun populateInitialData() {
@@ -47,23 +51,24 @@ abstract class BasketCaseDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: BasketCaseDatabase? = null
+        private var instance: BasketCaseDatabase? = null
 
-        fun getDatabase(context: Context) : BasketCaseDatabase {
-            val tempInstance = INSTANCE
+        fun getDatabase(context: Context): BasketCaseDatabase {
+            val tempInstance = instance
             if (tempInstance != null) {
                 return tempInstance
             }
             synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context = context.applicationContext,
-                    klass = BasketCaseDatabase::class.java,
-                    name = "basketcase_database"
-                )
-                    .fallbackToDestructiveMigration()
-                    .build()
-                INSTANCE = instance
-                return instance
+                val synchronizedInstance =
+                    Room.databaseBuilder(
+                        context = context.applicationContext,
+                        klass = BasketCaseDatabase::class.java,
+                        name = "basketcase_database",
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
+                instance = synchronizedInstance
+                return synchronizedInstance
             }
         }
     }

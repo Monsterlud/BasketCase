@@ -18,7 +18,11 @@ interface PantryItemDao {
     suspend fun insertAll(pantryItems: List<PantryItemEntity>)
 
     @Query("SELECT * FROM PantryItemEntity WHERE pantry_item_name = :name AND pantry_item_description = :description LIMIT 1")
-    fun getPantryItemByNameAndDescription(name: String, description: String? =  null): Flow<PantryItemEntity?>
+    fun getPantryItemByNameAndDescription(
+        name: String,
+        description: String? = null,
+    ): Flow<PantryItemEntity?>
+
     @Update
     suspend fun update(pantryItem: PantryItemEntity)
 
@@ -91,7 +95,6 @@ interface ItemToPurchaseDao {
 
 @Dao
 interface ShoppingListDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(shoppingList: ShoppingListEntity)
 
@@ -140,7 +143,10 @@ interface ShoppingListItemAssociationDao {
     suspend fun getListsForItem(itemId: Long): List<ShoppingListItemAssociation>
 
     @Query("SELECT EXISTS(SELECT * FROM ShoppingListItemAssociation WHERE shopping_list_id = :listId AND item_to_purchase_id = :itemId)")
-    suspend fun isItemInList(listId: Long, itemId: Long): Boolean
+    suspend fun isItemInList(
+        listId: Long,
+        itemId: Long,
+    ): Boolean
 
     @Query("SELECT * FROM ShoppingListItemAssociation")
     suspend fun getAllAssociations(): List<ShoppingListItemAssociation>

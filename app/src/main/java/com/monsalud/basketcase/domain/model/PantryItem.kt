@@ -7,7 +7,18 @@ data class PantryItem(
 )
 
 enum class PantryCategory {
-    FRUIT, VEGETABLE, PANTRY, MEAT, POULTRY, SEAFOOD, DAIRY, BAKEDGOOD, BEVERAGE, KITCHENSUPPLY, MISCELLANEOUS;
+    FRUIT,
+    VEGETABLE,
+    PANTRY,
+    MEAT,
+    POULTRY,
+    SEAFOOD,
+    DAIRY,
+    BAKEDGOOD,
+    BEVERAGE,
+    KITCHENSUPPLY,
+    MISCELLANEOUS,
+    ;
 
     fun getPantryCategoryName(): String {
         return when (this) {

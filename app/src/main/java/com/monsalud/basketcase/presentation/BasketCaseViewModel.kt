@@ -24,7 +24,6 @@ import timber.log.Timber
 class BasketCaseViewModel(
     private val repository: BasketCaseRepository,
 ) : ViewModel() {
-
     private val _currentScreen = MutableStateFlow<Screen>(Screen.MainScreen)
     val currentScreen = _currentScreen.asStateFlow()
 
@@ -48,27 +47,29 @@ class BasketCaseViewModel(
     val isLoadingPreferences: StateFlow<Boolean> = _isLoadingPreferences.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val userPreferencesFlow: StateFlow<BasketCaseDataStore.UserPreferences> = flow {
-        emit(repository.getUserPreferencesFlow())
-    }.onEach { _isLoadingPreferences.value = false }
-        .flatMapLatest { it }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = BasketCaseDataStore.UserPreferences(
-                hasSeenOnboardingInstructions = true,
-                hasSeenShoppingListInstructions = true,
-                hasSeenBasketInstructions = true,
-                hasSeenPantryInstructions = true,
-                hasSeenMarketInstructions = true,
+    val userPreferencesFlow: StateFlow<BasketCaseDataStore.UserPreferences> =
+        flow {
+            emit(repository.getUserPreferencesFlow())
+        }.onEach { _isLoadingPreferences.value = false }
+            .flatMapLatest { it }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Eagerly,
+                initialValue =
+                    BasketCaseDataStore.UserPreferences(
+                        hasSeenOnboardingInstructions = true,
+                        hasSeenShoppingListInstructions = true,
+                        hasSeenBasketInstructions = true,
+                        hasSeenPantryInstructions = true,
+                        hasSeenMarketInstructions = true,
+                    ),
             )
-        )
 
     init {
         viewModelScope.launch {
             combine(
                 repository.getAllPantryItems(),
-                repository.getAllMarkets()
+                repository.getAllMarkets(),
             ) { items, markets ->
                 _pantryItems.value = items
                 _markets.value = markets
@@ -90,9 +91,10 @@ class BasketCaseViewModel(
                     _pantryItemUpsertResult.value = PantryItemUpsertResult.Updated(pantryItem)
 
                     repository.getPantryItemById(pantryItem.id).collect { updatedItem ->
-                        _pantryItems.value = _pantryItems.value.map {
-                            if (it.id == updatedItem.id) updatedItem else it
-                        }
+                        _pantryItems.value =
+                            _pantryItems.value.map {
+                                if (it.id == updatedItem.id) updatedItem else it
+                            }
                     }
                 } else {
                     // Insert the new item into the database
@@ -121,9 +123,10 @@ class BasketCaseViewModel(
                     _marketUpsertResult.value = MarketUpsertResult.Updated(market)
 
                     repository.getMarketById(market.id).collect { updatedMarket ->
-                        _markets.value = _markets.value.map {
-                            if (it.id == updatedMarket.id) updatedMarket else it
-                        }
+                        _markets.value =
+                            _markets.value.map {
+                                if (it.id == updatedMarket.id) updatedMarket else it
+                            }
                     }
                 } else {
                     // Insert the new market into the database
@@ -181,12 +184,16 @@ class BasketCaseViewModel(
 
 sealed class PantryItemUpsertResult {
     data class Updated(val pantryItem: PantryItemEntity) : PantryItemUpsertResult()
+
     data class Inserted(val pantryItem: PantryItemEntity) : PantryItemUpsertResult()
+
     data class Error(val exception: Exception) : PantryItemUpsertResult()
 }
 
 sealed class MarketUpsertResult {
     data class Updated(val market: MarketEntity) : MarketUpsertResult()
+
     data class Inserted(val market: MarketEntity) : MarketUpsertResult()
+
     data class Error(val exception: Exception) : MarketUpsertResult()
 }

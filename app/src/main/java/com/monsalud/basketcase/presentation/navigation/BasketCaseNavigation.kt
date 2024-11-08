@@ -21,7 +21,7 @@ fun BasketCaseNavigation(
     NavHost(
         navController = navController,
         startDestination = Screen.MainScreen.route,
-        modifier = Modifier.padding(innerPadding)
+        modifier = Modifier.padding(innerPadding),
     ) {
         composable(route = Screen.MainScreen.route) {
             MainScreen()

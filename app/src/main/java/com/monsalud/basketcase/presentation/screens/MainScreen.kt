@@ -51,9 +51,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
-    shoppingLists: List<ShoppingListEntity> = DefaultData.shoppingLists,
-) {
+fun MainScreen(shoppingLists: List<ShoppingListEntity> = DefaultData.shoppingLists) {
     val viewModel: BasketCaseViewModel = koinViewModel()
     var isBottomSheetOpen by remember { mutableStateOf(false) }
 
@@ -72,29 +70,33 @@ fun MainScreen(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             if (showShoppingListInstructions) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.secondaryContainer)
-                        .padding(8.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.secondaryContainer)
+                            .padding(8.dp)
+                            .clip(RoundedCornerShape(8.dp)),
                 ) {
                     Text(
-                        text = "add as many different shopping lists as you like",
+                        text =
+                            "Add as many different shopping lists as you like. You can filter your Basket by " +
+                                "Shopping List making Lists a powerful way to organize your grocery needs.",
                         color = MaterialTheme.colorScheme.onSecondaryContainer,
                         modifier = Modifier.padding(start = 24.dp, top = 12.dp, bottom = 12.dp, end = 64.dp),
                     )
                     IconButton(
                         onClick = { viewModel.updateHasSeenShoppingListInstructions(true) },
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .padding(0.dp)
+                        modifier =
+                            Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(0.dp),
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
@@ -102,56 +104,62 @@ fun MainScreen(
                             tint = MaterialTheme.colorScheme.onSecondaryContainer,
                         )
                     }
-
                 }
             }
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(8.dp),
             ) {
                 items(shoppingLists) { shoppingList ->
                     Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .clickable { /* Handle item click */ }
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .clickable { /* Handle item click */ },
                     ) {
                         Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.secondary)
-                                .padding(8.dp)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .background(MaterialTheme.colorScheme.secondary)
+                                    .padding(8.dp),
                         ) {
                             Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .align(Alignment.CenterStart)
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .align(Alignment.CenterStart),
                             ) {
                                 Image(
                                     imageVector = Icons.Filled.List,
                                     contentDescription = "List Icon",
                                     colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSecondary),
-                                    modifier = Modifier
-                                        .padding(8.dp)
+                                    modifier =
+                                        Modifier
+                                            .padding(8.dp),
                                 )
                                 Text(
                                     text = shoppingList.listName,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onSecondary,
-                                    modifier = Modifier
-                                        .padding(8.dp),
+                                    modifier =
+                                        Modifier
+                                            .padding(8.dp),
                                 )
                             }
                             Image(
                                 painter = painterResource(id = R.drawable.groceries),
                                 contentDescription = "Groceries Icon",
                                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSecondary),
-                                modifier = Modifier
-                                    .align(Alignment.CenterEnd)
-                                    .padding(8.dp)
+                                modifier =
+                                    Modifier
+                                        .align(Alignment.CenterEnd)
+                                        .padding(8.dp),
                             )
                         }
                     }
@@ -160,9 +168,10 @@ fun MainScreen(
         }
         FloatingActionButton(
             onClick = { isBottomSheetOpen = true },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(MaterialTheme.spacing.extraLarge)
+            modifier =
+                Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(MaterialTheme.spacing.extraLarge),
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
         }
@@ -179,11 +188,10 @@ fun MainScreen(
         InstructionsDialog(
             onDismiss = {
                 viewModel.updateHasSeenOnboardingInstructions(true)
-            }
+            },
         )
     }
 }
-
 
 @Composable
 @Preview

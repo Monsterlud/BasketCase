@@ -40,40 +40,41 @@ fun NavDrawer(
     drawerState: DrawerState,
     navController: NavHostController,
     onScreenChange: (Screen) -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
 
-    val items = listOf(
-        NavigationItem(
-            title = "Shopping Lists",
-            selectedIcon = Icons.Filled.List,
-            unselectedIcon = Icons.Outlined.List,
-            badgeCount = 45,
-            route = Screen.MainScreen.route
-        ),
-        NavigationItem(
-            title = "Basket",
-            selectedIcon = ImageVector.vectorResource(id = R.drawable.shoppingbasket),
-            unselectedIcon = ImageVector.vectorResource(id = R.drawable.shoppingbasket),
-            route = Screen.GroceryBasketScreen.route
-        ),
-        NavigationItem(
-            title = "Pantry",
-            selectedIcon = ImageVector.vectorResource(id = R.drawable.groceries),
-            unselectedIcon = ImageVector.vectorResource(id = R.drawable.groceries),
-            route = Screen.PantryEssentialsScreen.route
-        ),
-        NavigationItem(
-            title = "Markets",
-            selectedIcon = ImageVector.vectorResource(id = R.drawable.market),
-            unselectedIcon = ImageVector.vectorResource(id = R.drawable.market),
-            route = Screen.MarketsScreen.route
+    val items =
+        listOf(
+            NavigationItem(
+                title = "Shopping Lists",
+                selectedIcon = Icons.Filled.List,
+                unselectedIcon = Icons.Outlined.List,
+                badgeCount = 45,
+                route = Screen.MainScreen.route,
+            ),
+            NavigationItem(
+                title = "Basket",
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.shoppingbasket),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.shoppingbasket),
+                route = Screen.GroceryBasketScreen.route,
+            ),
+            NavigationItem(
+                title = "Pantry",
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.groceries),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.groceries),
+                route = Screen.PantryEssentialsScreen.route,
+            ),
+            NavigationItem(
+                title = "Markets",
+                selectedIcon = ImageVector.vectorResource(id = R.drawable.market),
+                unselectedIcon = ImageVector.vectorResource(id = R.drawable.market),
+                route = Screen.MarketsScreen.route,
+            ),
         )
-    )
 
     val fontFamily = FontFamily(Font(R.font.playwriteitmoderna_regular))
     ModalNavigationDrawer(
@@ -84,7 +85,7 @@ fun NavDrawer(
                     text = "BasketCase",
                     fontSize = 24.sp,
                     fontFamily = fontFamily,
-                    modifier = Modifier.padding(horizontal = MaterialTheme.spacing.extraLarge, vertical = MaterialTheme.spacing.large)
+                    modifier = Modifier.padding(horizontal = MaterialTheme.spacing.extraLarge, vertical = MaterialTheme.spacing.large),
                 )
                 Divider()
                 Spacer(modifier = Modifier.height(24.dp))
@@ -101,12 +102,13 @@ fun NavDrawer(
                         },
                         icon = {
                             Icon(
-                                imageVector = if (index == selectedItemIndex) {
-                                    item.selectedIcon
-                                } else {
-                                    item.unselectedIcon
-                                },
-                                contentDescription = item.title
+                                imageVector =
+                                    if (index == selectedItemIndex) {
+                                        item.selectedIcon
+                                    } else {
+                                        item.unselectedIcon
+                                    },
+                                contentDescription = item.title,
                             )
                         },
                         badge = {
@@ -114,11 +116,11 @@ fun NavDrawer(
                                 Text(text = item.badgeCount.toString())
                             }
                         },
-                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                     )
                 }
             }
         },
-        content = content
+        content = content,
     )
 }

@@ -23,14 +23,10 @@ class LocalDataSourceImpl(
     private val shoppingListItemAssociationDao: ShoppingListItemAssociationDao,
     private val dataStore: BasketCaseDataStore,
 ) : LocalDataSource {
-
-    /** Room Database Methods */
-
-    // PantryItemEntity
+    /** PantryItemEntity */
     override suspend fun insertPantryItem(pantryItem: PantryItemEntity) = pantryItemDao.insert(pantryItem)
 
-    override suspend fun insertAllPantryItems(pantryItems: List<PantryItemEntity>) =
-        pantryItemDao.insertAll(pantryItems)
+    override suspend fun insertAllPantryItems(pantryItems: List<PantryItemEntity>) = pantryItemDao.insertAll(pantryItems)
 
     override suspend fun updatePantryItem(pantryItem: PantryItemEntity) = pantryItemDao.update(pantryItem)
 
@@ -41,9 +37,10 @@ class LocalDataSourceImpl(
     override fun getAllPantryItems(): Flow<List<PantryItemEntity>> = pantryItemDao.getAll()
 
     override fun getPantryItemById(id: Long): Flow<PantryItemEntity> = pantryItemDao.getById(id)
+
     override suspend fun getPantryItemByNameAndDescription(
         name: String,
-        description: String?
+        description: String?,
     ): Flow<PantryItemEntity?> {
         return if (description == null) {
             pantryItemDao.getPantryItemByNameAndDescription(name)
@@ -52,11 +49,10 @@ class LocalDataSourceImpl(
         }
     }
 
-    //MarketEntity
+    /** MarketEntity */
     override suspend fun insertMarket(market: MarketEntity) = marketDao.insert(market)
 
-    override suspend fun insertAllMarkets(markets: List<MarketEntity>) =
-        marketDao.insertAll(markets)
+    override suspend fun insertAllMarkets(markets: List<MarketEntity>) = marketDao.insertAll(markets)
 
     override suspend fun updateMarket(market: MarketEntity) = marketDao.update(market)
 
@@ -68,49 +64,38 @@ class LocalDataSourceImpl(
 
     override fun getMarketById(id: Long): Flow<MarketEntity> = marketDao.getById(id)
 
-    // ItemToPurchaseEntity
-    override suspend fun insertItemToPurchase(itemToPurchase: ItemToPurchaseEntity) =
-        itemToPurchaseDao.insert(itemToPurchase)
+    /** ItemToPurchaseEntity */
+    override suspend fun insertItemToPurchase(itemToPurchase: ItemToPurchaseEntity) = itemToPurchaseDao.insert(itemToPurchase)
 
     override suspend fun insertAllItemsToPurchase(itemsToPurchase: List<ItemToPurchaseEntity>) =
         itemToPurchaseDao.insertAll(itemsToPurchase)
 
-    override suspend fun updateItemToPurchase(itemToPurchase: ItemToPurchaseEntity) =
-        itemToPurchaseDao.update(itemToPurchase)
+    override suspend fun updateItemToPurchase(itemToPurchase: ItemToPurchaseEntity) = itemToPurchaseDao.update(itemToPurchase)
 
-    override suspend fun deleteItemToPurchase(itemToPurchase: ItemToPurchaseEntity) =
-        itemToPurchaseDao.delete(itemToPurchase)
+    override suspend fun deleteItemToPurchase(itemToPurchase: ItemToPurchaseEntity) = itemToPurchaseDao.delete(itemToPurchase)
 
     override fun deleteAllItemsToPurchase() = itemToPurchaseDao.deleteAll()
 
-    override fun getAllItemsToPurchase(): Flow<List<ItemToPurchaseEntity>> =
-        itemToPurchaseDao.getAll()
+    override fun getAllItemsToPurchase(): Flow<List<ItemToPurchaseEntity>> = itemToPurchaseDao.getAll()
 
-    override fun getItemToPurchaseById(id: Long): Flow<ItemToPurchaseEntity> =
-        itemToPurchaseDao.getById(id)
+    override fun getItemToPurchaseById(id: Long): Flow<ItemToPurchaseEntity> = itemToPurchaseDao.getById(id)
 
-    // ShoppingListEntity
-    override suspend fun insertShoppingList(shoppingList: ShoppingListEntity) =
-        shoppingListDao.insert(shoppingList)
+    /** ShoppingListEntity */
+    override suspend fun insertShoppingList(shoppingList: ShoppingListEntity) = shoppingListDao.insert(shoppingList)
 
-    override suspend fun insertAllShoppingLists(shoppingLists: List<ShoppingListEntity>) =
-        shoppingListDao.insertAll(shoppingLists)
+    override suspend fun insertAllShoppingLists(shoppingLists: List<ShoppingListEntity>) = shoppingListDao.insertAll(shoppingLists)
 
-    override suspend fun updateShoppingList(shoppingList: ShoppingListEntity) =
-        shoppingListDao.update(shoppingList)
+    override suspend fun updateShoppingList(shoppingList: ShoppingListEntity) = shoppingListDao.update(shoppingList)
 
-    override suspend fun deleteShoppingList(shoppingList: ShoppingListEntity) =
-        shoppingListDao.delete(shoppingList)
+    override suspend fun deleteShoppingList(shoppingList: ShoppingListEntity) = shoppingListDao.delete(shoppingList)
 
     override fun deleteAllShoppingLists() = shoppingListDao.deleteAll()
 
-    override fun getAllShoppingListsWithItems(): Flow<List<ShoppingListWithItems>> =
-        shoppingListDao.getAllWithItems()
+    override fun getAllShoppingListsWithItems(): Flow<List<ShoppingListWithItems>> = shoppingListDao.getAllWithItems()
 
-    override fun getShoppingListByIdWithItems(id: Long): Flow<ShoppingListWithItems> =
-        shoppingListDao.getByIdWithItems(id)
+    override fun getShoppingListByIdWithItems(id: Long): Flow<ShoppingListWithItems> = shoppingListDao.getByIdWithItems(id)
 
-    // ShoppingListItemAssociation
+    /** ShoppingListItemAssociation */
     override suspend fun insertShoppingListItemAssociation(association: ShoppingListItemAssociation) =
         shoppingListItemAssociationDao.insert(association)
 
@@ -120,8 +105,7 @@ class LocalDataSourceImpl(
     override suspend fun deleteShoppingListItemAssociation(association: ShoppingListItemAssociation) =
         shoppingListItemAssociationDao.delete(association)
 
-    override fun deleteAllShoppingListItemAssociations() =
-        shoppingListItemAssociationDao.deleteAll()
+    override fun deleteAllShoppingListItemAssociations() = shoppingListItemAssociationDao.deleteAll()
 
     override suspend fun getItemsForShoppingList(listId: Long): List<ShoppingListItemAssociation> =
         shoppingListItemAssociationDao.getItemsForList(listId)
@@ -129,8 +113,10 @@ class LocalDataSourceImpl(
     override suspend fun getShoppingListsForItem(itemId: Long): List<ShoppingListItemAssociation> =
         shoppingListItemAssociationDao.getListsForItem(itemId)
 
-    override suspend fun isItemInShoppingList(listId: Long, itemId: Long): Boolean =
-        shoppingListItemAssociationDao.isItemInList(listId, itemId)
+    override suspend fun isItemInShoppingList(
+        listId: Long,
+        itemId: Long,
+    ): Boolean = shoppingListItemAssociationDao.isItemInList(listId, itemId)
 
     override suspend fun getAllShoppingListItemAssociations(): List<ShoppingListItemAssociation> =
         shoppingListItemAssociationDao.getAllAssociations()

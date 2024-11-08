@@ -24,7 +24,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         setContent {
             BasketCaseAppTheme {
                 val navController = rememberNavController()
@@ -37,7 +36,7 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         onScreenChange = { screen ->
                             viewModel.setCurrentScreen(screen)
-                        }
+                        },
                     ) {
                         Scaffold(
                             topBar = {
@@ -50,16 +49,16 @@ class MainActivity : ComponentActivity() {
                                     },
                                     onBackClick = {
                                         navController.navigateUp()
-                                    }
+                                    },
                                 )
-                            }
-                        ) {
+                            },
+                        ) { innerPadding ->
                             BasketCaseNavigation(
                                 navController = navController,
-                                innerPadding = it,
+                                innerPadding = innerPadding,
                                 onScreenChange = { screen ->
                                     viewModel.setCurrentScreen(screen)
-                                }
+                                },
                             )
                         }
                     }

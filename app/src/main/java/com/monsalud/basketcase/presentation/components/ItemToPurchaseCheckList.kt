@@ -34,31 +34,31 @@ fun ItemToPurchaseChecklist(
     markets: List<MarketEntity>,
     selectedMarket: MarketEntity?,
     onMarketSelected: (MarketEntity) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButton(
             onClick = { onCheckedChange(!isChecked) },
-            modifier = modifier
+            modifier = modifier,
         ) {
             Icon(
                 imageVector = if (isChecked) Icons.Filled.CheckBox else Icons.Outlined.CheckBoxOutlineBlank,
-                contentDescription = "Checkbox"
+                contentDescription = "Checkbox",
             )
         }
         Text(
             text = name,
-            modifier = modifier.weight(0.4f)
+            modifier = modifier.weight(0.4f),
         )
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded },
-            modifier = Modifier.weight(0.4f)
+            modifier = Modifier.weight(0.4f),
         ) {
             TextField(
                 readOnly = true,
@@ -66,11 +66,11 @@ fun ItemToPurchaseChecklist(
                 onValueChange = {},
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 colors = ExposedDropdownMenuDefaults.textFieldColors(),
-                modifier = Modifier.menuAnchor()
+                modifier = Modifier.menuAnchor(),
             )
             ExposedDropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false },
             ) {
                 markets.forEach { market ->
                     DropdownMenuItem(
@@ -78,7 +78,7 @@ fun ItemToPurchaseChecklist(
                         onClick = {
                             onMarketSelected(market)
                             expanded = false
-                        }
+                        },
                     )
                 }
             }
@@ -95,6 +95,6 @@ fun ItemToPurchaseChecklistPreview() {
         name = "Bananas, Red",
         markets = markets,
         selectedMarket = null,
-        onMarketSelected = {}
+        onMarketSelected = {},
     )
 }

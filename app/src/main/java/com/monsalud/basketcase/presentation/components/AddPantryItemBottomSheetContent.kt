@@ -46,50 +46,52 @@ fun AddPantryItemBottomSheetContent(
     var pantryItemName by remember(pantryItem) { mutableStateOf(pantryItem?.pantryItemName ?: "") }
     var pantryItemDescription by remember(pantryItem) {
         mutableStateOf(
-            pantryItem?.pantryItemDescription ?: ""
+            pantryItem?.pantryItemDescription ?: "",
         )
     }
     var expanded by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(MaterialTheme.spacing.medium)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(MaterialTheme.spacing.medium),
     ) {
         Text(
             text = if (pantryItem == null) "Add Pantry Item" else "Update Pantry Item",
-            style = MaterialTheme.typography.headlineSmall
+            style = MaterialTheme.typography.headlineSmall,
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         OutlinedTextField(
             value = pantryItemName,
             onValueChange = { pantryItemName = it },
             label = { Text("Pantry Item Name (e.g. \"Onion\")") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         OutlinedTextField(
             value = pantryItemDescription,
             onValueChange = { pantryItemDescription = it },
             label = { Text("Pantry Item Description (e.g. \"Yellow\")") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
         Spacer(modifier = Modifier.height(MaterialTheme.spacing.medium))
         ExposedDropdownMenuBox(
             expanded = expanded,
-            onExpandedChange = { expanded = !expanded }
+            onExpandedChange = { expanded = !expanded },
         ) {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .border(
-                        width = 1.dp,
-                        color = MaterialTheme.colorScheme.outline,
-                        shape = RoundedCornerShape(4.dp)
-                    )
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(16.dp)
-                    .menuAnchor()
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.outline,
+                            shape = RoundedCornerShape(4.dp),
+                        )
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(16.dp)
+                        .menuAnchor(),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -97,19 +99,20 @@ fun AddPantryItemBottomSheetContent(
                 ) {
                     Text(
                         text = selectedPantryItemCategory.getPantryCategoryName(),
-                        modifier = Modifier
-                            .weight(1f)
+                        modifier =
+                            Modifier
+                                .weight(1f),
                     )
                     Icon(
                         imageVector = Icons.Filled.ArrowDropDown,
                         contentDescription = "Dropdown arrow",
-                        modifier = Modifier.rotate(if (expanded) 180f else 0f)
+                        modifier = Modifier.rotate(if (expanded) 180f else 0f),
                     )
                 }
             }
             ExposedDropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false },
             ) {
                 PantryCategory.entries.forEach { pantryItemCategory ->
                     DropdownMenuItem(
@@ -117,7 +120,7 @@ fun AddPantryItemBottomSheetContent(
                             selectedPantryItemCategory = pantryItemCategory
                             expanded = false
                         },
-                        text = { Text(pantryItemCategory.getPantryCategoryName()) }
+                        text = { Text(pantryItemCategory.getPantryCategoryName()) },
                     )
                 }
             }
@@ -140,7 +143,7 @@ fun AddPantryItemBottomSheetContent(
                 onPantryItemAdded(newPantryItem)
             },
             modifier = Modifier.align(Alignment.End),
-            enabled = pantryItemName.isNotBlank()
+            enabled = pantryItemName.isNotBlank(),
         ) {
             Text(if (pantryItem == null) "Add Pantry Item" else "Update Pantry Item")
         }

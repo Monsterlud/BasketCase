@@ -5,13 +5,22 @@ class Market(
     val marketName: String,
     val marketType: MarketType? = MarketType.OTHER,
     val marketLocation: Pair<Double, Double>? = null,
-    val marketAddress: String? = null
+    val marketAddress: String? = null,
 )
 
 enum class MarketType {
-    GROCERYSTORE, CORNERSTORE, BUTCHERSHOP, FISHMARKET, SPECIALTYMARKET, FARMERSMARKET, BAKERY, BEVERAGESTORE, OTHER;
+    GROCERYSTORE,
+    CORNERSTORE,
+    BUTCHERSHOP,
+    FISHMARKET,
+    SPECIALTYMARKET,
+    FARMERSMARKET,
+    BAKERY,
+    BEVERAGESTORE,
+    OTHER,
+    ;
 
-    fun getMarketTypeName() : String {
+    fun getMarketTypeName(): String {
         return when (this) {
             GROCERYSTORE -> "Grocery Store"
             CORNERSTORE -> "Corner Store"

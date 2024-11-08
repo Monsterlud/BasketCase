@@ -62,9 +62,10 @@ fun MarketsScreen(
     val context = LocalContext.current
 
     val markets by viewModel.markets.collectAsState(initial = emptyList())
-    val sortedMarkets = remember(markets) {
-        markets.sortedBy { it.marketName.lowercase() }
-    }
+    val sortedMarkets =
+        remember(markets) {
+            markets.sortedBy { it.marketName.lowercase() }
+        }
     var marketToEdit by remember { mutableStateOf<MarketEntity?>(null) }
 
     var isBottomSheetOpen by remember { mutableStateOf(false) }
@@ -80,156 +81,178 @@ fun MarketsScreen(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
             if (showMarketInstructions) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.secondaryContainer),
                 ) {
                     Text(
-                        text = "add or edit your favorite places to shop. Swipe to edit or delete or edit",
+                        text = "Add or edit your favorite places to shop. Swipe to edit or delete or edit",
                         color = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = modifier
-                            .padding(start = 24.dp, top = 12.dp, bottom = 12.dp, end = 64.dp),
+                        modifier =
+                            modifier
+                                .padding(start = 24.dp, top = 12.dp, bottom = 12.dp, end = 64.dp),
                     )
                     IconButton(
                         onClick = { viewModel.updateHasSeenMarketInstructions(true) },
-                        modifier = Modifier.align(Alignment.TopEnd)
-                            .padding(0.dp)
+                        modifier =
+                            Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(0.dp),
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Close Instructions",
-                            tint = MaterialTheme.colorScheme.onSecondaryContainer
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
                         )
                     }
                 }
             }
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(8.dp),
             ) {
                 items(
                     items = sortedMarkets,
-                    key = { it.id }
+                    key = { it.id },
                 ) { market ->
                     key(market.id, editActionCounter) {
-                        val dismissState = rememberSwipeToDismissBoxState(
-                            confirmValueChange = { dismissValue ->
-                                when (dismissValue) {
-                                    SwipeToDismissBoxValue.EndToStart -> {
-                                        viewModel.deleteMarketFromDatabase(market)
-                                        Toast.makeText(context, "Market deleted!", Toast.LENGTH_SHORT).show()
-                                        true
-                                    }
+                        val dismissState =
+                            rememberSwipeToDismissBoxState(
+                                confirmValueChange = { dismissValue ->
+                                    when (dismissValue) {
+                                        SwipeToDismissBoxValue.EndToStart -> {
+                                            viewModel.deleteMarketFromDatabase(market)
+                                            Toast.makeText(context, "Market deleted!", Toast.LENGTH_SHORT).show()
+                                            true
+                                        }
 
-                                    SwipeToDismissBoxValue.StartToEnd -> {
-                                        marketToEdit = market
-                                        isBottomSheetOpen = true
-                                        editActionCounter++
-                                        true
-                                    }
+                                        SwipeToDismissBoxValue.StartToEnd -> {
+                                            marketToEdit = market
+                                            isBottomSheetOpen = true
+                                            editActionCounter++
+                                            true
+                                        }
 
-                                    else -> false
-                                }
-                            },
-                            positionalThreshold = { distance: Float ->
-                                distance * 0.28f
-                            }
-                        )
+                                        else -> false
+                                    }
+                                },
+                                positionalThreshold = { distance: Float ->
+                                    distance * 0.28f
+                                },
+                            )
 
                         SwipeToDismissBox(
                             state = dismissState,
                             backgroundContent = {
-                                val (color, icon) = when (dismissState.targetValue) {
-                                    SwipeToDismissBoxValue.Settled -> {
-                                        val elevatedColor = MaterialTheme.colorScheme.surfaceColorAtElevation(5.dp)
-                                        elevatedColor to null
+                                val (color, icon) =
+                                    when (dismissState.targetValue) {
+                                        SwipeToDismissBoxValue.Settled -> {
+                                            val elevatedColor = MaterialTheme.colorScheme.surfaceColorAtElevation(5.dp)
+                                            elevatedColor to null
+                                        }
+
+                                        SwipeToDismissBoxValue.EndToStart -> deleteRed to Icons.Default.Delete
+                                        SwipeToDismissBoxValue.StartToEnd -> editGreen to Icons.Default.Edit
+                                        else -> MaterialTheme.colorScheme.background to null
                                     }
-                                    SwipeToDismissBoxValue.EndToStart -> deleteRed to Icons.Default.Delete
-                                    SwipeToDismissBoxValue.StartToEnd -> editGreen to Icons.Default.Edit
-                                    else -> MaterialTheme.colorScheme.background to null
-                                }
                                 Box(
                                     Modifier
                                         .fillMaxSize()
                                         .padding(8.dp)
                                         .background(color)
                                         .padding(horizontal = 20.dp),
-                                    contentAlignment = if (dismissState.targetValue == SwipeToDismissBoxValue.StartToEnd) Alignment.CenterStart else Alignment.CenterEnd
+                                    contentAlignment =
+                                        if (dismissState.targetValue == SwipeToDismissBoxValue.StartToEnd) {
+                                            Alignment.CenterStart
+                                        } else {
+                                            Alignment.CenterEnd
+                                        },
                                 ) {
                                     icon?.let {
                                         Icon(
                                             imageVector = icon,
-                                            contentDescription = if (dismissState.targetValue == SwipeToDismissBoxValue.StartToEnd) "Edit" else "Delete",
-                                            tint = Color.White
+                                            contentDescription =
+                                                if (dismissState.targetValue == SwipeToDismissBoxValue.StartToEnd) {
+                                                    "Edit"
+                                                } else {
+                                                    "Delete"
+                                                },
+                                            tint = Color.White,
                                         )
-
                                     }
                                 }
                             },
                             content = {
                                 Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp)
-                                        .clip(RoundedCornerShape(8.dp))
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(8.dp)
+                                            .clip(RoundedCornerShape(8.dp)),
                                 ) {
                                     // Market Type block with colored background
                                     Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .background(MaterialTheme.colorScheme.secondary)
-                                            .padding(8.dp)
+                                        modifier =
+                                            Modifier
+                                                .fillMaxWidth()
+                                                .background(MaterialTheme.colorScheme.secondary)
+                                                .padding(8.dp),
                                     ) {
                                         Text(
                                             text = market.marketType.getMarketTypeName(),
                                             color = MaterialTheme.colorScheme.onSecondary,
-                                            modifier = Modifier.align(Alignment.CenterEnd)
+                                            modifier = Modifier.align(Alignment.CenterEnd),
                                         )
                                     }
                                     // Market Name and Address block
                                     Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .background(MaterialTheme.colorScheme.secondaryContainer)
-                                            .padding(0.dp)
+                                        modifier =
+                                            Modifier
+                                                .fillMaxWidth()
+                                                .background(MaterialTheme.colorScheme.secondaryContainer)
+                                                .padding(0.dp),
                                     ) {
                                         Column(
-                                            modifier = Modifier
-                                                .padding(vertical = 0.dp, horizontal = 0.dp)
+                                            modifier =
+                                                Modifier
+                                                    .padding(vertical = 0.dp, horizontal = 0.dp),
                                         ) {
                                             Text(
                                                 text = market.marketName,
                                                 fontSize = 14.sp,
                                                 color = MaterialTheme.colorScheme.onSecondaryContainer,
-                                                modifier = Modifier
-                                                    .padding(
-                                                        start = 8.dp,
-                                                        top = 8.dp,
-                                                        bottom = 4.dp
-                                                    ),
+                                                modifier =
+                                                    Modifier
+                                                        .padding(
+                                                            start = 8.dp,
+                                                            top = 8.dp,
+                                                            bottom = 4.dp,
+                                                        ),
                                             )
                                             market.marketAddress?.let {
                                                 Text(
                                                     text = it,
                                                     fontSize = 12.sp,
-                                                    modifier = Modifier
-                                                        .padding(start = 8.dp, bottom = 8.dp),
+                                                    modifier =
+                                                        Modifier
+                                                            .padding(start = 8.dp, bottom = 8.dp),
                                                 )
                                             }
                                         }
                                     }
                                 }
-
                             },
                             enableDismissFromEndToStart = true,
                             enableDismissFromStartToEnd = true,
@@ -241,17 +264,19 @@ fun MarketsScreen(
 
         FloatingActionButton(
             onClick = { isBottomSheetOpen = true },
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(MaterialTheme.spacing.extraLarge)
+            modifier =
+                Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(MaterialTheme.spacing.extraLarge),
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
         }
 
         if (isBottomSheetOpen) {
-            val modalBottomSheetState = rememberModalBottomSheetState(
-                skipPartiallyExpanded = true
-            )
+            val modalBottomSheetState =
+                rememberModalBottomSheetState(
+                    skipPartiallyExpanded = true,
+                )
             ModalBottomSheet(
                 onDismissRequest = {
                     isBottomSheetOpen = false
@@ -264,14 +289,18 @@ fun MarketsScreen(
                     onMarketAdded = {
                         viewModel.upsertMarketToDatabase(it)
                         isBottomSheetOpen = false
-                        Toast.makeText(context, if (marketToEdit == null) "Market added!" else "Market updated!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            if (marketToEdit == null) "Market added!" else "Market updated!",
+                            Toast.LENGTH_SHORT,
+                        ).show()
                         marketToEdit = null
-                    })
+                    },
+                )
             }
         }
     }
 }
-
 
 @Composable
 @Preview

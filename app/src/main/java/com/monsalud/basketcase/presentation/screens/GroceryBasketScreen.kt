@@ -15,15 +15,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.monsalud.basketcase.ui.theme.spacing
 
 @Composable
-fun GroceryBasketScreen(
-    modifier: Modifier = Modifier
-) {
+fun GroceryBasketScreen(modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         FloatingActionButton(
             onClick = { /* Handle FAB click */ },
-            modifier = Modifier.align(Alignment.BottomEnd).padding(MaterialTheme.spacing.medium)
+            modifier = Modifier.align(Alignment.BottomEnd).padding(MaterialTheme.spacing.medium),
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
         }

@@ -19,15 +19,12 @@ import com.monsalud.basketcase.domain.model.PantryCategory
 data class PantryItemEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-
     @ColumnInfo(name = "pantry_item_name")
     var pantryItemName: String,
-
     @ColumnInfo(name = "pantry_item_description")
     var pantryItemDescription: String? = null,
-
     @ColumnInfo(name = "pantry_item_category")
-    var pantryItemCategory: PantryCategory
+    var pantryItemCategory: PantryCategory,
 )
 
 @Entity
@@ -35,18 +32,14 @@ data class PantryItemEntity(
 data class MarketEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-
     @ColumnInfo(name = "market_name")
     var marketName: String,
-
     @ColumnInfo(name = "market_type")
     var marketType: MarketType,
-
     @ColumnInfo(name = "market_location")
     var marketLocation: Pair<Double, Double>? = null,
-
     @ColumnInfo(name = "market_address")
-    var marketAddress: String? = null
+    var marketAddress: String? = null,
 )
 
 @Entity(
@@ -55,33 +48,28 @@ data class MarketEntity(
             entity = PantryItemEntity::class,
             parentColumns = ["id"],
             childColumns = ["pantry_item_id"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.CASCADE,
         ),
         ForeignKey(
             entity = MarketEntity::class,
             parentColumns = ["id"],
             childColumns = ["market_id"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ],
 )
 @TypeConverters(EntityTypeConverters::class)
 data class ItemToPurchaseEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-
     @ColumnInfo(name = "pantry_item_id")
     var pantryItemId: Long,
-
     @ColumnInfo(name = "market_id")
     var marketId: Long? = null,
-
     @ColumnInfo(name = "amount_to_purchase")
     var amountToPurchase: Double? = null,
-
     @ColumnInfo(name = "amount_type")
     var amountType: AmountType? = null,
-
     @ColumnInfo(name = "item_notes")
     var itemNotes: String? = null,
 )
@@ -92,12 +80,10 @@ data class ItemToPurchaseEntity(
 data class ShoppingListEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-
     @ColumnInfo(name = "list_name")
     var listName: String,
-
     @ColumnInfo(name = "creation_date")
-    var creationDate: Long = System.currentTimeMillis()
+    var creationDate: Long = System.currentTimeMillis(),
 )
 
 /** Associations
@@ -111,25 +97,23 @@ data class ShoppingListEntity(
             entity = ShoppingListEntity::class,
             parentColumns = ["id"],
             childColumns = ["shopping_list_id"],
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.CASCADE,
         ),
         ForeignKey(
             entity = ItemToPurchaseEntity::class,
             parentColumns = ["id"],
             childColumns = ["item_to_purchase_id"],
-            onDelete = ForeignKey.CASCADE
-        )
-    ]
+            onDelete = ForeignKey.CASCADE,
+        ),
+    ],
 )
 data class ShoppingListItemAssociation(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-
     @ColumnInfo(name = "shopping_list_id")
     var groceryListId: Long,
-
     @ColumnInfo(name = "item_to_purchase_id")
-    var itemToPurchaseId: Long
+    var itemToPurchaseId: Long,
 )
 
 /** Data Retrieval **/
@@ -139,11 +123,12 @@ data class ShoppingListWithItems(
     @Relation(
         parentColumn = "id",
         entityColumn = "id",
-        associateBy = Junction(
-            value = ShoppingListItemAssociation::class,
-            parentColumn = "shopping_list_id",
-            entityColumn = "item_to_purchase_id"
-        )
+        associateBy =
+            Junction(
+                value = ShoppingListItemAssociation::class,
+                parentColumn = "shopping_list_id",
+                entityColumn = "item_to_purchase_id",
+            ),
     )
-    val items: List<ItemToPurchaseEntity>
+    val items: List<ItemToPurchaseEntity>,
 )

@@ -26,3 +26,7 @@ jobs:
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_696293447 }}
           QODANA_ENDPOINT: 'https://qodana.cloud'
+          QODANA_YAML: |
+            linter:
+              ktlint:
+                enabled: true

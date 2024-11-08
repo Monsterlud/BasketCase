@@ -11,14 +11,13 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
-
 private const val BASKETCASE_PREFERENCES = "basketcase_preferences"
 val Context.basketCasePreferencesDatastore: DataStore<Preferences> by preferencesDataStore(
-    name = BASKETCASE_PREFERENCES
+    name = BASKETCASE_PREFERENCES,
 )
 
 class BasketCaseDataStore(
-    private val context: Context
+    private val context: Context,
 ) {
     private val dataStore = context.basketCasePreferencesDatastore
 
@@ -30,28 +29,29 @@ class BasketCaseDataStore(
         val HAS_SEEN_MARKET_INSTRUCTIONS = booleanPreferencesKey("has_seen_market_instructions")
     }
 
-    val preferencesFlow = dataStore.data
-        .catch { exception ->
-            if (exception is IOException) {
-                emit(emptyPreferences())
-            } else {
-                throw exception
+    val preferencesFlow =
+        dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
             }
-        }
-        .map { preferences ->
-            val hasSeenOnboardingInstructions = preferences[PreferencesKeys.HAS_SEEN_ONBOARDING_INSTRUCTIONS] ?: false
-            val hasSeenShoppingListInstructions = preferences[PreferencesKeys.HAS_SEEN_SHOPPING_LIST_INSTRUCTIONS] ?: false
-            val hasSeenBasketInstructions = preferences[PreferencesKeys.HAS_SEEN_BASKET_INSTRUCTIONS] ?: false
-            val hasSeenPantryInstructions = preferences[PreferencesKeys.HAS_SEEN_PANTRY_INSTRUCTIONS] ?: false
-            val hasSeenMarketInstructions = preferences[PreferencesKeys.HAS_SEEN_MARKET_INSTRUCTIONS] ?: false
-            UserPreferences(
-                hasSeenOnboardingInstructions = hasSeenOnboardingInstructions,
-                hasSeenShoppingListInstructions = hasSeenShoppingListInstructions,
-                hasSeenBasketInstructions = hasSeenBasketInstructions,
-                hasSeenPantryInstructions = hasSeenPantryInstructions,
-                hasSeenMarketInstructions = hasSeenMarketInstructions
-            )
-        }
+            .map { preferences ->
+                val hasSeenOnboardingInstructions = preferences[PreferencesKeys.HAS_SEEN_ONBOARDING_INSTRUCTIONS] ?: false
+                val hasSeenShoppingListInstructions = preferences[PreferencesKeys.HAS_SEEN_SHOPPING_LIST_INSTRUCTIONS] ?: false
+                val hasSeenBasketInstructions = preferences[PreferencesKeys.HAS_SEEN_BASKET_INSTRUCTIONS] ?: false
+                val hasSeenPantryInstructions = preferences[PreferencesKeys.HAS_SEEN_PANTRY_INSTRUCTIONS] ?: false
+                val hasSeenMarketInstructions = preferences[PreferencesKeys.HAS_SEEN_MARKET_INSTRUCTIONS] ?: false
+                UserPreferences(
+                    hasSeenOnboardingInstructions = hasSeenOnboardingInstructions,
+                    hasSeenShoppingListInstructions = hasSeenShoppingListInstructions,
+                    hasSeenBasketInstructions = hasSeenBasketInstructions,
+                    hasSeenPantryInstructions = hasSeenPantryInstructions,
+                    hasSeenMarketInstructions = hasSeenMarketInstructions,
+                )
+            }
 
     data class UserPreferences(
         val hasSeenOnboardingInstructions: Boolean,
