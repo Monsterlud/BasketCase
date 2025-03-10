@@ -3,12 +3,7 @@ package com.monsalud.basketcase.presentation.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,20 +11,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.List
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -43,7 +26,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.monsalud.basketcase.R
 import com.monsalud.basketcase.data.localdatasource.DefaultData
 import com.monsalud.basketcase.data.localdatasource.room.ShoppingListEntity
-import com.monsalud.basketcase.presentation.BasketCaseViewModel
+import com.monsalud.basketcase.presentation.MainScreenViewModel
+import com.monsalud.basketcase.presentation.UserPreferencesViewModel
 import com.monsalud.basketcase.presentation.components.AddListBottomSheetContent
 import com.monsalud.basketcase.presentation.components.InstructionsDialog
 import com.monsalud.basketcase.ui.theme.spacing
@@ -51,12 +35,16 @@ import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(shoppingLists: List<ShoppingListEntity> = DefaultData.shoppingLists) {
-    val viewModel: BasketCaseViewModel = koinViewModel()
+fun MainScreen(
+    viewModel: MainScreenViewModel = koinViewModel(),
+    userPreferencesViewModel: UserPreferencesViewModel = koinViewModel(),
+    shoppingLists: List<ShoppingListEntity> = DefaultData.shoppingLists
+) {
+
     var isBottomSheetOpen by remember { mutableStateOf(false) }
 
-    val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle()
-    val isLoadingPreferences by viewModel.isLoadingPreferences.collectAsStateWithLifecycle()
+    val userPreferences by userPreferencesViewModel.userPreferencesFlow.collectAsStateWithLifecycle()
+    val isLoadingPreferences by userPreferencesViewModel.isLoadingPreferences.collectAsStateWithLifecycle()
 
     val showOnboardingDialog by remember {
         derivedStateOf {
@@ -78,11 +66,11 @@ fun MainScreen(shoppingLists: List<ShoppingListEntity> = DefaultData.shoppingLis
             if (showShoppingListInstructions) {
                 Box(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.secondaryContainer)
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(8.dp)),
+                    Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .padding(8.dp)
+                        .clip(RoundedCornerShape(8.dp)),
                 ) {
                     Text(
                         text =
@@ -92,11 +80,11 @@ fun MainScreen(shoppingLists: List<ShoppingListEntity> = DefaultData.shoppingLis
                         modifier = Modifier.padding(start = 24.dp, top = 12.dp, bottom = 12.dp, end = 64.dp),
                     )
                     IconButton(
-                        onClick = { viewModel.updateHasSeenShoppingListInstructions(true) },
+                        onClick = { userPreferencesViewModel.updateHasSeenShoppingListInstructions(true) },
                         modifier =
-                            Modifier
-                                .align(Alignment.TopEnd)
-                                .padding(0.dp),
+                        Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(0.dp),
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
@@ -187,7 +175,7 @@ fun MainScreen(shoppingLists: List<ShoppingListEntity> = DefaultData.shoppingLis
     if (showOnboardingDialog) {
         InstructionsDialog(
             onDismiss = {
-                viewModel.updateHasSeenOnboardingInstructions(true)
+                userPreferencesViewModel.updateHasSeenOnboardingInstructions(true)
             },
         )
     }

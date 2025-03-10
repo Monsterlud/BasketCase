@@ -2,47 +2,16 @@ package com.monsalud.basketcase.presentation.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.SwipeToDismissBoxValue
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.material3.rememberSwipeToDismissBoxState
-import androidx.compose.material3.surfaceColorAtElevation
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,17 +22,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.monsalud.basketcase.data.localdatasource.room.PantryItemEntity
-import com.monsalud.basketcase.presentation.BasketCaseViewModel
+import com.monsalud.basketcase.presentation.PantryScreenViewModel
+import com.monsalud.basketcase.presentation.UserPreferencesViewModel
 import com.monsalud.basketcase.presentation.components.AddPantryItemBottomSheetContent
 import com.monsalud.basketcase.ui.theme.deleteRed
 import com.monsalud.basketcase.ui.theme.editGreen
 import com.monsalud.basketcase.ui.theme.spacing
 import org.koin.androidx.compose.koinViewModel
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PantryScreen(
-    viewModel: BasketCaseViewModel = koinViewModel(),
+    viewModel: PantryScreenViewModel = koinViewModel(),
+    userPreferencesViewModel: UserPreferencesViewModel = koinViewModel(),
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -84,6 +56,8 @@ fun PantryScreen(
                 compareBy<PantryItemEntity> { it.pantryItemCategory }.thenBy { it.pantryItemName.lowercase() },
             )
         }
+    Timber.d("pantryItems: $pantryItems")
+    Timber.d("filteredPantryItems: $filteredPantryItems")
 
     var pantryItemToEdit by remember { mutableStateOf<PantryItemEntity?>(null) }
     var pantryItemToDelete by remember { mutableStateOf<PantryItemEntity?>(null) }
@@ -91,8 +65,8 @@ fun PantryScreen(
     var isBottomSheetOpen by remember { mutableStateOf(false) }
     var editActionCounter by remember { mutableIntStateOf(0) }
 
-    val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle()
-    val isLoadingPreferences by viewModel.isLoadingPreferences.collectAsStateWithLifecycle()
+    val userPreferences by userPreferencesViewModel.userPreferencesFlow.collectAsStateWithLifecycle()
+    val isLoadingPreferences by userPreferencesViewModel.isLoadingPreferences.collectAsStateWithLifecycle()
 
     val showPantryInstructions by remember {
         derivedStateOf {
@@ -123,10 +97,10 @@ fun PantryScreen(
                             Color.Transparent,
                     ),
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .clip(CircleShape),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .clip(CircleShape),
                 placeholder = { Text(text = "Search pantry items") },
             )
             if (showPantryInstructions) {
@@ -148,7 +122,7 @@ fun PantryScreen(
                                 .padding(start = 24.dp, top = 12.dp, bottom = 12.dp, end = 64.dp),
                     )
                     IconButton(
-                        onClick = { viewModel.updateHasSeenPantryInstructions(true) },
+                        onClick = { userPreferencesViewModel.updateHasSeenPantryInstructions(true) },
                         modifier =
                             Modifier
                                 .align(Alignment.TopEnd)

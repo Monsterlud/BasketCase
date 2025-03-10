@@ -2,11 +2,7 @@ package com.monsalud.basketcase.presentation.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,26 +11,9 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SwipeToDismissBox
-import androidx.compose.material3.SwipeToDismissBoxValue
-import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
-import androidx.compose.material3.rememberSwipeToDismissBoxState
-import androidx.compose.material3.surfaceColorAtElevation
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -45,7 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.monsalud.basketcase.data.localdatasource.room.MarketEntity
-import com.monsalud.basketcase.presentation.BasketCaseViewModel
+import com.monsalud.basketcase.presentation.MarketsScreenViewModel
+import com.monsalud.basketcase.presentation.UserPreferencesViewModel
 import com.monsalud.basketcase.presentation.components.AddMarketBottomSheetContent
 import com.monsalud.basketcase.ui.theme.deleteRed
 import com.monsalud.basketcase.ui.theme.editGreen
@@ -55,7 +35,8 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MarketsScreen(
-    viewModel: BasketCaseViewModel = koinViewModel(),
+    viewModel: MarketsScreenViewModel = koinViewModel(),
+    userPreferencesViewModel: UserPreferencesViewModel = koinViewModel(),
     modifier: Modifier = Modifier,
     onMarketClick: () -> Unit = {},
 ) {
@@ -69,10 +50,10 @@ fun MarketsScreen(
     var marketToEdit by remember { mutableStateOf<MarketEntity?>(null) }
 
     var isBottomSheetOpen by remember { mutableStateOf(false) }
-    var editActionCounter by remember { mutableStateOf(0) }
+    var editActionCounter by remember { mutableIntStateOf(0) }
 
-    val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle()
-    val isLoadingPreferences by viewModel.isLoadingPreferences.collectAsStateWithLifecycle()
+    val userPreferences by userPreferencesViewModel.userPreferencesFlow.collectAsStateWithLifecycle()
+    val isLoadingPreferences by userPreferencesViewModel.isLoadingPreferences.collectAsStateWithLifecycle()
 
     val showMarketInstructions by remember {
         derivedStateOf {
@@ -89,11 +70,11 @@ fun MarketsScreen(
             if (showMarketInstructions) {
                 Box(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                            .background(MaterialTheme.colorScheme.secondaryContainer),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.secondaryContainer),
                 ) {
                     Text(
                         text = "Add or edit your favorite places to shop. Swipe to edit or delete or edit",
@@ -103,7 +84,7 @@ fun MarketsScreen(
                                 .padding(start = 24.dp, top = 12.dp, bottom = 12.dp, end = 64.dp),
                     )
                     IconButton(
-                        onClick = { viewModel.updateHasSeenMarketInstructions(true) },
+                        onClick = { userPreferencesViewModel.updateHasSeenMarketInstructions(true) },
                         modifier =
                             Modifier
                                 .align(Alignment.TopEnd)

@@ -7,15 +7,10 @@ import com.monsalud.basketcase.data.LocalDataSource
 import com.monsalud.basketcase.data.RemoteDataSource
 import com.monsalud.basketcase.data.localdatasource.LocalDataSourceImpl
 import com.monsalud.basketcase.data.localdatasource.datastore.BasketCaseDataStore
-import com.monsalud.basketcase.data.localdatasource.room.BasketCaseDatabase
-import com.monsalud.basketcase.data.localdatasource.room.ItemToPurchaseDao
-import com.monsalud.basketcase.data.localdatasource.room.MarketDao
-import com.monsalud.basketcase.data.localdatasource.room.PantryItemDao
-import com.monsalud.basketcase.data.localdatasource.room.ShoppingListDao
-import com.monsalud.basketcase.data.localdatasource.room.ShoppingListItemAssociationDao
+import com.monsalud.basketcase.data.localdatasource.room.*
 import com.monsalud.basketcase.data.remotedatasource.RemoteDataSourceImpl
 import com.monsalud.basketcase.domain.BasketCaseRepository
-import com.monsalud.basketcase.presentation.BasketCaseViewModel
+import com.monsalud.basketcase.presentation.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -25,6 +20,11 @@ val appModule =
         val moduleInstance = AppModule()
 
         viewModel { BasketCaseViewModel(get()) }
+        viewModel { MainScreenViewModel() }
+        viewModel { UserPreferencesViewModel(get()) }
+        viewModel { GroceryBasketScreenViewModel() }
+        viewModel { MarketsScreenViewModel(get()) }
+        viewModel { PantryScreenViewModel(get()) }
         single { BasketCaseRepositoryImpl(get(), get()) } bind BasketCaseRepository::class
         single { LocalDataSourceImpl(get(), get(), get(), get(), get(), get()) } bind LocalDataSource::class
         single { RemoteDataSourceImpl() } bind RemoteDataSource::class

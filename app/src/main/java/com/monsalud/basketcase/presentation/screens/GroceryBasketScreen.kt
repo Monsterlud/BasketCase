@@ -15,7 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.monsalud.basketcase.ui.theme.spacing
 
 @Composable
-fun GroceryBasketScreen(modifier: Modifier = Modifier) {
+fun GroceryBasketScreen(
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
